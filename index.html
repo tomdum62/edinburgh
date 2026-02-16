@@ -53,6 +53,20 @@
         .day-hero .hero-overlay{position:absolute;inset:0}
         .day-hero .hero-content{position:relative;z-index:2;padding:1.25rem;display:flex;flex-direction:column;justify-content:flex-end;min-height:200px}
         .spot{color:inherit;text-decoration:none;border-bottom:1px dotted rgba(96,165,250,.35)}.spot:hover{color:rgb(147,197,253);border-bottom-style:solid}
+        .cinema-strip{display:flex;gap:.75rem;overflow-x:auto;padding:.25rem 0 .5rem;-webkit-overflow-scrolling:touch;scroll-snap-type:x mandatory}
+        .cinema-strip::-webkit-scrollbar{height:3px}.cinema-strip::-webkit-scrollbar-thumb{background:rgba(245,158,11,.3);border-radius:2px}
+        .cinema-card{flex:0 0 220px;border-radius:.75rem;overflow:hidden;position:relative;scroll-snap-align:start;background:#1e293b;border:1px solid rgba(245,158,11,.15);transition:transform .2s,box-shadow .2s}
+        .cinema-card:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(245,158,11,.15)}
+        .cinema-card img{width:220px;height:130px;object-fit:cover;display:block}
+        .cinema-card .cc-body{padding:8px 10px}
+        .cinema-card .cc-badge{position:absolute;top:6px;left:6px;font-size:8px;font-weight:700;padding:2px 8px;border-radius:9999px;color:#fff;backdrop-filter:blur(4px)}
+        .cinema-card .cc-film{font-size:10px;font-weight:700;color:#fbbf24;margin-bottom:2px}
+        .cinema-card .cc-loc{font-size:9px;color:#94a3b8}
+        .cinema-card .cc-note{font-size:8px;color:#64748b;margin-top:2px;font-style:italic}
+        @media(max-width:640px){.cinema-card{flex:0 0 180px}.cinema-card img{width:180px;height:110px}}
+        @keyframes shimmer{0%{background-position:-200% 0}100%{background-position:200% 0}}
+        .section-divider{height:1px;background:linear-gradient(90deg,transparent,rgba(245,158,11,.3),transparent);margin:1rem 0}
+        .glass{background:rgba(30,41,59,.6);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.05)}
     </style>
 </head>
 <body class="bg-slate-900 text-white font-sans">
@@ -75,7 +89,7 @@
     </div>
 </header>
 
-<nav class="sticky top-0 z-50 bg-slate-800/95 backdrop-blur border-b border-slate-700">
+<nav class="sticky top-0 z-50 bg-slate-900/80 backdrop-blur-xl border-b border-white/5 shadow-lg shadow-black/20">
     <div class="max-w-5xl mx-auto px-3 py-2.5 flex gap-1.5 overflow-x-auto">
         <a href="#overview" class="nav-link px-3 py-1.5 rounded-lg text-xs whitespace-nowrap">Apercu</a>
         <a href="#transport" class="nav-link px-3 py-1.5 rounded-lg text-xs whitespace-nowrap">Vols</a>
@@ -204,6 +218,7 @@
             <div class="flex gap-2"><div class="text-amber-400 font-mono w-10 shrink-0">19:30</div><div><a href="https://www.google.com/maps/search/Whiski+Rooms+Edinburgh" target="_blank" rel="noopener" class="spot"><b>Whiski Rooms</b></a> Haggis + whisky + vue chateau</div></div>
         </div>
         <a href="https://www.google.com/maps/dir/Edinburgh+Airport/Grassmarket,+Edinburgh/Victoria+Street,+Edinburgh/Mercure+Edinburgh+Haymarket/Calton+Hill,+Edinburgh/Whiski+Rooms,+Edinburgh/" target="_blank" rel="noopener" class="reveal inline-flex items-center gap-1.5 bg-blue-600/20 border border-blue-500/30 text-blue-400 px-3 py-1.5 rounded-lg text-xs hover:bg-blue-600/30 transition mb-2"><svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>Itineraire Google Maps</a>
+        <div class="reveal mt-2 mb-2" id="cinema-jour1"></div>
         <div class="reveal mt-2 mb-2" id="ig-jour1"></div>
         <div class="reveal bg-slate-800 rounded-xl p-3"><div class="font-bold text-xs mb-1.5">Checklist J1</div><div class="grid grid-cols-2 gap-0.5" id="check-j1"></div></div>
     </div>
@@ -236,6 +251,7 @@
             <div class="mt-2 text-slate-400">Depart parking A82. Descente riviere, traversee, remontee vallon. Bonnes chaussures obligatoires.</div>
         </div>
         <a href="https://www.google.com/maps/dir/Mercure+Edinburgh+Haymarket/Buachaille+Etive+Mor/Glen+Etive,+Scotland/Three+Sisters+Glencoe/Lost+Valley+Glencoe/Clachaig+Inn+Glencoe/Glencoe+Lochan/Mercure+Edinburgh+Haymarket/" target="_blank" rel="noopener" class="reveal inline-flex items-center gap-1.5 bg-blue-600/20 border border-blue-500/30 text-blue-400 px-3 py-1.5 rounded-lg text-xs hover:bg-blue-600/30 transition mb-2"><svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>Itineraire Google Maps</a>
+        <div class="reveal mt-2 mb-2" id="cinema-jour2"></div>
         <div class="reveal mt-2 mb-2" id="ig-jour2"></div>
         <div class="reveal bg-slate-800 rounded-xl p-3"><div class="font-bold text-xs mb-1.5">Checklist J2</div><div class="grid grid-cols-2 gap-0.5" id="check-j2"></div></div>
     </div>
@@ -265,6 +281,7 @@
             </div>
         </div>
         <a href="https://www.google.com/maps/dir/Mercure+Edinburgh+Haymarket/North+Berwick+Law/Tantallon+Castle/The+Lobster+Shack+North+Berwick/Black+Ivy+Edinburgh/" target="_blank" rel="noopener" class="reveal inline-flex items-center gap-1.5 bg-blue-600/20 border border-blue-500/30 text-blue-400 px-3 py-1.5 rounded-lg text-xs hover:bg-blue-600/30 transition mb-2"><svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>Itineraire Google Maps</a>
+        <div class="reveal mt-2 mb-2" id="cinema-jour3"></div>
         <div class="reveal mt-2 mb-2" id="ig-jour3"></div>
         <div class="reveal bg-slate-800 rounded-xl p-3"><div class="font-bold text-xs mb-1.5">Checklist J3</div><div class="grid grid-cols-2 gap-0.5" id="check-j3"></div></div>
     </div>
@@ -294,6 +311,7 @@
         </div>
         <div class="reveal bg-slate-800 rounded-xl p-2.5 text-center text-xs mb-2"><span class="text-amber-400 font-bold">DINER:</span> <a href="https://www.google.com/maps/search/The+Kitchin+Edinburgh" target="_blank" rel="noopener" class="spot"><b>The Kitchin</b></a> Michelin | Leith | <a href="tel:+441315551755" class="text-rose-400 hover:underline">RESERVER 0131 555 1755</a></div>
         <a href="https://www.google.com/maps/dir/Mercure+Edinburgh+Haymarket/Holyrood+Park+Edinburgh/Arthurs+Seat+Edinburgh/Flotterstone+Pentland+Hills/The+Kitchin+Edinburgh/" target="_blank" rel="noopener" class="reveal inline-flex items-center gap-1.5 bg-blue-600/20 border border-blue-500/30 text-blue-400 px-3 py-1.5 rounded-lg text-xs hover:bg-blue-600/30 transition mb-2"><svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>Itineraire Google Maps</a>
+        <div class="reveal mt-2 mb-2" id="cinema-jour4"></div>
         <div class="reveal mt-2 mb-2" id="ig-jour4"></div>
         <div class="reveal bg-slate-800 rounded-xl p-3"><div class="font-bold text-xs mb-1.5">Checklist J4</div><div class="grid grid-cols-2 gap-0.5" id="check-j4"></div></div>
     </div>
@@ -317,6 +335,7 @@
             <div class="flex gap-2"><div class="text-amber-400 font-mono w-10 shrink-0">18:35</div><div><b>Vol EDI&#8594;CDG</b> arrivee 21:30</div></div>
         </div>
         <a href="https://www.google.com/maps/dir/Mercure+Edinburgh+Haymarket/Dean+Village+Edinburgh/Edinburgh+Airport/" target="_blank" rel="noopener" class="reveal inline-flex items-center gap-1.5 bg-blue-600/20 border border-blue-500/30 text-blue-400 px-3 py-1.5 rounded-lg text-xs hover:bg-blue-600/30 transition mb-2"><svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>Itineraire Google Maps</a>
+        <div class="reveal mt-2 mb-2" id="cinema-jour5"></div>
         <div class="reveal mt-2 mb-2" id="ig-jour5"></div>
         <div class="reveal bg-slate-800 rounded-xl p-3"><div class="font-bold text-xs mb-1.5">Checklist J5</div><div class="grid grid-cols-2 gap-0.5" id="check-j5"></div></div>
     </div>
@@ -388,14 +407,15 @@
             </div>
         </div>
     </div>
-    <div class="reveal mt-3 bg-gradient-to-r from-purple-900/30 to-indigo-900/30 border border-purple-700/30 rounded-xl p-4">
-        <b class="text-sm">Harry Potter</b>
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-1.5 mt-2 text-xs">
-            <div class="bg-white/10 rounded p-2"><b>Victoria St</b><div class="text-slate-400">Chemin de Traverse</div></div>
-            <div class="bg-white/10 rounded p-2"><b>Greyfriars</b><div class="text-slate-400">Tom Riddle</div></div>
-            <div class="bg-white/10 rounded p-2"><b>Heriot's</b><div class="text-slate-400">Poudlard</div></div>
-            <div class="bg-white/10 rounded p-2"><b>Elephant House</b><div class="text-slate-400">Cafe JKR</div></div>
+    <div class="reveal mt-3 bg-gradient-to-r from-purple-900/30 via-indigo-900/30 to-amber-900/20 border border-purple-700/30 rounded-xl p-4">
+        <div class="flex items-center gap-2 mb-2"><svg class="w-5 h-5 text-amber-400" fill="currentColor" viewBox="0 0 24 24"><path d="M18 4l2 4h-3l-2-4h-2l2 4h-3l-2-4H8l2 4H7L5 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V4h-4z"/></svg><b class="text-sm">Cinema & Series par jour</b></div>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-1.5 text-xs">
+            <div class="bg-purple-900/40 rounded-lg p-2 border border-purple-700/20"><b class="text-purple-300">Harry Potter</b><div class="text-slate-400">5 lieux J1 + Glencoe J2</div></div>
+            <div class="bg-slate-700/40 rounded-lg p-2 border border-slate-600/20"><b class="text-slate-300">James Bond: Skyfall</b><div class="text-slate-400">Glen Etive J2</div></div>
+            <div class="bg-emerald-900/40 rounded-lg p-2 border border-emerald-700/20"><b class="text-emerald-300">Outlander</b><div class="text-slate-400">4 chateaux + Highlands</div></div>
+            <div class="bg-amber-900/40 rounded-lg p-2 border border-amber-700/20"><b class="text-amber-300">+ 6 films</b><div class="text-slate-400">Braveheart, Holy Grail...</div></div>
         </div>
+        <div class="mt-2 text-[10px] text-slate-500">Voir les lieux de tournage dans le programme jour par jour</div>
     </div>
     <div class="reveal mt-3 bg-slate-800 rounded-xl p-4">
         <b class="text-sm">Gouter</b>
@@ -562,6 +582,41 @@ var d={jour1:[
 var pinSvg='<svg class="w-3 h-3 shrink-0" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>';
 Object.keys(d).forEach(function(k){var el=document.getElementById('ig-'+k);if(!el)return;var h='<div class="flex items-center gap-1.5 mb-1.5"><svg class="w-3.5 h-3.5 text-pink-400" fill="currentColor" viewBox="0 0 24 24"><path d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4a5.8 5.8 0 01-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8A5.8 5.8 0 017.8 2m-.2 2A3.6 3.6 0 004 7.6v8.8C4 18.39 5.61 20 7.6 20h8.8a3.6 3.6 0 003.6-3.6V7.6C20 5.61 18.39 4 16.4 4H7.6m9.65 1.5a1.25 1.25 0 110 2.5 1.25 1.25 0 010-2.5M12 7a5 5 0 110 10 5 5 0 010-10m0 2a3 3 0 100 6 3 3 0 000-6z"/></svg><span class="text-[11px] text-pink-400 font-semibold">Inspi photos</span><span class="text-[10px] text-slate-500">'+d[k].length+' spots</span></div><div class="ig-strip">';
 d[k].forEach(function(p){h+='<div class="ig-embed"><a href="https://www.instagram.com/p/'+p.c+'/" target="_blank" rel="noopener"><img src="'+p.img+'" alt="'+p.n+'" loading="lazy"></a><div class="ig-info"><a href="https://www.google.com/maps/search/'+p.g+'" target="_blank" rel="noopener">'+pinSvg+'<span>'+p.n+'</span></a></div></div>'});h+='</div>';el.innerHTML=h})}();
+
+// CINEMA & SERIES - Filming locations per day
+!function(){var W='https://upload.wikimedia.org/wikipedia/commons/thumb/';
+var filmSvg='<svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M18 4l2 4h-3l-2-4h-2l2 4h-3l-2-4H8l2 4H7L5 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V4h-4z"/></svg>';
+var d={jour1:[
+{film:'Harry Potter',loc:'Victoria Street',note:'Inspiration pour le Chemin de Traverse (Diagon Alley)',g:'Victoria+Street+Edinburgh',badge:'bg-purple-600/80',img:W+'2/2f/Victoria_Street_at_early_morning_-_Edinburgh.jpg/600px-Victoria_Street_at_early_morning_-_Edinburgh.jpg'},
+{film:'Harry Potter',loc:'Greyfriars Kirkyard',note:'Tombe de Tom Riddle (Thomas Riddell) + McGonagall',g:'Greyfriars+Kirkyard+Edinburgh',badge:'bg-purple-600/80',img:W+'f/f1/Greyfriars_Kirkyard_-_02.jpg/600px-Greyfriars_Kirkyard_-_02.jpg'},
+{film:'Harry Potter',loc:"George Heriot's School",note:"Inspiration pour Poudlard - visible depuis Greyfriars",g:'George+Heriots+School+Edinburgh',badge:'bg-purple-600/80',img:W+'7/76/Edinburgh_%2C_George_Heriot%27s_School_-_geograph.org.uk_-_4947474.jpg/600px-Edinburgh_%2C_George_Heriot%27s_School_-_geograph.org.uk_-_4947474.jpg'},
+{film:'Harry Potter',loc:'The Elephant House',note:'Cafe ou J.K. Rowling a ecrit les premiers chapitres',g:'Elephant+House+Edinburgh',badge:'bg-purple-600/80',img:W+'8/81/The_Elephant_House.jpg/600px-The_Elephant_House.jpg'},
+{film:'Harry Potter',loc:'Balmoral Hotel',note:'Suite 552 - JKR a fini Les Reliques de la Mort ici',g:'Balmoral+Hotel+Edinburgh',badge:'bg-purple-600/80',img:W+'e/e1/Balmoral-Hotel-Edinburgh.jpg/600px-Balmoral-Hotel-Edinburgh.jpg'},
+{film:'Avengers: Infinity War',loc:'Cockburn Street',note:'Scenes de poursuite Edinburgh (2018)',g:'Cockburn+Street+Edinburgh',badge:'bg-red-600/80',img:W+'7/71/Cockburn_Street_-_geograph.org.uk_-_1174100.jpg/600px-Cockburn_Street_-_geograph.org.uk_-_1174100.jpg'}
+],jour2:[
+{film:'James Bond: Skyfall',loc:'Glen Etive Road',note:'La route vers le manoir Skyfall - scene iconique avec 007 et M',g:'Glen+Etive+Scotland',badge:'bg-slate-600/80',img:W+'2/28/Glen_Etive_Entices_%2814312715212%29.jpg/600px-Glen_Etive_Entices_%2814312715212%29.jpg'},
+{film:'Harry Potter',loc:'Glencoe / Hagrid Hut',note:'Paysages pour les exterieurs de Poudlard et la cabane de Hagrid',g:'Three+Sisters+Glencoe',badge:'bg-purple-600/80',img:W+'9/90/Three_Sisters_of_Glencoe%2C_Scotland.jpg/600px-Three_Sisters_of_Glencoe%2C_Scotland.jpg'},
+{film:'Monty Python: Holy Grail',loc:'Castle Stalker',note:'"It\'s only a model!" - le chateau final du film (visible A828)',g:'Castle+Stalker+Appin',badge:'bg-yellow-600/80',img:W+'5/51/Appin_Castle_Stalker_and_Loch_Laich_seen_from_the_Castle_Stalker_View_Cafe_1.jpg/600px-Appin_Castle_Stalker_and_Loch_Laich_seen_from_the_Castle_Stalker_View_Cafe_1.jpg'},
+{film:'Harry Potter: Poudlard Express',loc:'Glenfinnan Viaduct',note:'Le viaduc du train - 1h30 au nord (pas sur la route mais iconique)',g:'Glenfinnan+Viaduct',badge:'bg-purple-600/80',img:W+'1/11/Jacobite_on_Glenfinnan_Viaduct_2_20211024.jpg/600px-Jacobite_on_Glenfinnan_Viaduct_2_20211024.jpg'},
+{film:'Braveheart',loc:'Glencoe Valley',note:'Scenes de bataille de William Wallace (1995)',g:'Glencoe+Valley+Scotland',badge:'bg-blue-700/80',img:W+'3/34/The_Lost_Valley%2C_Ballachulish%2C_United_Kingdom_%28Unsplash%29.jpg/600px-The_Lost_Valley%2C_Ballachulish%2C_United_Kingdom_%28Unsplash%29.jpg'},
+{film:'Outlander',loc:'Highlands ecossais',note:'Les paysages des Highlands = le monde de Jamie Fraser',g:'Scottish+Highlands',badge:'bg-emerald-700/80',img:W+'f/f4/Glencoe_Lochan_-_Scotland.jpg/600px-Glencoe_Lochan_-_Scotland.jpg'}
+],jour3:[
+{film:'Outlander',loc:'Blackness Castle',note:'Fort William dans la serie - a 30min sur la route de N.Berwick',g:'Blackness+Castle+Scotland',badge:'bg-emerald-700/80',img:W+'e/e4/Blackness_Castle%2C_Blackness%2C_Scotland.jpg/600px-Blackness_Castle%2C_Blackness%2C_Scotland.jpg'},
+{film:'Da Vinci Code',loc:'Rosslyn Chapel',note:'Scene finale du film - a 25min au sud d\'Edinburgh',g:'Rosslyn+Chapel+Scotland',badge:'bg-amber-700/80',img:W+'a/aa/Rosslyn_Chapel_Exterior.jpg/600px-Rosslyn_Chapel_Exterior.jpg'},
+{film:'Outlander',loc:'Doune Castle',note:'Castle Leoch (clan MacKenzie) - 1h15 au nord-ouest',g:'Doune+Castle+Scotland',badge:'bg-emerald-700/80',img:W+'e/eb/Scotland-2016-Aerial-Doune_Castle_%28and_Castle_keeper%27s_cottage%29.jpg/600px-Scotland-2016-Aerial-Doune_Castle_%28and_Castle_keeper%27s_cottage%29.jpg'}
+],jour4:[
+{film:'One Day (Netflix 2024)',loc:"Arthur's Seat",note:'Scene romantique au sommet - Dexter et Emma',g:'Arthurs+Seat+Edinburgh',badge:'bg-pink-600/80',img:W+'e/e4/Arthurs_seat_edinburgh.jpg/600px-Arthurs_seat_edinburgh.jpg'},
+{film:'Trainspotting',loc:'Edinburgh',note:'"Choose Life" - Calton Hill, Princes St, la ville entiere',g:'Calton+Hill+Edinburgh',badge:'bg-orange-600/80',img:W+'4/44/Edinburgh_and_Dugald_Stewart_Monument_20211020.jpg/600px-Edinburgh_and_Dugald_Stewart_Monument_20211020.jpg'},
+{film:'Outlander',loc:'Holyrood Palace',note:'Scenes royales - palais de Charles Edouard Stuart',g:'Holyrood+Palace+Edinburgh',badge:'bg-emerald-700/80',img:W+'6/6f/Holyrood_Palace_main_entrance_20211021.jpg/600px-Holyrood_Palace_main_entrance_20211021.jpg'}
+],jour5:[
+{film:'Outlander',loc:'Craigh na Dun (fictif)',note:'Les pierres magiques - inspire des standing stones ecossais',g:'Standing+Stones+Scotland',badge:'bg-emerald-700/80',img:W+'a/ac/Dean_Village_in_Edinbugh%2C_Scotland_%2850565852688%29.jpg/600px-Dean_Village_in_Edinbugh%2C_Scotland_%2850565852688%29.jpg'},
+{film:'Highlander',loc:'Eilean Donan Castle',note:'"There can be only one!" - chateau iconique des Highlands',g:'Eilean+Donan+Castle',badge:'bg-indigo-700/80',img:W+'d/dc/Eilean_Donan_castle_-_95mm.jpg/600px-Eilean_Donan_castle_-_95mm.jpg'}
+]};
+var pinSvg='<svg class="w-2.5 h-2.5 shrink-0" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>';
+Object.keys(d).forEach(function(k){var el=document.getElementById('cinema-'+k);if(!el||!d[k].length)return;
+var h='<div class="flex items-center gap-1.5 mb-1.5">'+filmSvg+'<span class="text-[11px] text-amber-400 font-semibold">Lieux de cinema & series</span><span class="text-[10px] text-slate-500">'+d[k].length+' references</span></div><div class="cinema-strip">';
+d[k].forEach(function(c){h+='<div class="cinema-card"><a href="https://www.google.com/maps/search/'+c.g+'" target="_blank" rel="noopener"><img src="'+c.img+'" alt="'+c.loc+'" loading="lazy"></a><span class="cc-badge '+c.badge+'">'+c.film+'</span><div class="cc-body"><div class="cc-film">'+c.film+'</div><a href="https://www.google.com/maps/search/'+c.g+'" target="_blank" rel="noopener" class="cc-loc flex items-center gap-1">'+pinSvg+c.loc+'</a><div class="cc-note">'+c.note+'</div></div></div>'});
+h+='</div>';el.innerHTML=h})}();
 
 // CHECKLISTS
 var checkData={
