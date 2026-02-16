@@ -67,6 +67,14 @@
         @keyframes shimmer{0%{background-position:-200% 0}100%{background-position:200% 0}}
         .section-divider{height:1px;background:linear-gradient(90deg,transparent,rgba(245,158,11,.3),transparent);margin:1rem 0}
         .glass{background:rgba(30,41,59,.6);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.05)}
+        .music-btn{position:fixed;bottom:20px;left:20px;z-index:9999;width:48px;height:48px;border-radius:50%;border:1px solid rgba(245,158,11,.3);background:rgba(15,23,42,.85);backdrop-filter:blur(12px);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:transform .2s,box-shadow .2s,border-color .3s;box-shadow:0 4px 15px rgba(0,0,0,.4)}
+        .music-btn:hover{transform:scale(1.1);box-shadow:0 6px 25px rgba(245,158,11,.2);border-color:rgba(245,158,11,.6)}
+        .music-btn.playing{border-color:rgba(245,158,11,.6);animation:music-pulse 2s ease infinite}
+        .music-btn .note{font-size:20px;transition:transform .3s}.music-btn.playing .note{animation:note-dance 1s ease infinite}
+        .music-btn .tooltip{position:absolute;bottom:56px;left:50%;transform:translateX(-50%);background:rgba(15,23,42,.95);border:1px solid rgba(245,158,11,.2);border-radius:8px;padding:6px 10px;white-space:nowrap;font-size:10px;color:#fbbf24;opacity:0;pointer-events:none;transition:opacity .3s}
+        .music-btn:hover .tooltip{opacity:1}
+        @keyframes music-pulse{0%,100%{box-shadow:0 4px 15px rgba(0,0,0,.4)}50%{box-shadow:0 4px 20px rgba(245,158,11,.25)}}
+        @keyframes note-dance{0%,100%{transform:rotate(0deg)}25%{transform:rotate(-8deg)}75%{transform:rotate(8deg)}}
     </style>
 </head>
 <body class="bg-slate-900 text-white font-sans">
@@ -745,6 +753,19 @@ renderPhrases('ph-emergency',[
 {en:'I need to contact the French embassy',fr:"Je dois contacter l'ambassade de France"},
 {en:'Emergency: dial 999',fr:'Urgences : composez le 999',note:'Police + Ambulance + Pompiers = 999'}
 ])}();
+</script>
+
+<!-- Outlander Music Player -->
+<button class="music-btn" id="musicBtn" onclick="toggleMusic()" aria-label="Play Outlander theme">
+    <span class="note">&#9835;</span>
+    <span class="tooltip">&#127926; The Skye Boat Song - Outlander</span>
+</button>
+<div id="yt-player" style="position:fixed;top:-9999px;left:-9999px;width:1px;height:1px;pointer-events:none"></div>
+<script>
+var ytPlayer,ytReady=false,musicPlaying=false;
+var tag=document.createElement('script');tag.src='https://www.youtube.com/iframe_api';document.head.appendChild(tag);
+function onYouTubeIframeAPIReady(){ytPlayer=new YT.Player('yt-player',{height:'1',width:'1',videoId:'YrusSXEEv1M',playerVars:{autoplay:0,loop:1,playlist:'YrusSXEEv1M',controls:0,disablekb:1,fs:0,modestbranding:1,rel:0},events:{onReady:function(){ytReady=true;ytPlayer.setVolume(35)}}});}
+function toggleMusic(){if(!ytReady)return;var b=document.getElementById('musicBtn');if(musicPlaying){ytPlayer.pauseVideo();b.classList.remove('playing');musicPlaying=false}else{ytPlayer.playVideo();b.classList.add('playing');musicPlaying=true}}
 </script>
 </body>
 </html>
