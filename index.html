@@ -24,8 +24,13 @@
         .bg-gradient-hero{background:linear-gradient(to bottom,rgba(15,23,42,0) 0%,rgba(15,23,42,.7) 50%,rgba(15,23,42,1) 100%)}
         #map-container{border-radius:1rem;z-index:1}
         .leaflet-popup-content-wrapper{border-radius:10px!important}
-        .ig-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:.75rem}
-        .ig-card{transition:transform .2s,box-shadow .2s}.ig-card:hover{transform:translateY(-3px);box-shadow:0 8px 20px rgba(168,85,247,.2)}
+        .ig-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.5rem}
+        @media(min-width:768px){.ig-grid{grid-template-columns:repeat(6,1fr);gap:.6rem}}
+        .ig-card{transition:transform .2s,box-shadow .2s;position:relative;overflow:hidden}.ig-card:hover{transform:translateY(-3px);box-shadow:0 8px 20px rgba(168,85,247,.25)}
+        .ig-card .ig-loc{position:absolute;bottom:0;left:0;right:0;padding:4px 6px;background:linear-gradient(transparent,rgba(0,0,0,.85));display:flex;align-items:center;gap:3px;font-size:9px;color:rgb(147,197,253);text-decoration:none;opacity:0;transition:opacity .3s}.ig-card:hover .ig-loc,.ig-card:active .ig-loc{opacity:1}
+        @media(max-width:767px){.ig-card .ig-loc{opacity:1}}
+        .phrase-cat{cursor:pointer;user-select:none}.phrase-cat .chevron{transition:transform .3s}.phrase-cat.open .chevron{transform:rotate(180deg)}
+        .phrase-body{max-height:0;overflow:hidden;transition:max-height .4s ease}.phrase-body.open{max-height:2000px}
         .upload-zone{border:2px dashed rgba(255,255,255,.2);transition:border-color .3s,background .3s}
         .upload-zone:hover,.upload-zone.dragover{border-color:rgb(245 158 11);background:rgba(245,158,11,.05)}
         .photo-thumb{position:relative;overflow:hidden;border-radius:.75rem}
@@ -34,9 +39,10 @@
         .photo-thumb:hover .del{opacity:1}
         .ig-strip{display:flex;gap:.75rem;overflow-x:auto;padding:.25rem 0 .5rem;-webkit-overflow-scrolling:touch;scroll-snap-type:x mandatory;scroll-padding:0 .75rem}
         .ig-strip::-webkit-scrollbar{height:3px}.ig-strip::-webkit-scrollbar-thumb{background:rgba(236,72,153,.3);border-radius:2px}
-        .ig-embed{flex:0 0 280px;border-radius:.75rem;overflow:hidden;background:linear-gradient(135deg,#2d1b4e 0%,#1e293b 100%);border:1px solid rgba(236,72,153,.1);scroll-snap-align:start}
-        .ig-embed iframe{width:280px;height:350px;border:none;display:block}
-        @media(max-width:640px){.ig-embed{flex:0 0 260px}.ig-embed iframe{width:260px;height:330px}}
+        .ig-embed{flex:0 0 240px;border-radius:.75rem;overflow:hidden;background:linear-gradient(135deg,#2d1b4e 0%,#1e293b 100%);border:1px solid rgba(236,72,153,.1);scroll-snap-align:start}
+        .ig-crop{width:240px;height:240px;overflow:hidden}
+        .ig-crop iframe{width:240px;height:480px;border:none;display:block;margin-top:-56px}
+        @media(max-width:640px){.ig-embed{flex:0 0 200px}.ig-crop{width:200px;height:200px}.ig-crop iframe{width:200px;height:400px;margin-top:-48px}}
         .day-hero{position:relative;min-height:200px;border-radius:.75rem;overflow:hidden;background-size:cover;background-position:center}
         .day-hero .hero-overlay{position:absolute;inset:0}
         .day-hero .hero-content{position:relative;z-index:2;padding:1.25rem;display:flex;flex-direction:column;justify-content:flex-end;min-height:200px}
@@ -304,8 +310,8 @@
 </section>
 
 <section id="instagram" class="mb-14">
-    <h2 class="text-2xl font-serif font-bold mb-2 reveal">Instagram - Vrais spots</h2>
-    <p class="text-slate-400 text-xs mb-4 reveal">Previews Instagram sous chaque jour | Cliquez pour ouvrir le post</p>
+    <h2 class="text-2xl font-serif font-bold mb-2 reveal">Instagram - 18 vrais spots</h2>
+    <p class="text-slate-400 text-xs mb-4 reveal">18 photos, 18 lieux | Survolez pour la localisation GPS</p>
     <div class="ig-grid reveal" id="ig-grid"></div>
 </section>
 
@@ -371,33 +377,50 @@
 
 <section id="phrases" class="mb-14">
     <h2 class="text-2xl font-serif font-bold mb-2 reveal">Phrases utiles & Ecossais</h2>
-    <p class="text-slate-400 text-xs mb-4 reveal">Appuyez sur le haut-parleur pour entendre la prononciation</p>
+    <p class="text-slate-400 text-xs mb-4 reveal">Depliant interactif | Appuyez pour ecouter la prononciation</p>
 
-    <div class="space-y-4">
-        <div class="reveal bg-slate-800 rounded-xl p-4">
-            <h3 class="font-bold text-sm text-rose-400 mb-3">Bases & Politesse</h3>
-            <div class="space-y-1.5" id="ph-basics"></div>
+    <div class="space-y-2" id="phrase-sections">
+        <div class="reveal bg-slate-800 rounded-xl overflow-hidden">
+            <div class="phrase-cat flex items-center justify-between px-4 py-3" onclick="togglePh(this)">
+                <div class="flex items-center gap-2"><span class="w-6 h-6 bg-rose-600 rounded-full flex items-center justify-center text-[10px] font-bold">12</span><h3 class="font-bold text-sm text-rose-400">Bases & Politesse</h3></div>
+                <svg class="chevron w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+            </div>
+            <div class="phrase-body"><div class="space-y-1.5 px-4 pb-4" id="ph-basics"></div></div>
         </div>
-        <div class="reveal bg-slate-800 rounded-xl p-4">
-            <h3 class="font-bold text-sm text-amber-400 mb-3">Restaurant & Pub</h3>
-            <div class="space-y-1.5" id="ph-resto"></div>
+        <div class="reveal bg-slate-800 rounded-xl overflow-hidden">
+            <div class="phrase-cat flex items-center justify-between px-4 py-3" onclick="togglePh(this)">
+                <div class="flex items-center gap-2"><span class="w-6 h-6 bg-amber-600 rounded-full flex items-center justify-center text-[10px] font-bold">12</span><h3 class="font-bold text-sm text-amber-400">Restaurant & Pub</h3></div>
+                <svg class="chevron w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+            </div>
+            <div class="phrase-body"><div class="space-y-1.5 px-4 pb-4" id="ph-resto"></div></div>
         </div>
-        <div class="reveal bg-slate-800 rounded-xl p-4">
-            <h3 class="font-bold text-sm text-sky-400 mb-3">Transport & Directions</h3>
-            <div class="space-y-1.5" id="ph-transport"></div>
+        <div class="reveal bg-slate-800 rounded-xl overflow-hidden">
+            <div class="phrase-cat flex items-center justify-between px-4 py-3" onclick="togglePh(this)">
+                <div class="flex items-center gap-2"><span class="w-6 h-6 bg-sky-600 rounded-full flex items-center justify-center text-[10px] font-bold">10</span><h3 class="font-bold text-sm text-sky-400">Transport & Directions</h3></div>
+                <svg class="chevron w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+            </div>
+            <div class="phrase-body"><div class="space-y-1.5 px-4 pb-4" id="ph-transport"></div></div>
         </div>
-        <div class="reveal bg-slate-800 rounded-xl p-4">
-            <h3 class="font-bold text-sm text-emerald-400 mb-3">Hotel & Reservation</h3>
-            <div class="space-y-1.5" id="ph-hotel"></div>
+        <div class="reveal bg-slate-800 rounded-xl overflow-hidden">
+            <div class="phrase-cat flex items-center justify-between px-4 py-3" onclick="togglePh(this)">
+                <div class="flex items-center gap-2"><span class="w-6 h-6 bg-emerald-600 rounded-full flex items-center justify-center text-[10px] font-bold">8</span><h3 class="font-bold text-sm text-emerald-400">Hotel & Reservation</h3></div>
+                <svg class="chevron w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+            </div>
+            <div class="phrase-body"><div class="space-y-1.5 px-4 pb-4" id="ph-hotel"></div></div>
         </div>
-        <div class="reveal bg-gradient-to-br from-purple-900/30 to-indigo-900/30 border border-purple-700/30 rounded-xl p-4">
-            <h3 class="font-bold text-sm text-purple-400 mb-1">Expressions ecossaises</h3>
-            <p class="text-slate-500 text-[10px] mb-3">Le vrai accent des Highlands !</p>
-            <div class="space-y-1.5" id="ph-scottish"></div>
+        <div class="reveal bg-gradient-to-br from-purple-900/30 to-indigo-900/30 border border-purple-700/30 rounded-xl overflow-hidden">
+            <div class="phrase-cat flex items-center justify-between px-4 py-3" onclick="togglePh(this)">
+                <div class="flex items-center gap-2"><span class="w-6 h-6 bg-purple-600 rounded-full flex items-center justify-center text-[10px] font-bold">18</span><h3 class="font-bold text-sm text-purple-400">Expressions ecossaises</h3><span class="text-[9px] text-slate-500">Le vrai accent !</span></div>
+                <svg class="chevron w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+            </div>
+            <div class="phrase-body"><div class="space-y-1.5 px-4 pb-4" id="ph-scottish"></div></div>
         </div>
-        <div class="reveal bg-rose-900/20 border border-rose-700/30 rounded-xl p-4">
-            <h3 class="font-bold text-sm text-rose-400 mb-3">Urgences</h3>
-            <div class="space-y-1.5" id="ph-emergency"></div>
+        <div class="reveal bg-rose-900/20 border border-rose-700/30 rounded-xl overflow-hidden">
+            <div class="phrase-cat flex items-center justify-between px-4 py-3" onclick="togglePh(this)">
+                <div class="flex items-center gap-2"><span class="w-6 h-6 bg-rose-600 rounded-full flex items-center justify-center text-[10px] font-bold">8</span><h3 class="font-bold text-sm text-rose-400">Urgences & Numeros utiles</h3></div>
+                <svg class="chevron w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+            </div>
+            <div class="phrase-body"><div class="space-y-1.5 px-4 pb-4" id="ph-emergency"></div></div>
         </div>
     </div>
 </section>
@@ -436,16 +459,18 @@ function flyTo(t){var x=ft[t];if(x)map.flyTo(x.c,x.z)}
 
 // INSTAGRAM
 !function(){var p=[
-{c:'C-Bx_8muVBu',n:'Victoria Street',t:'Colorful curve'},{c:'DAn2Y9NCAtK',n:'Grassmarket',t:'Pub & ambiance'},{c:'DTdffnpmH1D',n:'Calton Hill',t:'Sunset view'},{c:'DRxLM-RgKz3',n:'The Vennel',t:'Iconic steps'},{c:'DHGTeNLtMMc',n:'Edinburgh Castle',t:'Classic view'},{c:'DTA7PynjMsL',n:'Three Sisters',t:'Glencoe majesty'},{c:'DMGU5oPxwFV',n:'Glen Etive',t:'Scenic valley'},{c:'DOJL_UTjPg-',n:'Glencoe Lochan',t:'Mirror lake'},{c:'CXRdEBOj1SP',n:'Lost Valley',t:'Coire Gabhail'},{c:'DRHjK7CDYDL',n:'Tantallon Castle',t:'Bass Rock view'},{c:'DUH-jTQiBzg',n:'North Berwick',t:'Coast & sea'},{c:'CikvzHuKY-M',n:"Arthur's Seat",t:'Panorama 360'},{c:'DN8HckoDela',n:'Dean Village',t:'Hidden gem'},{c:'DURKewak92a',n:'Water of Leith',t:'River walk'}
+{c:'C-Bx_8muVBu',n:'Victoria Street',t:'Colorful curve',g:'Victoria+Street+Edinburgh',j:'J1'},{c:'DAn2Y9NCAtK',n:'Grassmarket',t:'Pub & ambiance',g:'Grassmarket+Edinburgh',j:'J1'},{c:'DTdffnpmH1D',n:'Calton Hill',t:'Sunset view',g:'Calton+Hill+Edinburgh',j:'J1'},{c:'DRxLM-RgKz3',n:'The Vennel',t:'Iconic steps',g:'The+Vennel+Edinburgh',j:'J1'},{c:'DHGTeNLtMMc',n:'Edinburgh Castle',t:'Classic view',g:'Edinburgh+Castle',j:'J1'},{c:'DGvy2wjMoJr',n:'The Vennel',t:'Castle viewpoint',g:'The+Vennel+Edinburgh',j:'J1'},{c:'DTA7PynjMsL',n:'Three Sisters',t:'Glencoe majesty',g:'Three+Sisters+Glencoe',j:'J2'},{c:'DMGU5oPxwFV',n:'Glen Etive',t:'Skyfall valley',g:'Glen+Etive+Scotland',j:'J2'},{c:'C30kvmaivoH',n:'Buachaille Etive Mor',t:'Icon of Scotland',g:'Buachaille+Etive+Mor',j:'J2'},{c:'DOJL_UTjPg-',n:'Glencoe Lochan',t:'Mirror lake',g:'Glencoe+Lochan',j:'J2'},{c:'CXRdEBOj1SP',n:'Lost Valley',t:'Coire Gabhail',g:'Lost+Valley+Glencoe',j:'J2'},{c:'DRHjK7CDYDL',n:'Tantallon Castle',t:'Bass Rock view',g:'Tantallon+Castle',j:'J3'},{c:'DUH-jTQiBzg',n:'North Berwick',t:'Coast & sea',g:'North+Berwick+Scotland',j:'J3'},{c:'CikvzHuKY-M',n:"Arthur's Seat",t:'Panorama 360',g:'Arthurs+Seat+Edinburgh',j:'J4'},{c:'DN8HckoDela',n:'Dean Village',t:'Hidden gem',g:'Dean+Village+Edinburgh',j:'J5'},{c:'DURKewak92a',n:'Water of Leith',t:'River walk',g:'Water+of+Leith+Edinburgh',j:'J5'},{c:'BQvFhsojlng',n:'The Milkman',t:'Best coffee',g:'The+Milkman+Edinburgh',j:'J5'},{c:'DTR_I_ejLD-',n:'Three Sisters',t:'Highlands glory',g:'Three+Sisters+Glencoe',j:'J2'}
 ],g=document.getElementById('ig-grid');
-p.forEach(function(x){var a=document.createElement('a');a.href='https://www.instagram.com/p/'+x.c+'/';a.target='_blank';a.rel='noopener';a.className='ig-card block bg-slate-800 rounded-xl overflow-hidden';
-a.innerHTML='<div class="aspect-square bg-gradient-to-br from-purple-900/40 via-pink-900/20 to-amber-900/20 flex flex-col items-center justify-center p-3 text-center"><div class="w-10 h-10 mb-2 rounded-full bg-gradient-to-tr from-purple-600 to-pink-500 flex items-center justify-center"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg></div><div class="font-bold text-xs">'+x.n+'</div><div class="text-[10px] text-slate-400 mt-0.5">'+x.t+'</div><div class="text-[10px] text-pink-400 mt-1.5">Voir &#8594;</div></div>';
-g.appendChild(a)})}();
+var jc={J1:'#e11d48',J2:'#9333ea',J3:'#0284c7',J4:'#059669',J5:'#ea580c'};
+p.forEach(function(x){var d=document.createElement('div');d.className='ig-card bg-slate-800 rounded-xl';
+var col=jc[x.j]||'#f59e0b';
+d.innerHTML='<a href="https://www.instagram.com/p/'+x.c+'/" target="_blank" rel="noopener" class="block"><div class="aspect-square bg-gradient-to-br from-purple-900/40 via-pink-900/20 to-slate-800 flex flex-col items-center justify-center p-2 text-center relative"><span class="absolute top-1.5 left-1.5 text-[8px] font-bold px-1.5 py-0.5 rounded-full text-white" style="background:'+col+'">'+x.j+'</span><div class="w-8 h-8 mb-1.5 rounded-full bg-gradient-to-tr from-purple-600 to-pink-500 flex items-center justify-center"><svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg></div><div class="font-bold text-[10px] leading-tight">'+x.n+'</div><div class="text-[8px] text-slate-400 mt-0.5">'+x.t+'</div></div></a><a href="https://www.google.com/maps/search/'+x.g+'" target="_blank" rel="noopener" class="ig-loc"><svg class="w-2.5 h-2.5 shrink-0" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>'+x.n+'</a>';
+g.appendChild(d)})}();
 
 // INSTAGRAM PER-DAY EMBEDS
 !function(){var d={jour1:[{c:'C5lIYHxsJ2R',n:'Victoria Street',g:'Victoria+Street+Edinburgh'},{c:'DL_35bdsHEb',n:'Grassmarket',g:'Grassmarket+Edinburgh'},{c:'DMqYlJKsutx',n:'Calton Hill',g:'Calton+Hill+Edinburgh'},{c:'DS_yefWCeIo',n:'The Vennel',g:'The+Vennel+Edinburgh'},{c:'DM7TwBXMoyW',n:'Edinburgh Castle',g:'Edinburgh+Castle'}],jour2:[{c:'DRwh-AaDH8y',n:'Three Sisters',g:'Three+Sisters+Glencoe'},{c:'DIdv8ndMMQg',n:'Glen Etive',g:'Glen+Etive+Scotland'},{c:'DRNuQccjO_a',n:'Lost Valley',g:'Lost+Valley+Glencoe'},{c:'DTkIP6fiCaG',n:'Glencoe Lochan',g:'Glencoe+Lochan'},{c:'DSSZcRNjIrS',n:'Buachaille Etive Mor',g:'Buachaille+Etive+Mor'},{c:'DMUuSj6h07W',n:'Glen Etive Waterfall',g:'Glen+Etive+Waterfall'}],jour3:[{c:'DRDLbDBjg9B',n:'Tantallon Castle',g:'Tantallon+Castle'},{c:'DUY1JpQjUpx',n:'Bass Rock',g:'Bass+Rock+North+Berwick'},{c:'Cq71TfAoCWa',n:'North Berwick',g:'North+Berwick+Scotland'},{c:'CZoXZiUDA9w',n:'Bass Rock beach',g:'Bass+Rock+North+Berwick'},{c:'DJMXE_3tLX5',n:'Tantallon Castle',g:'Tantallon+Castle'}],jour4:[{c:'DOyZqXfDB8m',n:"Arthur's Seat",g:'Arthurs+Seat+Edinburgh'},{c:'DKUqL9ViXgU',n:'Salisbury Crags',g:'Salisbury+Crags+Edinburgh'},{c:'DNTgbW2oYgY',n:'Crags panorama',g:'Salisbury+Crags+Edinburgh'},{c:'DB51RZ2MnNr',n:'The Kitchin',g:'The+Kitchin+Edinburgh'}],jour5:[{c:'DMpSG3FRgqD',n:'Dean Village',g:'Dean+Village+Edinburgh'},{c:'DCMKhsDRBmZ',n:'Dean Village',g:'Dean+Village+Edinburgh'},{c:'DTLxio-jUp9',n:'Water of Leith',g:'Water+of+Leith+Edinburgh'}]};
 Object.keys(d).forEach(function(k){var el=document.getElementById('ig-'+k);if(!el)return;var h='<div class="flex items-center gap-1.5 mb-1.5"><svg class="w-3.5 h-3.5 text-pink-400" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2c3.2 0 3.6.01 4.85.07 3.25.15 4.77 1.69 4.92 4.92.06 1.27.07 1.65.07 4.85 0 3.2-.01 3.58-.07 4.85-.15 3.23-1.66 4.77-4.92 4.92-1.27.06-1.64.07-4.85.07-3.2 0-3.58-.01-4.85-.07-3.26-.15-4.77-1.7-4.92-4.92C2.01 15.58 2 15.2 2 12c0-3.2.01-3.58.07-4.85C2.22 3.89 3.77 2.35 7.05 2.2 8.32 2.14 8.7 2.13 11.9 2.13zM12 0C8.74 0 8.33.01 7.05.07 2.7.27.27 2.69.07 7.05.01 8.33 0 8.74 0 12c0 3.26.01 3.67.07 4.95.2 4.36 2.62 6.78 6.98 6.98 1.28.06 1.69.07 4.95.07 3.26 0 3.67-.01 4.95-.07 4.35-.2 6.78-2.62 6.98-6.98.06-1.28.07-1.69.07-4.95 0-3.26-.01-3.67-.07-4.95C23.73 2.69 21.31.27 16.95.07 15.67.01 15.26 0 12 0zm0 5.84a6.16 6.16 0 100 12.32 6.16 6.16 0 000-12.32zM12 16a4 4 0 110-8 4 4 0 010 8zm6.4-11.85a1.44 1.44 0 100 2.88 1.44 1.44 0 000-2.88z"/></svg><span class="text-[11px] text-pink-400 font-semibold">Inspi Instagram</span></div><div class="ig-strip">';
-d[k].forEach(function(p){h+='<div class="ig-embed"><iframe src="https://www.instagram.com/p/'+p.c+'/embed/" loading="lazy" allowtransparency="true" title="'+p.n+'"></iframe><a href="https://www.google.com/maps/search/'+p.g+'" target="_blank" rel="noopener" class="flex items-center gap-1 px-2.5 py-1.5 text-[10px] text-blue-400 hover:text-blue-300 hover:bg-blue-900/20 transition"><svg class="w-3 h-3 shrink-0" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>'+p.n+'</a></div>'});h+='</div>';el.innerHTML=h})}();
+d[k].forEach(function(p){h+='<div class="ig-embed"><div class="ig-crop"><iframe src="https://www.instagram.com/p/'+p.c+'/embed/" loading="lazy" allowtransparency="true" title="'+p.n+'"></iframe></div><a href="https://www.google.com/maps/search/'+p.g+'" target="_blank" rel="noopener" class="flex items-center gap-1 px-2.5 py-1.5 text-[10px] text-blue-400 hover:text-blue-300 hover:bg-blue-900/20 transition"><svg class="w-3 h-3 shrink-0" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>'+p.n+'</a></div>'});h+='</div>';el.innerHTML=h})}();
 
 // CHECKLISTS
 var checkData={
@@ -495,6 +520,7 @@ voice=v.find(function(x){return x.name==='Google UK English Female'})||v.find(fu
 if(syn.getVoices().length)pickVoice();else syn.onvoiceschanged=pickVoice;
 function speak(txt){syn.cancel();var u=new SpeechSynthesisUtterance(txt);u.lang='en-GB';u.rate=0.9;u.pitch=1.0;if(voice)u.voice=voice;syn.speak(u)}
 window.sayIt=speak;
+window.togglePh=function(el){el.classList.toggle('open');el.nextElementSibling.classList.toggle('open')};
 var svgSpk='<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072M17.95 6.05a8 8 0 010 11.9M11 5L6 9H2v6h4l5 4V5z"/></svg>';
 function renderPhrases(id,arr){
 var el=document.getElementById(id);if(!el)return;
@@ -504,64 +530,74 @@ d.className='flex items-center gap-2 bg-slate-700/30 rounded-lg px-3 py-2';
 d.innerHTML='<button onclick="sayIt(\''+p.en.replace(/'/g,"\\'")+'\')" class="shrink-0 w-8 h-8 rounded-full bg-blue-600/30 hover:bg-blue-600/50 flex items-center justify-center text-blue-400 transition">'+svgSpk+'</button><div class="flex-1 min-w-0"><div class="font-semibold text-xs text-white">'+p.en+'</div><div class="text-[11px] text-slate-400">'+p.fr+'</div>'+(p.note?'<div class="text-[10px] text-purple-400 italic">'+p.note+'</div>':'')+'</div>';
 el.appendChild(d)})}
 renderPhrases('ph-basics',[
-{en:'Hello!',fr:'Bonjour !'},{en:'Good morning',fr:'Bonjour (matin)'},{en:'Good evening',fr:'Bonsoir'},
+{en:'Hello!',fr:'Bonjour !'},{en:'Good morning',fr:'Bonjour (matin)'},{en:'Good afternoon',fr:'Bon apres-midi'},{en:'Good evening',fr:'Bonsoir'},
 {en:'Thank you very much',fr:'Merci beaucoup'},{en:'Please',fr:"S'il vous plait"},{en:'Excuse me',fr:'Excusez-moi'},
 {en:"Sorry, I don't speak English very well",fr:'Desole, je ne parle pas tres bien anglais'},
-{en:'Do you speak French?',fr:'Parlez-vous francais ?'},{en:'Yes / No',fr:'Oui / Non'},
-{en:'How are you?',fr:'Comment allez-vous ?'},{en:"I'm fine, thanks!",fr:'Je vais bien, merci !'},
-{en:'Cheers!',fr:'Sante ! / Merci !',note:'Tres utilise en Ecosse, signifie merci ET sante'}
+{en:'Do you speak French?',fr:'Parlez-vous francais ?'},{en:'How are you?',fr:'Comment allez-vous ?'},
+{en:"I'm fine, thanks!",fr:'Je vais bien, merci !'},{en:'Cheers!',fr:'Sante ! / Merci !',note:'Tres utilise en Ecosse, signifie merci ET sante'}
 ]);
 renderPhrases('ph-resto',[
 {en:'A table for two, please',fr:'Une table pour deux, SVP'},
 {en:'Could I see the menu?',fr:'Puis-je voir le menu ?'},
 {en:"I'd like to order...",fr:'Je voudrais commander...'},
+{en:'What do you recommend?',fr:'Que recommandez-vous ?'},
 {en:'A pint of lager, please',fr:'Une pinte de biere, SVP'},
-{en:'Could I have a glass of red wine?',fr:'Puis-je avoir un verre de vin rouge ?'},
-{en:'The bill, please',fr:"L'addition, s'il vous plait"},
-{en:'Do you have any recommendations?',fr:'Avez-vous des recommandations ?'},
+{en:'Could I have a glass of red wine?',fr:'Un verre de vin rouge ?'},
+{en:'A wee dram of whisky, please',fr:'Un petit verre de whisky, SVP',note:'Expression ecossaise classique'},
 {en:"I'll have the haggis, please",fr:'Je prendrai le haggis, SVP',note:'A tester absolument !'},
+{en:'Could we have some water?',fr:"De l'eau SVP ?"},
 {en:'Is service included?',fr:'Le service est-il inclus ?'},
-{en:'A wee dram of whisky, please',fr:'Un petit verre de whisky, SVP',note:'Expression ecossaise classique'}
+{en:'The bill, please',fr:"L'addition, s'il vous plait"},
+{en:'It was delicious, thank you!',fr:"C'etait delicieux, merci !"}
 ]);
 renderPhrases('ph-transport',[
-{en:'Where is the nearest bus stop?',fr:"Ou est l'arret de bus le plus proche ?"},
+{en:'Where is the nearest bus stop?',fr:"Ou est l'arret de bus ?"},
 {en:'How do I get to Edinburgh Castle?',fr:'Comment aller au chateau ?'},
 {en:'Is it within walking distance?',fr:"C'est accessible a pied ?"},
+{en:'How far is it?',fr:"C'est a combien ?"},
 {en:'Turn left / Turn right',fr:'Tournez a gauche / a droite'},
 {en:'Go straight on',fr:'Allez tout droit'},
 {en:'We are lost, can you help?',fr:'Nous sommes perdus, pouvez-vous aider ?'},
-{en:'Where can I park?',fr:'Ou puis-je me garer ?'},
-{en:'Fill it up, please',fr:'Le plein, SVP',note:'Pour la voiture de location'}
+{en:'Where can I park the car?',fr:'Ou puis-je me garer ?'},
+{en:'Fill it up with petrol, please',fr:'Le plein d\'essence SVP',note:'En Ecosse on dit "petrol" pas "gas"'},
+{en:'Is there a shortcut?',fr:'Y a-t-il un raccourci ?'}
 ]);
 renderPhrases('ph-hotel',[
-{en:'We have a reservation under Dumarquez',fr:'Nous avons une reservation au nom de Dumarquez'},
+{en:'We have a reservation under Dumarquez',fr:'Reservation au nom de Dumarquez'},
 {en:'Could we check in early?',fr:'Pouvons-nous arriver plus tot ?'},
-{en:'What time is breakfast?',fr:'A quelle heure est le petit-dejeuner ?'},
-{en:'Could we have extra towels?',fr:'Pourrions-nous avoir des serviettes supplementaires ?'},
+{en:'What time is breakfast?',fr:'A quelle heure est le petit-dej ?'},
+{en:'Could we have extra towels?',fr:'Des serviettes supplementaires ?'},
+{en:'Is there WiFi? What is the password?',fr:'Y a-t-il du WiFi ? Quel est le mot de passe ?'},
 {en:'Where is the car park?',fr:'Ou est le parking ?'},
-{en:"We're checking out",fr:'Nous partons / check-out'}
+{en:'Could you call us a taxi?',fr:'Pouvez-vous appeler un taxi ?'},
+{en:"We're checking out, room 214",fr:'Check-out, chambre 214'}
 ]);
 renderPhrases('ph-scottish',[
 {en:'Aye',fr:'Oui',note:'Le "oui" ecossais par excellence'},
-{en:'Nae bother',fr:'Pas de probleme / De rien',note:'Reponse typique a "thank you"'},
+{en:'Nae',fr:'Non / Pas',note:'"Nae bother" = pas de probleme'},
 {en:'Wee',fr:'Petit',note:'"A wee bit" = un petit peu'},
 {en:'Bonnie',fr:'Joli, beau',note:'"Bonnie Scotland" = la belle Ecosse'},
 {en:'Braw',fr:'Super, magnifique',note:'"Braw day!" = Belle journee !'},
 {en:'Loch',fr:'Lac',note:'Prononcez le "ch" du fond de la gorge'},
 {en:'Glen',fr:'Vallee',note:'Glencoe = vallee des pleurs'},
-{en:'Ben',fr:'Montagne, sommet',note:'Ben Nevis = plus haut sommet UK'},
-{en:'Slainte mhath!',fr:'A votre sante !',note:'Prononcez "slanj-uh va" - pour trinquer au whisky'},
-{en:'Ye ken?',fr:'Tu sais ? / Tu vois ?',note:'Tres courant dans la conversation'},
+{en:'Ben',fr:'Montagne, sommet',note:'Ben Nevis = plus haut sommet UK (1345m)'},
+{en:'Slainte mhath!',fr:'A votre sante !',note:'Prononcez "slanj-uh va" - pour trinquer'},
+{en:'Ye ken?',fr:'Tu sais ? / Tu vois ?',note:'Tres courant en conversation'},
 {en:'Blether',fr:'Bavardage, papoter',note:'"Having a blether" = papoter'},
 {en:'Haud yer wheesht!',fr:'Tais-toi !',note:'Prononcez "hod yer weesht" - humoristique'},
 {en:'Dinnae fash yersel',fr:'Ne vous en faites pas',note:'"Fash" vient du francais "facher" !'},
-{en:'Auld',fr:'Vieux',note:'"Auld Reekie" = surnom d\'Edimbourg'},
+{en:'Auld Reekie',fr:'Le vieux enfume',note:'Surnom d\'Edimbourg - l\'ancienne ville enfumee'},
+{en:'Wee heavy',fr:'Biere ecossaise forte',note:'Style de biere: maltee, caramel, 7-10%'},
+{en:'Ceilidh',fr:'Bal traditionnel ecossais',note:'Prononcez "KAY-lee" - danse en groupe'},
+{en:'Munro bagging',fr:'Collecter les sommets de +914m',note:'282 Munros en Ecosse - un sport national'},
 {en:"It's a braw bricht moonlicht nicht the nicht",fr:'Belle nuit de clair de lune ce soir',note:'Virelangue ecossais celebre - essayez !'}
 ]);
 renderPhrases('ph-emergency',[
 {en:'Help!',fr:"A l'aide !"},{en:'Call an ambulance!',fr:'Appelez une ambulance !'},
 {en:'I need a doctor',fr:"J'ai besoin d'un medecin"},{en:'Where is the nearest hospital?',fr:"Ou est l'hopital le plus proche ?"},
-{en:'I have lost my passport',fr:"J'ai perdu mon passeport"},{en:'Emergency: dial 999',fr:'Urgences : composez le 999',note:'Equivalent du 15/17/18 en France'}
+{en:'I have lost my passport',fr:"J'ai perdu mon passeport"},{en:'My wallet has been stolen',fr:'On m\'a vole mon portefeuille'},
+{en:'I need to contact the French embassy',fr:"Je dois contacter l'ambassade de France"},
+{en:'Emergency: dial 999',fr:'Urgences : composez le 999',note:'Police + Ambulance + Pompiers = 999'}
 ])}();
 </script>
 </body>
