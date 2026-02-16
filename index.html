@@ -72,6 +72,7 @@
         <a href="#instagram" class="nav-link px-3 py-1.5 rounded-lg text-xs whitespace-nowrap">Instagram</a>
         <a href="#photos" class="nav-link px-3 py-1.5 rounded-lg text-xs whitespace-nowrap">Photos</a>
         <a href="#practical" class="nav-link px-3 py-1.5 rounded-lg text-xs whitespace-nowrap">Pratique</a>
+        <a href="#phrases" class="nav-link px-3 py-1.5 rounded-lg text-xs whitespace-nowrap">Phrases</a>
     </div>
 </nav>
 
@@ -367,6 +368,39 @@
         </div>
     </div>
 </section>
+
+<section id="phrases" class="mb-14">
+    <h2 class="text-2xl font-serif font-bold mb-2 reveal">Phrases utiles & Ecossais</h2>
+    <p class="text-slate-400 text-xs mb-4 reveal">Appuyez sur le haut-parleur pour entendre la prononciation</p>
+
+    <div class="space-y-4">
+        <div class="reveal bg-slate-800 rounded-xl p-4">
+            <h3 class="font-bold text-sm text-rose-400 mb-3">Bases & Politesse</h3>
+            <div class="space-y-1.5" id="ph-basics"></div>
+        </div>
+        <div class="reveal bg-slate-800 rounded-xl p-4">
+            <h3 class="font-bold text-sm text-amber-400 mb-3">Restaurant & Pub</h3>
+            <div class="space-y-1.5" id="ph-resto"></div>
+        </div>
+        <div class="reveal bg-slate-800 rounded-xl p-4">
+            <h3 class="font-bold text-sm text-sky-400 mb-3">Transport & Directions</h3>
+            <div class="space-y-1.5" id="ph-transport"></div>
+        </div>
+        <div class="reveal bg-slate-800 rounded-xl p-4">
+            <h3 class="font-bold text-sm text-emerald-400 mb-3">Hotel & Reservation</h3>
+            <div class="space-y-1.5" id="ph-hotel"></div>
+        </div>
+        <div class="reveal bg-gradient-to-br from-purple-900/30 to-indigo-900/30 border border-purple-700/30 rounded-xl p-4">
+            <h3 class="font-bold text-sm text-purple-400 mb-1">Expressions ecossaises</h3>
+            <p class="text-slate-500 text-[10px] mb-3">Le vrai accent des Highlands !</p>
+            <div class="space-y-1.5" id="ph-scottish"></div>
+        </div>
+        <div class="reveal bg-rose-900/20 border border-rose-700/30 rounded-xl p-4">
+            <h3 class="font-bold text-sm text-rose-400 mb-3">Urgences</h3>
+            <div class="space-y-1.5" id="ph-emergency"></div>
+        </div>
+    </div>
+</section>
 </main>
 
 <footer class="bg-slate-800 py-6 text-center">
@@ -452,6 +486,82 @@ var uz=document.getElementById('upload-zone');
 uz.addEventListener('dragover',function(e){e.preventDefault();uz.classList.add('dragover')});
 uz.addEventListener('dragleave',function(){uz.classList.remove('dragover')});
 uz.addEventListener('drop',function(e){e.preventDefault();uz.classList.remove('dragover');if(e.dataTransfer.files.length)handleUpload({target:{files:e.dataTransfer.files,value:''}})});
+
+// PHRASES & SPEECH
+!function(){
+var syn=window.speechSynthesis,voice=null;
+function pickVoice(){var v=syn.getVoices();voice=v.find(function(x){return x.lang==='en-GB'})||v.find(function(x){return x.lang.startsWith('en')})||v[0]}
+if(syn.getVoices().length)pickVoice();else syn.onvoiceschanged=pickVoice;
+function speak(txt){syn.cancel();var u=new SpeechSynthesisUtterance(txt);u.lang='en-GB';u.rate=0.85;if(voice)u.voice=voice;syn.speak(u)}
+window.sayIt=speak;
+var svgSpk='<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072M17.95 6.05a8 8 0 010 11.9M11 5L6 9H2v6h4l5 4V5z"/></svg>';
+function renderPhrases(id,arr){
+var el=document.getElementById(id);if(!el)return;
+arr.forEach(function(p){
+var d=document.createElement('div');
+d.className='flex items-center gap-2 bg-slate-700/30 rounded-lg px-3 py-2';
+d.innerHTML='<button onclick="sayIt(\''+p.en.replace(/'/g,"\\'")+'\')" class="shrink-0 w-8 h-8 rounded-full bg-blue-600/30 hover:bg-blue-600/50 flex items-center justify-center text-blue-400 transition">'+svgSpk+'</button><div class="flex-1 min-w-0"><div class="font-semibold text-xs text-white">'+p.en+'</div><div class="text-[11px] text-slate-400">'+p.fr+'</div>'+(p.note?'<div class="text-[10px] text-purple-400 italic">'+p.note+'</div>':'')+'</div>';
+el.appendChild(d)})}
+renderPhrases('ph-basics',[
+{en:'Hello!',fr:'Bonjour !'},{en:'Good morning',fr:'Bonjour (matin)'},{en:'Good evening',fr:'Bonsoir'},
+{en:'Thank you very much',fr:'Merci beaucoup'},{en:'Please',fr:"S'il vous plait"},{en:'Excuse me',fr:'Excusez-moi'},
+{en:"Sorry, I don't speak English very well",fr:'Desole, je ne parle pas tres bien anglais'},
+{en:'Do you speak French?',fr:'Parlez-vous francais ?'},{en:'Yes / No',fr:'Oui / Non'},
+{en:'How are you?',fr:'Comment allez-vous ?'},{en:"I'm fine, thanks!",fr:'Je vais bien, merci !'},
+{en:'Cheers!',fr:'Sante ! / Merci !',note:'Tres utilise en Ecosse, signifie merci ET sante'}
+]);
+renderPhrases('ph-resto',[
+{en:'A table for two, please',fr:'Une table pour deux, SVP'},
+{en:'Could I see the menu?',fr:'Puis-je voir le menu ?'},
+{en:"I'd like to order...",fr:'Je voudrais commander...'},
+{en:'A pint of lager, please',fr:'Une pinte de biere, SVP'},
+{en:'Could I have a glass of red wine?',fr:'Puis-je avoir un verre de vin rouge ?'},
+{en:'The bill, please',fr:"L'addition, s'il vous plait"},
+{en:'Do you have any recommendations?',fr:'Avez-vous des recommandations ?'},
+{en:"I'll have the haggis, please",fr:'Je prendrai le haggis, SVP',note:'A tester absolument !'},
+{en:'Is service included?',fr:'Le service est-il inclus ?'},
+{en:'A wee dram of whisky, please',fr:'Un petit verre de whisky, SVP',note:'Expression ecossaise classique'}
+]);
+renderPhrases('ph-transport',[
+{en:'Where is the nearest bus stop?',fr:"Ou est l'arret de bus le plus proche ?"},
+{en:'How do I get to Edinburgh Castle?',fr:'Comment aller au chateau ?'},
+{en:'Is it within walking distance?',fr:"C'est accessible a pied ?"},
+{en:'Turn left / Turn right',fr:'Tournez a gauche / a droite'},
+{en:'Go straight on',fr:'Allez tout droit'},
+{en:'We are lost, can you help?',fr:'Nous sommes perdus, pouvez-vous aider ?'},
+{en:'Where can I park?',fr:'Ou puis-je me garer ?'},
+{en:'Fill it up, please',fr:'Le plein, SVP',note:'Pour la voiture de location'}
+]);
+renderPhrases('ph-hotel',[
+{en:'We have a reservation under Dumarquez',fr:'Nous avons une reservation au nom de Dumarquez'},
+{en:'Could we check in early?',fr:'Pouvons-nous arriver plus tot ?'},
+{en:'What time is breakfast?',fr:'A quelle heure est le petit-dejeuner ?'},
+{en:'Could we have extra towels?',fr:'Pourrions-nous avoir des serviettes supplementaires ?'},
+{en:'Where is the car park?',fr:'Ou est le parking ?'},
+{en:"We're checking out",fr:'Nous partons / check-out'}
+]);
+renderPhrases('ph-scottish',[
+{en:'Aye',fr:'Oui',note:'Le "oui" ecossais par excellence'},
+{en:'Nae bother',fr:'Pas de probleme / De rien',note:'Reponse typique a "thank you"'},
+{en:'Wee',fr:'Petit',note:'"A wee bit" = un petit peu'},
+{en:'Bonnie',fr:'Joli, beau',note:'"Bonnie Scotland" = la belle Ecosse'},
+{en:'Braw',fr:'Super, magnifique',note:'"Braw day!" = Belle journee !'},
+{en:'Loch',fr:'Lac',note:'Prononcez le "ch" du fond de la gorge'},
+{en:'Glen',fr:'Vallee',note:'Glencoe = vallee des pleurs'},
+{en:'Ben',fr:'Montagne, sommet',note:'Ben Nevis = plus haut sommet UK'},
+{en:'Slainte mhath!',fr:'A votre sante !',note:'Prononcez "slanj-uh va" - pour trinquer au whisky'},
+{en:'Ye ken?',fr:'Tu sais ? / Tu vois ?',note:'Tres courant dans la conversation'},
+{en:'Blether',fr:'Bavardage, papoter',note:'"Having a blether" = papoter'},
+{en:'Haud yer wheesht!',fr:'Tais-toi !',note:'Prononcez "hod yer weesht" - humoristique'},
+{en:'Dinnae fash yersel',fr:'Ne vous en faites pas',note:'"Fash" vient du francais "facher" !'},
+{en:'Auld',fr:'Vieux',note:'"Auld Reekie" = surnom d\'Edimbourg'},
+{en:"It's a braw bricht moonlicht nicht the nicht",fr:'Belle nuit de clair de lune ce soir',note:'Virelangue ecossais celebre - essayez !'}
+]);
+renderPhrases('ph-emergency',[
+{en:'Help!',fr:"A l'aide !"},{en:'Call an ambulance!',fr:'Appelez une ambulance !'},
+{en:'I need a doctor',fr:"J'ai besoin d'un medecin"},{en:'Where is the nearest hospital?',fr:"Ou est l'hopital le plus proche ?"},
+{en:'I have lost my passport',fr:"J'ai perdu mon passeport"},{en:'Emergency: dial 999',fr:'Urgences : composez le 999',note:'Equivalent du 15/17/18 en France'}
+])}();
 </script>
 </body>
 </html>
