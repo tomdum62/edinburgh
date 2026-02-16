@@ -32,13 +32,22 @@
         .photo-thumb img{width:100%;height:100%;object-fit:cover}
         .photo-thumb .del{position:absolute;top:4px;right:4px;background:rgba(0,0,0,.6);border-radius:50%;width:24px;height:24px;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .2s;cursor:pointer}
         .photo-thumb:hover .del{opacity:1}
+        .ig-strip{display:flex;gap:.75rem;overflow-x:auto;padding:.25rem 0 .5rem;-webkit-overflow-scrolling:touch}
+        .ig-strip::-webkit-scrollbar{height:3px}.ig-strip::-webkit-scrollbar-thumb{background:rgba(236,72,153,.3);border-radius:2px}
+        .ig-embed{flex:0 0 240px;border-radius:.75rem;overflow:hidden;background:linear-gradient(135deg,#2d1b4e 0%,#1e293b 100%);border:1px solid rgba(236,72,153,.1)}
+        .ig-embed iframe{width:240px;height:300px;border:none;display:block}
+        .day-hero{position:relative;min-height:200px;border-radius:.75rem;overflow:hidden;background-size:cover;background-position:center}
+        .day-hero .hero-overlay{position:absolute;inset:0}
+        .day-hero .hero-content{position:relative;z-index:2;padding:1.25rem;display:flex;flex-direction:column;justify-content:flex-end;min-height:200px}
     </style>
 </head>
 <body class="bg-slate-900 text-white font-sans">
 
 <header class="relative h-screen max-h-[550px] overflow-hidden">
-    <div class="w-full h-full bg-gradient-to-br from-indigo-900 via-slate-900 to-purple-900 flex items-center justify-center">
-        <div class="text-center opacity-[.07] text-[180px] font-serif select-none">EDI</div>
+    <div class="w-full h-full bg-cover bg-center" style="background-image:url('https://images.unsplash.com/photo-1668509549273-14abf4067904?w=1400&h=700&fit=crop&q=80')">
+        <div class="w-full h-full bg-gradient-to-br from-indigo-900/60 via-slate-900/40 to-purple-900/60 flex items-center justify-center">
+            <div class="text-center opacity-[.07] text-[180px] font-serif select-none">EDI</div>
+        </div>
     </div>
     <div class="absolute inset-0 bg-gradient-hero"></div>
     <div class="absolute bottom-0 left-0 right-0 p-6 md:p-10">
@@ -134,10 +143,14 @@
     <h2 class="text-2xl font-serif font-bold mb-5 reveal">Programme jour par jour</h2>
 
     <div id="jour1" class="mb-8 scroll-mt-20">
-        <div class="reveal bg-gradient-to-r from-rose-900/40 to-slate-800 rounded-xl p-4 mb-2">
-            <div class="flex items-center gap-2 mb-1"><span class="bg-rose-700 w-7 h-7 rounded-full flex items-center justify-center font-bold text-xs">J1</span><span class="text-slate-300 text-xs">Jeu 19 fev</span></div>
-            <h3 class="text-lg font-serif font-bold">Arrivee & Vieille Ville</h3>
-            <div class="flex gap-2 mt-1 text-[10px]"><span class="bg-slate-700 px-2 py-0.5 rounded-full">5km</span><span class="bg-slate-700 px-2 py-0.5 rounded-full">~5h visite</span></div>
+        <div class="reveal day-hero mb-2" id="hero-j1" style="background-image:url('https://images.unsplash.com/photo-1567082904542-bd04c6be982c?w=900&h=450&fit=crop&q=80')">
+            <div class="hero-overlay bg-gradient-to-t from-slate-900 via-rose-900/50 to-rose-800/20"></div>
+            <div class="hero-content">
+                <div class="flex items-center gap-2 mb-1"><span class="bg-rose-700 w-7 h-7 rounded-full flex items-center justify-center font-bold text-xs shadow-lg">J1</span><span class="text-slate-200 text-xs font-medium">Jeu 19 fev</span></div>
+                <h3 class="text-xl md:text-2xl font-serif font-bold drop-shadow-lg">Arrivee & Vieille Ville</h3>
+                <p class="text-slate-300 text-xs mt-1 drop-shadow">Victoria Street, Grassmarket, Calton Hill sunset</p>
+                <div class="flex gap-2 mt-2 text-[10px]"><span class="bg-white/15 backdrop-blur-sm px-2.5 py-0.5 rounded-full">5km marche</span><span class="bg-white/15 backdrop-blur-sm px-2.5 py-0.5 rounded-full">~5h visite</span></div>
+            </div>
         </div>
         <div class="reveal space-y-1.5 bg-slate-800/50 rounded-xl p-3 text-xs mb-2">
             <div class="flex gap-2"><div class="text-amber-400 font-mono w-10 shrink-0">10:00</div><div><b>Vol CDG&#8594;EDI</b> EZY3246</div></div>
@@ -150,14 +163,19 @@
             <div class="flex gap-2"><div class="text-amber-400 font-mono w-10 shrink-0">17:00</div><div><b>Calton Hill</b> coucher de soleil</div></div>
             <div class="flex gap-2"><div class="text-amber-400 font-mono w-10 shrink-0">19:30</div><div><b>Whiski Rooms</b> Haggis + whisky + vue chateau</div></div>
         </div>
+        <div class="reveal mt-2 mb-2" id="ig-jour1"></div>
         <div class="reveal bg-slate-800 rounded-xl p-3"><div class="font-bold text-xs mb-1.5">Checklist J1</div><div class="grid grid-cols-2 gap-0.5" id="check-j1"></div></div>
     </div>
 
     <div id="jour2" class="mb-8 scroll-mt-20">
-        <div class="reveal bg-gradient-to-r from-emerald-900/40 to-slate-800 rounded-xl p-4 mb-2">
-            <div class="flex items-center gap-2 mb-1"><span class="bg-emerald-700 w-7 h-7 rounded-full flex items-center justify-center font-bold text-xs">J2</span><span class="text-slate-300 text-xs">Ven 20 fev</span></div>
-            <h3 class="text-lg font-serif font-bold">Arthur's Seat & Pentland Hills</h3>
-            <div class="flex gap-2 mt-1 text-[10px]"><span class="bg-slate-700 px-2 py-0.5 rounded-full">18km</span><span class="bg-slate-700 px-2 py-0.5 rounded-full">+650m</span><span class="bg-slate-700 px-2 py-0.5 rounded-full">6h rando</span></div>
+        <div class="reveal day-hero mb-2" id="hero-j2" style="background-image:url('https://images.unsplash.com/photo-1514133903970-e1e61242a2c0?w=900&h=450&fit=crop&q=80')">
+            <div class="hero-overlay bg-gradient-to-t from-slate-900 via-emerald-900/50 to-emerald-800/20"></div>
+            <div class="hero-content">
+                <div class="flex items-center gap-2 mb-1"><span class="bg-emerald-700 w-7 h-7 rounded-full flex items-center justify-center font-bold text-xs shadow-lg">J2</span><span class="text-slate-200 text-xs font-medium">Ven 20 fev</span></div>
+                <h3 class="text-xl md:text-2xl font-serif font-bold drop-shadow-lg">Arthur's Seat & Pentland Hills</h3>
+                <p class="text-slate-300 text-xs mt-1 drop-shadow">Sommet 251m, vue 360, collines sauvages</p>
+                <div class="flex gap-2 mt-2 text-[10px]"><span class="bg-white/15 backdrop-blur-sm px-2.5 py-0.5 rounded-full">18km</span><span class="bg-white/15 backdrop-blur-sm px-2.5 py-0.5 rounded-full">+650m D+</span><span class="bg-white/15 backdrop-blur-sm px-2.5 py-0.5 rounded-full">6h rando</span></div>
+            </div>
         </div>
         <div class="grid md:grid-cols-2 gap-2 mb-2">
             <div class="reveal bg-emerald-900/20 border border-emerald-700/20 rounded-xl p-3 text-xs">
@@ -172,14 +190,19 @@
             </div>
         </div>
         <div class="reveal bg-slate-800 rounded-xl p-2.5 text-center text-xs mb-2"><span class="text-amber-400 font-bold">DINER:</span> <b>The Kitchin</b> Michelin | Leith | <span class="text-rose-400">RESERVER 0131 555 1755</span></div>
+        <div class="reveal mt-2 mb-2" id="ig-jour2"></div>
         <div class="reveal bg-slate-800 rounded-xl p-3"><div class="font-bold text-xs mb-1.5">Checklist J2</div><div class="grid grid-cols-2 gap-0.5" id="check-j2"></div></div>
     </div>
 
     <div id="jour3" class="mb-8 scroll-mt-20">
-        <div class="reveal bg-gradient-to-r from-sky-900/40 to-slate-800 rounded-xl p-4 mb-2">
-            <div class="flex items-center gap-2 mb-1"><span class="bg-sky-700 w-7 h-7 rounded-full flex items-center justify-center font-bold text-xs">J3</span><span class="text-slate-300 text-xs">Sam 21 fev</span></div>
-            <h3 class="text-lg font-serif font-bold">North Berwick & Rugby</h3>
-            <div class="flex gap-2 mt-1 text-[10px]"><span class="bg-slate-700 px-2 py-0.5 rounded-full">12km</span><span class="bg-slate-700 px-2 py-0.5 rounded-full">1h30 route</span><span class="bg-slate-700 px-2 py-0.5 rounded-full">Match 16:40</span></div>
+        <div class="reveal day-hero mb-2" id="hero-j3" style="background-image:url('https://images.unsplash.com/photo-1651755185898-976c5ed4b7bc?w=900&h=450&fit=crop&q=80')">
+            <div class="hero-overlay bg-gradient-to-t from-slate-900 via-sky-900/50 to-sky-800/20"></div>
+            <div class="hero-content">
+                <div class="flex items-center gap-2 mb-1"><span class="bg-sky-700 w-7 h-7 rounded-full flex items-center justify-center font-bold text-xs shadow-lg">J3</span><span class="text-slate-200 text-xs font-medium">Sam 21 fev</span></div>
+                <h3 class="text-xl md:text-2xl font-serif font-bold drop-shadow-lg">North Berwick & Rugby</h3>
+                <p class="text-slate-300 text-xs mt-1 drop-shadow">Cote sauvage, Bass Rock, Six Nations au pub</p>
+                <div class="flex gap-2 mt-2 text-[10px]"><span class="bg-white/15 backdrop-blur-sm px-2.5 py-0.5 rounded-full">12km</span><span class="bg-white/15 backdrop-blur-sm px-2.5 py-0.5 rounded-full">1h30 route</span><span class="bg-white/15 backdrop-blur-sm px-2.5 py-0.5 rounded-full">Match 16:40</span></div>
+            </div>
         </div>
         <div class="grid md:grid-cols-2 gap-2 mb-2">
             <div class="reveal bg-sky-900/20 border border-sky-700/20 rounded-xl p-3 text-xs">
@@ -194,15 +217,20 @@
                 <div class="text-rose-400 mt-1">RESERVER: weareblackivy.com</div>
             </div>
         </div>
+        <div class="reveal mt-2 mb-2" id="ig-jour3"></div>
         <div class="reveal bg-slate-800 rounded-xl p-3"><div class="font-bold text-xs mb-1.5">Checklist J3</div><div class="grid grid-cols-2 gap-0.5" id="check-j3"></div></div>
     </div>
 
     <div id="jour4" class="mb-8 scroll-mt-20">
-        <div class="reveal bg-gradient-to-r from-purple-900/40 to-slate-800 rounded-xl p-4 mb-2 relative">
-            <span class="absolute top-2 right-2 bg-amber-500 text-slate-900 text-[10px] font-bold px-1.5 py-0.5 rounded-full">JOURNEE EXCEPTIONNELLE</span>
-            <div class="flex items-center gap-2 mb-1"><span class="bg-purple-700 w-7 h-7 rounded-full flex items-center justify-center font-bold text-xs">J4</span><span class="text-slate-300 text-xs">Dim 22 fev</span></div>
-            <h3 class="text-lg font-serif font-bold">Glencoe & Les Highlands</h3>
-            <div class="flex gap-2 mt-1 text-[10px]"><span class="bg-slate-700 px-2 py-0.5 rounded-full">4h route</span><span class="bg-slate-700 px-2 py-0.5 rounded-full">10km rando</span><span class="bg-slate-700 px-2 py-0.5 rounded-full">+300m</span></div>
+        <div class="reveal day-hero mb-2" id="hero-j4" style="background-image:url('https://images.unsplash.com/photo-1659977193681-c40fa885527e?w=900&h=450&fit=crop&q=80')">
+            <div class="hero-overlay bg-gradient-to-t from-slate-900 via-purple-900/50 to-purple-800/20"></div>
+            <div class="hero-content">
+                <span class="absolute top-3 right-3 bg-amber-500 text-slate-900 text-[10px] font-bold px-2 py-0.5 rounded-full shadow-lg z-10">JOURNEE EXCEPTIONNELLE</span>
+                <div class="flex items-center gap-2 mb-1"><span class="bg-purple-700 w-7 h-7 rounded-full flex items-center justify-center font-bold text-xs shadow-lg">J4</span><span class="text-slate-200 text-xs font-medium">Dim 22 fev</span></div>
+                <h3 class="text-xl md:text-2xl font-serif font-bold drop-shadow-lg">Glencoe & Les Highlands</h3>
+                <p class="text-slate-300 text-xs mt-1 drop-shadow">Three Sisters, Lost Valley, Glen Etive - route Skyfall</p>
+                <div class="flex gap-2 mt-2 text-[10px]"><span class="bg-white/15 backdrop-blur-sm px-2.5 py-0.5 rounded-full">4h route</span><span class="bg-white/15 backdrop-blur-sm px-2.5 py-0.5 rounded-full">10km rando</span><span class="bg-white/15 backdrop-blur-sm px-2.5 py-0.5 rounded-full">+300m D+</span></div>
+            </div>
         </div>
         <div class="reveal space-y-1.5 bg-purple-900/20 border border-purple-700/20 rounded-xl p-3 text-xs mb-2">
             <div class="flex gap-2"><div class="text-amber-400 font-mono w-10 shrink-0">06:30</div><div><b>Depart</b> petit-dej emporter</div></div>
@@ -220,14 +248,19 @@
             <div class="grid grid-cols-3 gap-2 mt-2"><div><span class="text-slate-400">Distance</span><br><b>4.5km A/R</b></div><div><span class="text-slate-400">D+</span><br><b>300m</b></div><div><span class="text-slate-400">Duree</span><br><b>2h30-3h</b></div><div><span class="text-slate-400">Difficulte</span><br><b class="text-amber-400">Moderee-dur</b></div><div><span class="text-slate-400">Terrain</span><br><b>Pierriers, riviere</b></div><div><span class="text-slate-400">Highlight</span><br><b>Vallee cachee</b></div></div>
             <div class="mt-2 text-slate-400">Depart parking A82. Descente riviere, traversee, remontee vallon. Bonnes chaussures obligatoires.</div>
         </div>
+        <div class="reveal mt-2 mb-2" id="ig-jour4"></div>
         <div class="reveal bg-slate-800 rounded-xl p-3"><div class="font-bold text-xs mb-1.5">Checklist J4</div><div class="grid grid-cols-2 gap-0.5" id="check-j4"></div></div>
     </div>
 
     <div id="jour5" class="mb-8 scroll-mt-20">
-        <div class="reveal bg-gradient-to-r from-orange-900/40 to-slate-800 rounded-xl p-4 mb-2">
-            <div class="flex items-center gap-2 mb-1"><span class="bg-orange-600 w-7 h-7 rounded-full flex items-center justify-center font-bold text-xs">J5</span><span class="text-slate-300 text-xs">Lun 23 fev</span></div>
-            <h3 class="text-lg font-serif font-bold">Dean Village & Depart</h3>
-            <div class="flex gap-2 mt-1 text-[10px]"><span class="bg-slate-700 px-2 py-0.5 rounded-full">3km</span><span class="bg-slate-700 px-2 py-0.5 rounded-full">Vol 18:35</span></div>
+        <div class="reveal day-hero mb-2" id="hero-j5" style="background-image:url('https://images.unsplash.com/photo-1610991136128-838ca3c5497b?w=900&h=450&fit=crop&q=80')">
+            <div class="hero-overlay bg-gradient-to-t from-slate-900 via-orange-900/50 to-orange-800/20"></div>
+            <div class="hero-content">
+                <div class="flex items-center gap-2 mb-1"><span class="bg-orange-600 w-7 h-7 rounded-full flex items-center justify-center font-bold text-xs shadow-lg">J5</span><span class="text-slate-200 text-xs font-medium">Lun 23 fev</span></div>
+                <h3 class="text-xl md:text-2xl font-serif font-bold drop-shadow-lg">Dean Village & Depart</h3>
+                <p class="text-slate-300 text-xs mt-1 drop-shadow">Village medieval cache, Water of Leith, meilleur cafe</p>
+                <div class="flex gap-2 mt-2 text-[10px]"><span class="bg-white/15 backdrop-blur-sm px-2.5 py-0.5 rounded-full">3km balade</span><span class="bg-white/15 backdrop-blur-sm px-2.5 py-0.5 rounded-full">Vol 18:35</span></div>
+            </div>
         </div>
         <div class="reveal space-y-1.5 bg-orange-900/20 border border-orange-700/20 rounded-xl p-3 text-xs mb-2">
             <div class="flex gap-2"><div class="text-amber-400 font-mono w-10 shrink-0">08:00</div><div><b>Dean Village</b> moulins, riviere</div></div>
@@ -237,6 +270,7 @@
             <div class="flex gap-2"><div class="text-amber-400 font-mono w-10 shrink-0">15:30</div><div><b>Retour voiture</b> Eastfield Rd Airport (20min check-in)</div></div>
             <div class="flex gap-2"><div class="text-amber-400 font-mono w-10 shrink-0">18:35</div><div><b>Vol EDI&#8594;CDG</b> arrivee 21:30</div></div>
         </div>
+        <div class="reveal mt-2 mb-2" id="ig-jour5"></div>
         <div class="reveal bg-slate-800 rounded-xl p-3"><div class="font-bold text-xs mb-1.5">Checklist J5</div><div class="grid grid-cols-2 gap-0.5" id="check-j5"></div></div>
     </div>
 
@@ -261,7 +295,7 @@
 
 <section id="instagram" class="mb-14">
     <h2 class="text-2xl font-serif font-bold mb-2 reveal">Instagram - Vrais spots</h2>
-    <p class="text-slate-400 text-xs mb-4 reveal">Posts publics | Cliquez pour ouvrir Instagram</p>
+    <p class="text-slate-400 text-xs mb-4 reveal">Previews Instagram sous chaque jour | Cliquez pour ouvrir le post</p>
     <div class="ig-grid reveal" id="ig-grid"></div>
 </section>
 
@@ -364,6 +398,11 @@ function flyTo(t){var x=ft[t];if(x)map.flyTo(x.c,x.z)}
 p.forEach(function(x){var a=document.createElement('a');a.href='https://www.instagram.com/p/'+x.c+'/';a.target='_blank';a.rel='noopener';a.className='ig-card block bg-slate-800 rounded-xl overflow-hidden';
 a.innerHTML='<div class="aspect-square bg-gradient-to-br from-purple-900/40 via-pink-900/20 to-amber-900/20 flex flex-col items-center justify-center p-3 text-center"><div class="w-10 h-10 mb-2 rounded-full bg-gradient-to-tr from-purple-600 to-pink-500 flex items-center justify-center"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg></div><div class="font-bold text-xs">'+x.n+'</div><div class="text-[10px] text-slate-400 mt-0.5">'+x.t+'</div><div class="text-[10px] text-pink-400 mt-1.5">Voir &#8594;</div></div>';
 g.appendChild(a)})}();
+
+// INSTAGRAM PER-DAY EMBEDS
+!function(){var d={jour1:[{c:'C-Bx_8muVBu',n:'Victoria Street'},{c:'DRXvBLBAHH1',n:'Victoria St neige'},{c:'DTdffnpmH1D',n:'Calton Hill'},{c:'DP17AQUDfQ4',n:'The Vennel'},{c:'DHGTeNLtMMc',n:'Edinburgh Castle'}],jour2:[{c:'CikvzHuKY-M',n:"Arthur's Seat"}],jour3:[{c:'CgUM8Noo_b_',n:'Bass Rock'},{c:'DUH-jTQiBzg',n:'North Berwick'}],jour4:[{c:'DPrUWXtgumw',n:'Three Sisters'},{c:'CHcW6kdDyw3',n:'Buachaille'},{c:'DURKXUtDlZ8',n:'Glencoe'},{c:'DOAk2D8CKjx',n:'Glencoe'}],jour5:[{c:'DN8HckoDela',n:'Dean Village'},{c:'DL2yJP4i8yU',n:'Dean Village'}]};
+Object.keys(d).forEach(function(k){var el=document.getElementById('ig-'+k);if(!el)return;var h='<div class="flex items-center gap-1.5 mb-1.5"><svg class="w-3.5 h-3.5 text-pink-400" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2c3.2 0 3.6.01 4.85.07 3.25.15 4.77 1.69 4.92 4.92.06 1.27.07 1.65.07 4.85 0 3.2-.01 3.58-.07 4.85-.15 3.23-1.66 4.77-4.92 4.92-1.27.06-1.64.07-4.85.07-3.2 0-3.58-.01-4.85-.07-3.26-.15-4.77-1.7-4.92-4.92C2.01 15.58 2 15.2 2 12c0-3.2.01-3.58.07-4.85C2.22 3.89 3.77 2.35 7.05 2.2 8.32 2.14 8.7 2.13 11.9 2.13zM12 0C8.74 0 8.33.01 7.05.07 2.7.27.27 2.69.07 7.05.01 8.33 0 8.74 0 12c0 3.26.01 3.67.07 4.95.2 4.36 2.62 6.78 6.98 6.98 1.28.06 1.69.07 4.95.07 3.26 0 3.67-.01 4.95-.07 4.35-.2 6.78-2.62 6.98-6.98.06-1.28.07-1.69.07-4.95 0-3.26-.01-3.67-.07-4.95C23.73 2.69 21.31.27 16.95.07 15.67.01 15.26 0 12 0zm0 5.84a6.16 6.16 0 100 12.32 6.16 6.16 0 000-12.32zM12 16a4 4 0 110-8 4 4 0 010 8zm6.4-11.85a1.44 1.44 0 100 2.88 1.44 1.44 0 000-2.88z"/></svg><span class="text-[11px] text-pink-400 font-semibold">Inspi Instagram</span></div><div class="ig-strip">';
+d[k].forEach(function(p){h+='<div class="ig-embed"><iframe src="https://www.instagram.com/p/'+p.c+'/embed/" loading="lazy" allowtransparency="true" title="'+p.n+'"></iframe></div>'});h+='</div>';el.innerHTML=h})}();
 
 // CHECKLISTS
 var checkData={
