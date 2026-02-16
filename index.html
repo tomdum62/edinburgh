@@ -67,6 +67,19 @@
         @keyframes shimmer{0%{background-position:-200% 0}100%{background-position:200% 0}}
         .section-divider{height:1px;background:linear-gradient(90deg,transparent,rgba(245,158,11,.3),transparent);margin:1rem 0}
         .glass{background:rgba(30,41,59,.6);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.05)}
+        .weather-bar{display:flex;gap:.5rem;overflow-x:auto;padding:.25rem 0;-webkit-overflow-scrolling:touch}
+        .weather-day{flex:0 0 auto;min-width:140px;border-radius:.75rem;padding:10px 12px;background:rgba(30,41,59,.7);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.08);transition:transform .2s,border-color .3s,box-shadow .3s;cursor:pointer}
+        .weather-day:hover,.weather-day.active{transform:translateY(-2px);border-color:rgba(96,165,250,.4);box-shadow:0 4px 15px rgba(96,165,250,.1)}
+        .weather-day.active{border-color:rgba(245,158,11,.5);box-shadow:0 4px 15px rgba(245,158,11,.15)}
+        .weather-day .wd-icon{font-size:24px;line-height:1}
+        .weather-day .wd-day{font-size:10px;font-weight:700;color:#94a3b8}
+        .weather-day .wd-temp{font-size:14px;font-weight:700;color:#fff}
+        .weather-day .wd-temp span{font-size:11px;color:#64748b;font-weight:400}
+        .weather-day .wd-detail{font-size:9px;color:#64748b;margin-top:3px;display:flex;flex-direction:column;gap:1px}
+        .weather-day .wd-detail .wd-rain{color:#60a5fa}.weather-day .wd-detail .wd-wind{color:#a78bfa}
+        .weather-day .wd-alert{font-size:8px;font-weight:700;padding:2px 6px;border-radius:9999px;margin-top:4px;display:inline-block}
+        .weather-inline{display:inline-flex;align-items:center;gap:6px;background:rgba(30,41,59,.7);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.08);border-radius:8px;padding:4px 10px;font-size:10px;color:#cbd5e1}
+        .weather-inline .wi-icon{font-size:16px}
         .music-btn{position:fixed;bottom:20px;left:20px;z-index:9999;width:48px;height:48px;border-radius:50%;border:1px solid rgba(245,158,11,.3);background:rgba(15,23,42,.85);backdrop-filter:blur(12px);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:transform .2s,box-shadow .2s,border-color .3s;box-shadow:0 4px 15px rgba(0,0,0,.4)}
         .music-btn:hover{transform:scale(1.1);box-shadow:0 6px 25px rgba(245,158,11,.2);border-color:rgba(245,158,11,.6)}
         .music-btn.playing{border-color:rgba(245,158,11,.6);animation:music-pulse 2s ease infinite}
@@ -105,6 +118,7 @@
         <a href="#map" class="nav-link px-3 py-1.5 rounded-lg text-xs whitespace-nowrap">Carte</a>
         <a href="#instagram" class="nav-link px-3 py-1.5 rounded-lg text-xs whitespace-nowrap">Instagram</a>
         <a href="#photos" class="nav-link px-3 py-1.5 rounded-lg text-xs whitespace-nowrap">Photos</a>
+        <a href="#weather-overview" class="nav-link px-3 py-1.5 rounded-lg text-xs whitespace-nowrap">Meteo</a>
         <a href="#practical" class="nav-link px-3 py-1.5 rounded-lg text-xs whitespace-nowrap">Pratique</a>
         <a href="#phrases" class="nav-link px-3 py-1.5 rounded-lg text-xs whitespace-nowrap">Phrases</a>
     </div>
@@ -120,6 +134,11 @@
         <div class="reveal bg-slate-800 rounded-xl p-3 text-center"><div class="text-xl font-bold text-amber-400">300km</div><div class="text-slate-400 text-xs">route</div></div>
         <div class="reveal bg-slate-800 rounded-xl p-3 text-center"><div class="text-xl font-bold text-amber-400">20+</div><div class="text-slate-400 text-xs">spots</div></div>
         <div class="reveal bg-slate-800 rounded-xl p-3 text-center"><div class="text-xl font-bold text-amber-400">&#163;180</div><div class="text-slate-400 text-xs">voiture</div></div>
+    </div>
+    <div class="reveal mb-6">
+        <h3 class="text-sm font-bold text-slate-300 mb-2 flex items-center gap-2"><svg class="w-4 h-4 text-sky-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z"/></svg>Meteo du sejour <span class="text-[10px] text-slate-500 font-normal">(Open-Meteo, maj auto)</span></h3>
+        <div class="weather-bar" id="weather-overview"></div>
+        <div class="text-[9px] text-slate-600 mt-1" id="weather-updated"></div>
     </div>
     <div class="space-y-2">
         <a href="#jour1" class="day-card reveal block bg-rose-900/30 border border-rose-700/30 rounded-lg p-3 relative"><span class="absolute -top-1.5 -right-1.5 bg-rose-500 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full">BIENVENUE</span><div class="flex items-center gap-3"><div class="w-8 h-8 bg-rose-700 rounded-full flex items-center justify-center font-bold text-xs shrink-0">J1</div><div><div class="font-bold text-sm">Jeu 19 - Arrivee & Vieille Ville</div><div class="text-slate-400 text-xs">Vol 10:00 CDG&#8594;EDI 10:50 | Victoria St, Grassmarket, Calton Hill</div></div></div></a>
@@ -211,7 +230,7 @@
                 <div class="flex items-center gap-2 mb-1"><span class="bg-rose-700 w-7 h-7 rounded-full flex items-center justify-center font-bold text-xs shadow-lg">J1</span><span class="text-slate-200 text-xs font-medium">Jeu 19 fev</span></div>
                 <h3 class="text-xl md:text-2xl font-serif font-bold drop-shadow-lg">Arrivee & Vieille Ville</h3>
                 <p class="text-slate-300 text-xs mt-1 drop-shadow">Victoria Street, Grassmarket, Calton Hill sunset</p>
-                <div class="flex gap-2 mt-2 text-[10px]"><span class="bg-white/15 backdrop-blur-sm px-2.5 py-0.5 rounded-full">5km marche</span><span class="bg-white/15 backdrop-blur-sm px-2.5 py-0.5 rounded-full">~5h visite</span></div>
+                <div class="flex gap-2 mt-2 text-[10px]"><span class="bg-white/15 backdrop-blur-sm px-2.5 py-0.5 rounded-full">5km marche</span><span class="bg-white/15 backdrop-blur-sm px-2.5 py-0.5 rounded-full">~5h visite</span><span class="weather-inline" id="wi-j1"></span></div>
             </div>
         </div>
         <div class="reveal space-y-1.5 bg-slate-800/50 rounded-xl p-3 text-xs mb-2">
@@ -239,7 +258,7 @@
                 <div class="flex items-center gap-2 mb-1"><span class="bg-purple-700 w-7 h-7 rounded-full flex items-center justify-center font-bold text-xs shadow-lg">J2</span><span class="text-slate-200 text-xs font-medium">Ven 20 fev</span></div>
                 <h3 class="text-xl md:text-2xl font-serif font-bold drop-shadow-lg">Glencoe & Les Highlands</h3>
                 <p class="text-slate-300 text-xs mt-1 drop-shadow">Three Sisters, Lost Valley, Glen Etive - route Skyfall</p>
-                <div class="flex gap-2 mt-2 text-[10px]"><span class="bg-white/15 backdrop-blur-sm px-2.5 py-0.5 rounded-full">4h route</span><span class="bg-white/15 backdrop-blur-sm px-2.5 py-0.5 rounded-full">10km rando</span><span class="bg-white/15 backdrop-blur-sm px-2.5 py-0.5 rounded-full">+300m D+</span></div>
+                <div class="flex gap-2 mt-2 text-[10px]"><span class="bg-white/15 backdrop-blur-sm px-2.5 py-0.5 rounded-full">4h route</span><span class="bg-white/15 backdrop-blur-sm px-2.5 py-0.5 rounded-full">10km rando</span><span class="bg-white/15 backdrop-blur-sm px-2.5 py-0.5 rounded-full">+300m D+</span><span class="weather-inline" id="wi-j2"></span></div>
             </div>
         </div>
         <div class="reveal space-y-1.5 bg-purple-900/20 border border-purple-700/20 rounded-xl p-3 text-xs mb-2">
@@ -272,7 +291,7 @@
                 <div class="flex items-center gap-2 mb-1"><span class="bg-sky-700 w-7 h-7 rounded-full flex items-center justify-center font-bold text-xs shadow-lg">J3</span><span class="text-slate-200 text-xs font-medium">Sam 21 fev</span></div>
                 <h3 class="text-xl md:text-2xl font-serif font-bold drop-shadow-lg">North Berwick & Rugby</h3>
                 <p class="text-slate-300 text-xs mt-1 drop-shadow">Cote sauvage, Bass Rock, Six Nations au pub</p>
-                <div class="flex gap-2 mt-2 text-[10px]"><span class="bg-white/15 backdrop-blur-sm px-2.5 py-0.5 rounded-full">12km</span><span class="bg-white/15 backdrop-blur-sm px-2.5 py-0.5 rounded-full">1h30 route</span><span class="bg-white/15 backdrop-blur-sm px-2.5 py-0.5 rounded-full">Match 16:40</span></div>
+                <div class="flex gap-2 mt-2 text-[10px]"><span class="bg-white/15 backdrop-blur-sm px-2.5 py-0.5 rounded-full">12km</span><span class="bg-white/15 backdrop-blur-sm px-2.5 py-0.5 rounded-full">1h30 route</span><span class="bg-white/15 backdrop-blur-sm px-2.5 py-0.5 rounded-full">Match 16:40</span><span class="weather-inline" id="wi-j3"></span></div>
             </div>
         </div>
         <div class="grid md:grid-cols-2 gap-2 mb-2">
@@ -302,7 +321,7 @@
                 <div class="flex items-center gap-2 mb-1"><span class="bg-emerald-700 w-7 h-7 rounded-full flex items-center justify-center font-bold text-xs shadow-lg">J4</span><span class="text-slate-200 text-xs font-medium">Dim 22 fev</span></div>
                 <h3 class="text-xl md:text-2xl font-serif font-bold drop-shadow-lg">Arthur's Seat & Pentland Hills</h3>
                 <p class="text-slate-300 text-xs mt-1 drop-shadow">Sommet 251m, vue 360, collines sauvages</p>
-                <div class="flex gap-2 mt-2 text-[10px]"><span class="bg-white/15 backdrop-blur-sm px-2.5 py-0.5 rounded-full">18km</span><span class="bg-white/15 backdrop-blur-sm px-2.5 py-0.5 rounded-full">+650m D+</span><span class="bg-white/15 backdrop-blur-sm px-2.5 py-0.5 rounded-full">6h rando</span></div>
+                <div class="flex gap-2 mt-2 text-[10px]"><span class="bg-white/15 backdrop-blur-sm px-2.5 py-0.5 rounded-full">18km</span><span class="bg-white/15 backdrop-blur-sm px-2.5 py-0.5 rounded-full">+650m D+</span><span class="bg-white/15 backdrop-blur-sm px-2.5 py-0.5 rounded-full">6h rando</span><span class="weather-inline" id="wi-j4"></span></div>
             </div>
         </div>
         <div class="grid md:grid-cols-2 gap-2 mb-2">
@@ -331,7 +350,7 @@
                 <div class="flex items-center gap-2 mb-1"><span class="bg-orange-600 w-7 h-7 rounded-full flex items-center justify-center font-bold text-xs shadow-lg">J5</span><span class="text-slate-200 text-xs font-medium">Lun 23 fev</span></div>
                 <h3 class="text-xl md:text-2xl font-serif font-bold drop-shadow-lg">Dean Village & Depart</h3>
                 <p class="text-slate-300 text-xs mt-1 drop-shadow">Village medieval cache, Water of Leith, meilleur cafe</p>
-                <div class="flex gap-2 mt-2 text-[10px]"><span class="bg-white/15 backdrop-blur-sm px-2.5 py-0.5 rounded-full">3km balade</span><span class="bg-white/15 backdrop-blur-sm px-2.5 py-0.5 rounded-full">Vol 18:35</span></div>
+                <div class="flex gap-2 mt-2 text-[10px]"><span class="bg-white/15 backdrop-blur-sm px-2.5 py-0.5 rounded-full">3km balade</span><span class="bg-white/15 backdrop-blur-sm px-2.5 py-0.5 rounded-full">Vol 18:35</span><span class="weather-inline" id="wi-j5"></span></div>
             </div>
         </div>
         <div class="reveal space-y-1.5 bg-orange-900/20 border border-orange-700/20 rounded-xl p-3 text-xs mb-2">
@@ -757,15 +776,100 @@ renderPhrases('ph-emergency',[
 
 <!-- Outlander Music Player -->
 <button class="music-btn" id="musicBtn" onclick="toggleMusic()" aria-label="Play Outlander theme">
-    <span class="note">&#9835;</span>
+    <span class="note" id="musicIcon">&#9835;</span>
     <span class="tooltip">&#127926; The Skye Boat Song - Outlander</span>
 </button>
-<div id="yt-player" style="position:fixed;top:-9999px;left:-9999px;width:1px;height:1px;pointer-events:none"></div>
+<div id="yt-player-wrap" style="position:fixed;top:-9999px;left:-9999px;width:1px;height:1px;pointer-events:none;overflow:hidden"><div id="yt-player"></div></div>
 <script>
-var ytPlayer,ytReady=false,musicPlaying=false;
-var tag=document.createElement('script');tag.src='https://www.youtube.com/iframe_api';document.head.appendChild(tag);
-function onYouTubeIframeAPIReady(){ytPlayer=new YT.Player('yt-player',{height:'1',width:'1',videoId:'YrusSXEEv1M',playerVars:{autoplay:0,loop:1,playlist:'YrusSXEEv1M',controls:0,disablekb:1,fs:0,modestbranding:1,rel:0},events:{onReady:function(){ytReady=true;ytPlayer.setVolume(35)}}});}
-function toggleMusic(){if(!ytReady)return;var b=document.getElementById('musicBtn');if(musicPlaying){ytPlayer.pauseVideo();b.classList.remove('playing');musicPlaying=false}else{ytPlayer.playVideo();b.classList.add('playing');musicPlaying=true}}
+var ytPlayer,ytReady=false,musicPlaying=false,ytFailed=false;
+var ytVideos=['YrusSXEEv1M','0qrwJDR6bzs','sECPEz5eDvc'],ytIdx=0;
+var tag=document.createElement('script');tag.src='https://www.youtube.com/iframe_api';tag.onerror=function(){ytFailed=true;document.getElementById('musicIcon').textContent='\u2716'};document.head.appendChild(tag);
+function createYTPlayer(vid){
+ytPlayer=new YT.Player('yt-player',{height:'1',width:'1',videoId:vid,host:'https://www.youtube-nocookie.com',
+playerVars:{autoplay:0,loop:1,playlist:vid,controls:0,disablekb:1,fs:0,modestbranding:1,rel:0,enablejsapi:1,origin:location.origin,playsinline:1},
+events:{onReady:function(e){ytReady=true;e.target.setVolume(40);document.getElementById('musicIcon').textContent='\u266B'},
+onError:function(){ytIdx++;if(ytIdx<ytVideos.length){document.getElementById('yt-player').remove();var d=document.createElement('div');d.id='yt-player';document.getElementById('yt-player-wrap').appendChild(d);createYTPlayer(ytVideos[ytIdx])}else{ytFailed=true;document.getElementById('musicIcon').textContent='\u2716'}},
+onStateChange:function(e){if(e.data===YT.PlayerState.ENDED){e.target.playVideo()}}}});}
+function onYouTubeIframeAPIReady(){createYTPlayer(ytVideos[0]);}
+function toggleMusic(){if(ytFailed||!ytReady)return;var b=document.getElementById('musicBtn'),ic=document.getElementById('musicIcon');if(musicPlaying){ytPlayer.pauseVideo();b.classList.remove('playing');ic.textContent='\u266B';musicPlaying=false}else{ytPlayer.playVideo();b.classList.add('playing');ic.textContent='\u266C';musicPlaying=true}}
+</script>
+
+<!-- Weather Widget - Open-Meteo API (no key needed) -->
+<script>
+!function(){
+var WMO={0:['Ciel degage','\u2600\uFE0F'],1:['Peu nuageux','\u26C5'],2:['Partiellement nuageux','\u26C5'],3:['Couvert','\u2601\uFE0F'],45:['Brouillard','\uD83C\uDF2B\uFE0F'],48:['Brouillard givrant','\uD83C\uDF2B\uFE0F'],51:['Bruine legere','\uD83C\uDF26\uFE0F'],53:['Bruine','\uD83C\uDF26\uFE0F'],55:['Bruine forte','\uD83C\uDF27\uFE0F'],56:['Bruine verglacante','\u2744\uFE0F'],57:['Bruine vergl. forte','\u2744\uFE0F'],61:['Pluie legere','\uD83C\uDF27\uFE0F'],63:['Pluie moderee','\uD83C\uDF27\uFE0F'],65:['Pluie forte','\uD83C\uDF27\uFE0F'],66:['Pluie verglacante','\u2744\uFE0F'],67:['Pluie vergl. forte','\u2744\uFE0F'],71:['Neige legere','\uD83C\uDF28\uFE0F'],73:['Neige moderee','\uD83C\uDF28\uFE0F'],75:['Neige forte','\uD83C\uDF28\uFE0F'],77:['Grains de neige','\uD83C\uDF28\uFE0F'],80:['Averses legeres','\uD83C\uDF26\uFE0F'],81:['Averses','\uD83C\uDF27\uFE0F'],82:['Averses violentes','\u26C8\uFE0F'],85:['Averses de neige','\uD83C\uDF28\uFE0F'],86:['Fortes av. neige','\uD83C\uDF28\uFE0F'],95:['Orage','\u26A1'],96:['Orage + grele','\u26A1'],99:['Orage + grele forte','\u26A1']};
+var DAYS=['J1 Jeu 19','J2 Ven 20','J3 Sam 21','J4 Dim 22','J5 Lun 23'];
+var LOCS=[{n:'Edinburgh',la:55.95,lo:-3.19},{n:'Glencoe',la:56.68,lo:-5.05},{n:'Edinburgh',la:55.95,lo:-3.19},{n:'Edinburgh',la:55.95,lo:-3.19},{n:'Edinburgh',la:55.95,lo:-3.19}];
+var COLORS=['rose','purple','sky','emerald','orange'];
+
+function wmoInfo(c){return WMO[c]||['Inconnu','\u2753'];}
+
+function fetchWeather(lat,lon){
+return fetch('https://api.open-meteo.com/v1/forecast?latitude='+lat+'&longitude='+lon+'&daily=temperature_2m_max,temperature_2m_min,precipitation_sum,precipitation_probability_max,windspeed_10m_max,weathercode&hourly=temperature_2m,precipitation_probability,weathercode,windspeed_10m&timezone=Europe/London&start_date=2026-02-19&end_date=2026-02-23').then(function(r){return r.json()});
+}
+
+function renderOverview(ediData,glenData){
+var c=document.getElementById('weather-overview');if(!c)return;
+var html='';
+for(var i=0;i<5;i++){
+var d=i===1?glenData:ediData;
+var tmax=d.daily.temperature_2m_max[i],tmin=d.daily.temperature_2m_min[i];
+var rain=d.daily.precipitation_sum[i],rainP=d.daily.precipitation_probability_max[i];
+var wind=d.daily.windspeed_10m_max[i],code=d.daily.weathercode[i];
+var w=wmoInfo(code);
+var alert='';
+if(code>=71&&code<=77)alert='<div class="wd-alert bg-sky-500/20 text-sky-300">NEIGE</div>';
+else if(wind>30)alert='<div class="wd-alert bg-amber-500/20 text-amber-300">VENT FORT</div>';
+else if(rain>10)alert='<div class="wd-alert bg-blue-500/20 text-blue-300">PLUIE</div>';
+else if(rainP<20&&code<=2)alert='<div class="wd-alert bg-emerald-500/20 text-emerald-300">BEAU</div>';
+html+='<div class="weather-day" data-day="'+i+'" onclick="document.getElementById(\'jour'+(i+1)+'\').scrollIntoView({behavior:\'smooth\'})">';
+html+='<div class="wd-icon">'+w[1]+'</div>';
+html+='<div class="wd-day">'+DAYS[i]+' <span style="color:#64748b;font-weight:400">'+LOCS[i].n+'</span></div>';
+html+='<div class="wd-temp">'+Math.round(tmax)+'\u00B0 <span>/ '+Math.round(tmin)+'\u00B0</span></div>';
+html+='<div style="font-size:9px;color:#94a3b8;margin-top:1px">'+w[0]+'</div>';
+html+='<div class="wd-detail">';
+html+='<span class="wd-rain">\uD83D\uDCA7 '+rain.toFixed(1)+'mm ('+rainP+'%)</span>';
+html+='<span class="wd-wind">\uD83D\uDCA8 '+Math.round(wind)+'km/h</span>';
+html+='</div>';
+html+=alert;
+html+='</div>';
+}
+c.innerHTML=html;
+document.getElementById('weather-updated').textContent='Mis a jour: '+new Date().toLocaleString('fr-FR',{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'});
+}
+
+function renderInline(ediData,glenData){
+for(var i=0;i<5;i++){
+var el=document.getElementById('wi-j'+(i+1));if(!el)continue;
+var d=i===1?glenData:ediData;
+var tmax=d.daily.temperature_2m_max[i],tmin=d.daily.temperature_2m_min[i];
+var code=d.daily.weathercode[i],rainP=d.daily.precipitation_probability_max[i];
+var w=wmoInfo(code);
+el.innerHTML='<span class="wi-icon">'+w[1]+'</span><b>'+Math.round(tmax)+'\u00B0</b>/'+Math.round(tmin)+'\u00B0 <span style="color:#60a5fa">\uD83D\uDCA7'+rainP+'%</span>';
+}
+}
+
+function highlightActiveDay(){
+var days=document.querySelectorAll('.weather-day');
+var sections=['jour1','jour2','jour3','jour4','jour5'];
+var active=-1;
+for(var i=sections.length-1;i>=0;i--){
+var el=document.getElementById(sections[i]);
+if(el&&el.getBoundingClientRect().top<=200){active=i;break;}
+}
+days.forEach(function(d,idx){d.classList.toggle('active',idx===active)});
+}
+
+Promise.all([fetchWeather(55.95,-3.19),fetchWeather(56.68,-5.05)]).then(function(res){
+renderOverview(res[0],res[1]);
+renderInline(res[0],res[1]);
+window.addEventListener('scroll',highlightActiveDay);
+highlightActiveDay();
+}).catch(function(e){
+var c=document.getElementById('weather-overview');
+if(c)c.innerHTML='<div class="text-slate-500 text-xs">Meteo indisponible - verifiez votre connexion</div>';
+});
+}();
 </script>
 </body>
 </html>
