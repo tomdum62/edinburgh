@@ -40,6 +40,7 @@
         .day-hero{position:relative;min-height:200px;border-radius:.75rem;overflow:hidden;background-size:cover;background-position:center}
         .day-hero .hero-overlay{position:absolute;inset:0}
         .day-hero .hero-content{position:relative;z-index:2;padding:1.25rem;display:flex;flex-direction:column;justify-content:flex-end;min-height:200px}
+        .spot{color:inherit;text-decoration:none;border-bottom:1px dotted rgba(96,165,250,.35)}.spot:hover{color:rgb(147,197,253);border-bottom-style:solid}
     </style>
 </head>
 <body class="bg-slate-900 text-white font-sans">
@@ -86,11 +87,11 @@
         <div class="reveal bg-slate-800 rounded-xl p-3 text-center"><div class="text-xl font-bold text-amber-400">&#163;180</div><div class="text-slate-400 text-xs">voiture</div></div>
     </div>
     <div class="space-y-2">
-        <a href="#jour1" class="day-card reveal block bg-rose-900/30 border border-rose-700/30 rounded-lg p-3"><div class="flex items-center gap-3"><div class="w-8 h-8 bg-rose-700 rounded-full flex items-center justify-center font-bold text-xs shrink-0">J1</div><div><div class="font-bold text-sm">Jeu 19 - Arrivee & Vieille Ville</div><div class="text-slate-400 text-xs">Vol 10:00 CDG&#8594;EDI 10:50 | Victoria St, Grassmarket, Calton Hill</div></div></div></a>
+        <a href="#jour1" class="day-card reveal block bg-rose-900/30 border border-rose-700/30 rounded-lg p-3 relative"><span class="absolute -top-1.5 -right-1.5 bg-rose-500 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full">BIENVENUE</span><div class="flex items-center gap-3"><div class="w-8 h-8 bg-rose-700 rounded-full flex items-center justify-center font-bold text-xs shrink-0">J1</div><div><div class="font-bold text-sm">Jeu 19 - Arrivee & Vieille Ville</div><div class="text-slate-400 text-xs">Vol 10:00 CDG&#8594;EDI 10:50 | Victoria St, Grassmarket, Calton Hill</div></div></div></a>
         <a href="#jour2" class="day-card reveal block bg-purple-900/30 border border-purple-700/30 rounded-lg p-3 relative"><span class="absolute -top-1.5 -right-1.5 bg-amber-500 text-slate-900 text-[10px] font-bold px-1.5 py-0.5 rounded-full">EPIQUE</span><div class="flex items-center gap-3"><div class="w-8 h-8 bg-purple-700 rounded-full flex items-center justify-center font-bold text-xs shrink-0">J2</div><div><div class="font-bold text-sm">Ven 20 - Glencoe & Highlands</div><div class="text-slate-400 text-xs">300km A/R | Three Sisters | Lost Valley | Glen Etive</div></div></div></a>
-        <a href="#jour3" class="day-card reveal block bg-sky-900/30 border border-sky-700/30 rounded-lg p-3"><div class="flex items-center gap-3"><div class="w-8 h-8 bg-sky-700 rounded-full flex items-center justify-center font-bold text-xs shrink-0">J3</div><div><div class="font-bold text-sm">Sam 21 - North Berwick & Rugby</div><div class="text-slate-400 text-xs">Cote + Bass Rock | Wales vs Scotland 16:40</div></div></div></a>
-        <a href="#jour4" class="day-card reveal block bg-emerald-900/30 border border-emerald-700/30 rounded-lg p-3"><div class="flex items-center gap-3"><div class="w-8 h-8 bg-emerald-700 rounded-full flex items-center justify-center font-bold text-xs shrink-0">J4</div><div><div class="font-bold text-sm">Dim 22 - Arthur's Seat & Pentlands</div><div class="text-slate-400 text-xs">18km | +650m D+ | The Kitchin Michelin</div></div></div></a>
-        <a href="#jour5" class="day-card reveal block bg-orange-900/30 border border-orange-700/30 rounded-lg p-3"><div class="flex items-center gap-3"><div class="w-8 h-8 bg-orange-600 rounded-full flex items-center justify-center font-bold text-xs shrink-0">J5</div><div><div class="font-bold text-sm">Lun 23 - Dean Village & Depart</div><div class="text-slate-400 text-xs">Water of Leith | Vol 18:35 EDI&#8594;CDG 21:30</div></div></div></a>
+        <a href="#jour3" class="day-card reveal block bg-sky-900/30 border border-sky-700/30 rounded-lg p-3 relative"><span class="absolute -top-1.5 -right-1.5 bg-sky-500 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full">MER & RUGBY</span><div class="flex items-center gap-3"><div class="w-8 h-8 bg-sky-700 rounded-full flex items-center justify-center font-bold text-xs shrink-0">J3</div><div><div class="font-bold text-sm">Sam 21 - North Berwick & Rugby</div><div class="text-slate-400 text-xs">Cote + Bass Rock | Wales vs Scotland 16:40</div></div></div></a>
+        <a href="#jour4" class="day-card reveal block bg-emerald-900/30 border border-emerald-700/30 rounded-lg p-3 relative"><span class="absolute -top-1.5 -right-1.5 bg-emerald-500 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full">DOUBLE SOMMET</span><div class="flex items-center gap-3"><div class="w-8 h-8 bg-emerald-700 rounded-full flex items-center justify-center font-bold text-xs shrink-0">J4</div><div><div class="font-bold text-sm">Dim 22 - Arthur's Seat & Pentlands</div><div class="text-slate-400 text-xs">18km | +650m D+ | The Kitchin Michelin</div></div></div></a>
+        <a href="#jour5" class="day-card reveal block bg-orange-900/30 border border-orange-700/30 rounded-lg p-3 relative"><span class="absolute -top-1.5 -right-1.5 bg-orange-500 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full">LAST DAY</span><div class="flex items-center gap-3"><div class="w-8 h-8 bg-orange-600 rounded-full flex items-center justify-center font-bold text-xs shrink-0">J5</div><div><div class="font-bold text-sm">Lun 23 - Dean Village & Depart</div><div class="text-slate-400 text-xs">Water of Leith | Vol 18:35 EDI&#8594;CDG 21:30</div></div></div></a>
     </div>
 </section>
 
@@ -131,7 +132,7 @@
         </div>
         <div class="grid grid-cols-2 gap-2 mb-2 text-xs">
             <div class="bg-slate-700/50 rounded-lg p-2"><div class="text-slate-400">Prix total</div><b class="text-amber-400">GBP 180</b> (40 prepaye + 140 sur place)</div>
-            <div class="bg-slate-700/50 rounded-lg p-2"><div class="text-slate-400">Appeler a l'arrivee</div><b class="text-amber-400">0044 131 333 0347</b></div>
+            <div class="bg-slate-700/50 rounded-lg p-2"><div class="text-slate-400">Appeler a l'arrivee</div><a href="tel:+441313330347" class="text-amber-400 font-bold hover:underline">0044 131 333 0347</a></div>
         </div>
         <div class="bg-rose-900/30 border border-rose-700/30 rounded-lg p-2 text-xs">
             <b class="text-rose-400">Documents:</b> Permis physique + Passeport + CB physique (au nom conducteur, 3 mois+)
@@ -155,14 +156,14 @@
         </div>
         <div class="reveal space-y-1.5 bg-slate-800/50 rounded-xl p-3 text-xs mb-2">
             <div class="flex gap-2"><div class="text-amber-400 font-mono w-10 shrink-0">10:00</div><div><b>Vol CDG&#8594;EDI</b> EZY3246</div></div>
-            <div class="flex gap-2"><div class="text-amber-400 font-mono w-10 shrink-0">10:50</div><div><b>Arrivee</b> + appel Arnold Clark</div></div>
-            <div class="flex gap-2"><div class="text-amber-400 font-mono w-10 shrink-0">11:00</div><div><b>Pickup voiture</b> Edinburgh Airport</div></div>
-            <div class="flex gap-2"><div class="text-amber-400 font-mono w-10 shrink-0">12:00</div><div><b>Dejeuner Grassmarket</b></div></div>
-            <div class="flex gap-2"><div class="text-amber-400 font-mono w-10 shrink-0">14:00</div><div><b>Victoria Street</b> + Victoria Terrace</div></div>
-            <div class="flex gap-2"><div class="text-amber-400 font-mono w-10 shrink-0">15:00</div><div><b>Check-in Mercure</b> Chambre Privilege</div></div>
-            <div class="flex gap-2"><div class="text-amber-400 font-mono w-10 shrink-0">16:00</div><div><b>Royal Mile + The Vennel</b></div></div>
-            <div class="flex gap-2"><div class="text-amber-400 font-mono w-10 shrink-0">17:00</div><div><b>Calton Hill</b> coucher de soleil</div></div>
-            <div class="flex gap-2"><div class="text-amber-400 font-mono w-10 shrink-0">19:30</div><div><b>Whiski Rooms</b> Haggis + whisky + vue chateau</div></div>
+            <div class="flex gap-2"><div class="text-amber-400 font-mono w-10 shrink-0">10:50</div><div><b>Arrivee</b> + appel <a href="tel:+441313330347" class="spot">Arnold Clark</a></div></div>
+            <div class="flex gap-2"><div class="text-amber-400 font-mono w-10 shrink-0">11:00</div><div><a href="https://www.google.com/maps/search/Edinburgh+Airport" target="_blank" rel="noopener" class="spot"><b>Pickup voiture</b> Edinburgh Airport</a></div></div>
+            <div class="flex gap-2"><div class="text-amber-400 font-mono w-10 shrink-0">12:00</div><div><a href="https://www.google.com/maps/search/Grassmarket+Edinburgh" target="_blank" rel="noopener" class="spot"><b>Dejeuner Grassmarket</b></a></div></div>
+            <div class="flex gap-2"><div class="text-amber-400 font-mono w-10 shrink-0">14:00</div><div><a href="https://www.google.com/maps/search/Victoria+Street+Edinburgh" target="_blank" rel="noopener" class="spot"><b>Victoria Street</b></a> + Victoria Terrace</div></div>
+            <div class="flex gap-2"><div class="text-amber-400 font-mono w-10 shrink-0">15:00</div><div><a href="https://www.google.com/maps/search/Mercure+Edinburgh+Haymarket" target="_blank" rel="noopener" class="spot"><b>Check-in Mercure</b></a> Chambre Privilege</div></div>
+            <div class="flex gap-2"><div class="text-amber-400 font-mono w-10 shrink-0">16:00</div><div><a href="https://www.google.com/maps/search/Royal+Mile+Edinburgh" target="_blank" rel="noopener" class="spot"><b>Royal Mile</b></a> + <a href="https://www.google.com/maps/search/The+Vennel+Edinburgh" target="_blank" rel="noopener" class="spot"><b>The Vennel</b></a></div></div>
+            <div class="flex gap-2"><div class="text-amber-400 font-mono w-10 shrink-0">17:00</div><div><a href="https://www.google.com/maps/search/Calton+Hill+Edinburgh" target="_blank" rel="noopener" class="spot"><b>Calton Hill</b></a> coucher de soleil</div></div>
+            <div class="flex gap-2"><div class="text-amber-400 font-mono w-10 shrink-0">19:30</div><div><a href="https://www.google.com/maps/search/Whiski+Rooms+Edinburgh" target="_blank" rel="noopener" class="spot"><b>Whiski Rooms</b></a> Haggis + whisky + vue chateau</div></div>
         </div>
         <a href="https://www.google.com/maps/dir/Edinburgh+Airport/Grassmarket,+Edinburgh/Victoria+Street,+Edinburgh/Mercure+Edinburgh+Haymarket/Calton+Hill,+Edinburgh/Whiski+Rooms,+Edinburgh/" target="_blank" rel="noopener" class="reveal inline-flex items-center gap-1.5 bg-blue-600/20 border border-blue-500/30 text-blue-400 px-3 py-1.5 rounded-lg text-xs hover:bg-blue-600/30 transition mb-2"><svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>Itineraire Google Maps</a>
         <div class="reveal mt-2 mb-2" id="ig-jour1"></div>
@@ -182,12 +183,12 @@
         </div>
         <div class="reveal space-y-1.5 bg-purple-900/20 border border-purple-700/20 rounded-xl p-3 text-xs mb-2">
             <div class="flex gap-2"><div class="text-amber-400 font-mono w-10 shrink-0">06:30</div><div><b>Depart</b> petit-dej emporter</div></div>
-            <div class="flex gap-2"><div class="text-amber-400 font-mono w-10 shrink-0">09:00</div><div><b>Buachaille Etive Mor</b> (56.652,-5.052)</div></div>
-            <div class="flex gap-2"><div class="text-amber-400 font-mono w-10 shrink-0">09:45</div><div><b>Glen Etive</b> route Skyfall, 12mi de lochs</div></div>
-            <div class="flex gap-2"><div class="text-amber-400 font-mono w-10 shrink-0">10:45</div><div><b>Three Sisters</b> viewpoint (56.668,-5.070)</div></div>
-            <div class="flex gap-2"><div class="text-amber-400 font-mono w-10 shrink-0">11:15</div><div><b>Lost Valley</b> rando 2.5h, +300m, pierriers</div></div>
-            <div class="flex gap-2"><div class="text-amber-400 font-mono w-10 shrink-0">14:00</div><div><b>Clachaig Inn</b> pub historique</div></div>
-            <div class="flex gap-2"><div class="text-amber-400 font-mono w-10 shrink-0">15:15</div><div><b>Glencoe Lochan</b> lac miroir (1h facile)</div></div>
+            <div class="flex gap-2"><div class="text-amber-400 font-mono w-10 shrink-0">09:00</div><div><a href="https://www.google.com/maps/search/Buachaille+Etive+Mor" target="_blank" rel="noopener" class="spot"><b>Buachaille Etive Mor</b></a></div></div>
+            <div class="flex gap-2"><div class="text-amber-400 font-mono w-10 shrink-0">09:45</div><div><a href="https://www.google.com/maps/search/Glen+Etive+Scotland" target="_blank" rel="noopener" class="spot"><b>Glen Etive</b></a> route Skyfall, 12mi de lochs</div></div>
+            <div class="flex gap-2"><div class="text-amber-400 font-mono w-10 shrink-0">10:45</div><div><a href="https://www.google.com/maps/search/Three+Sisters+Glencoe" target="_blank" rel="noopener" class="spot"><b>Three Sisters</b></a> viewpoint</div></div>
+            <div class="flex gap-2"><div class="text-amber-400 font-mono w-10 shrink-0">11:15</div><div><a href="https://www.google.com/maps/search/Lost+Valley+Glencoe" target="_blank" rel="noopener" class="spot"><b>Lost Valley</b></a> rando 2.5h, +300m, pierriers</div></div>
+            <div class="flex gap-2"><div class="text-amber-400 font-mono w-10 shrink-0">14:00</div><div><a href="https://www.google.com/maps/search/Clachaig+Inn+Glencoe" target="_blank" rel="noopener" class="spot"><b>Clachaig Inn</b></a> pub historique</div></div>
+            <div class="flex gap-2"><div class="text-amber-400 font-mono w-10 shrink-0">15:15</div><div><a href="https://www.google.com/maps/search/Glencoe+Lochan" target="_blank" rel="noopener" class="spot"><b>Glencoe Lochan</b></a> lac miroir (1h facile)</div></div>
             <div class="flex gap-2"><div class="text-amber-400 font-mono w-10 shrink-0">16:00</div><div><b>Retour</b> 2h30 route</div></div>
             <div class="flex gap-2"><div class="text-amber-400 font-mono w-10 shrink-0">19:00</div><div><b>Arcade Haggis & Whisky</b></div></div>
         </div>
@@ -205,6 +206,7 @@
         <div class="reveal day-hero mb-2" id="hero-j3" style="background-image:url('https://images.unsplash.com/photo-1651755185898-976c5ed4b7bc?w=900&h=450&fit=crop&q=80')">
             <div class="hero-overlay bg-gradient-to-t from-slate-900 via-sky-900/50 to-sky-800/20"></div>
             <div class="hero-content">
+                <span class="absolute top-3 right-3 bg-sky-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full shadow-lg z-10">SIX NATIONS</span>
                 <div class="flex items-center gap-2 mb-1"><span class="bg-sky-700 w-7 h-7 rounded-full flex items-center justify-center font-bold text-xs shadow-lg">J3</span><span class="text-slate-200 text-xs font-medium">Sam 21 fev</span></div>
                 <h3 class="text-xl md:text-2xl font-serif font-bold drop-shadow-lg">North Berwick & Rugby</h3>
                 <p class="text-slate-300 text-xs mt-1 drop-shadow">Cote sauvage, Bass Rock, Six Nations au pub</p>
@@ -214,13 +216,13 @@
         <div class="grid md:grid-cols-2 gap-2 mb-2">
             <div class="reveal bg-sky-900/20 border border-sky-700/20 rounded-xl p-3 text-xs">
                 <b>Matin: North Berwick</b>
-                <ul class="mt-1 space-y-0.5 text-slate-300"><li>08:00 - Route cotiere (40min)</li><li>09:00 - North Berwick Law (187m)</li><li>11:00 - Tantallon Castle</li><li>12:30 - Lobster Shack</li></ul>
-                <div class="mt-1.5 text-sky-400">GPS: 56.059, -2.719 | Vue Bass Rock</div>
+                <ul class="mt-1 space-y-0.5 text-slate-300"><li>08:00 - Route cotiere (40min)</li><li>09:00 - <a href="https://www.google.com/maps/search/North+Berwick+Law" target="_blank" rel="noopener" class="spot">North Berwick Law</a> (187m)</li><li>11:00 - <a href="https://www.google.com/maps/search/Tantallon+Castle" target="_blank" rel="noopener" class="spot">Tantallon Castle</a></li><li>12:30 - <a href="https://www.google.com/maps/search/Lobster+Shack+North+Berwick" target="_blank" rel="noopener" class="spot">Lobster Shack</a></li></ul>
+                <div class="mt-1.5 text-sky-400"><a href="https://www.google.com/maps/search/Bass+Rock+North+Berwick" target="_blank" rel="noopener" class="spot text-sky-400">Bass Rock</a> | Vue spectaculaire</div>
             </div>
             <div class="reveal bg-slate-800 rounded-xl p-3 text-xs">
                 <b>Soir: Six Nations</b>
                 <div class="text-center my-2"><div class="text-base font-bold">WALES vs SCOTLAND</div><div class="text-amber-400">Kick-off: 16:40</div></div>
-                <div class="bg-slate-700 rounded p-2"><b>Black Ivy Pub</b> | 9 ecrans | Pies gratuits</div>
+                <div class="bg-slate-700 rounded p-2"><a href="https://www.google.com/maps/search/Black+Ivy+Edinburgh" target="_blank" rel="noopener" class="spot"><b>Black Ivy Pub</b></a> | 9 ecrans | Pies gratuits</div>
                 <div class="text-rose-400 mt-1">RESERVER: weareblackivy.com</div>
             </div>
         </div>
@@ -233,6 +235,7 @@
         <div class="reveal day-hero mb-2" id="hero-j4" style="background-image:url('https://images.unsplash.com/photo-1514133903970-e1e61242a2c0?w=900&h=450&fit=crop&q=80')">
             <div class="hero-overlay bg-gradient-to-t from-slate-900 via-emerald-900/50 to-emerald-800/20"></div>
             <div class="hero-content">
+                <span class="absolute top-3 right-3 bg-emerald-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full shadow-lg z-10">DOUBLE SOMMET</span>
                 <div class="flex items-center gap-2 mb-1"><span class="bg-emerald-700 w-7 h-7 rounded-full flex items-center justify-center font-bold text-xs shadow-lg">J4</span><span class="text-slate-200 text-xs font-medium">Dim 22 fev</span></div>
                 <h3 class="text-xl md:text-2xl font-serif font-bold drop-shadow-lg">Arthur's Seat & Pentland Hills</h3>
                 <p class="text-slate-300 text-xs mt-1 drop-shadow">Sommet 251m, vue 360, collines sauvages</p>
@@ -242,16 +245,16 @@
         <div class="grid md:grid-cols-2 gap-2 mb-2">
             <div class="reveal bg-emerald-900/20 border border-emerald-700/20 rounded-xl p-3 text-xs">
                 <b>Matin: Arthur's Seat (251m)</b>
-                <ul class="mt-1 space-y-0.5 text-slate-300"><li>09:00 - Holyrood Park depart</li><li>09:30 - Salisbury Crags</li><li>10:15 - Sommet (vue 360)</li><li>11:30 - Descente Dunsapie</li></ul>
-                <div class="mt-1.5 text-emerald-400">GPS: 55.9441, -3.1618 | 8km | +250m | 2.5h</div>
+                <ul class="mt-1 space-y-0.5 text-slate-300"><li>09:00 - <a href="https://www.google.com/maps/search/Holyrood+Park+Edinburgh" target="_blank" rel="noopener" class="spot">Holyrood Park</a> depart</li><li>09:30 - <a href="https://www.google.com/maps/search/Salisbury+Crags+Edinburgh" target="_blank" rel="noopener" class="spot">Salisbury Crags</a></li><li>10:15 - <a href="https://www.google.com/maps/search/Arthurs+Seat+Edinburgh" target="_blank" rel="noopener" class="spot">Sommet Arthur's Seat</a> (vue 360)</li><li>11:30 - Descente Dunsapie</li></ul>
+                <div class="mt-1.5 text-emerald-400">8km | +250m | 2.5h</div>
             </div>
             <div class="reveal bg-emerald-900/20 border border-emerald-700/20 rounded-xl p-3 text-xs">
                 <b>AM: Pentland Hills</b>
-                <ul class="mt-1 space-y-0.5 text-slate-300"><li>13:30 - Route Flotterstone (25min)</li><li>14:00 - Rando Turnhouse Hill</li><li>15:30 - Carnethy Hill (573m)</li><li>17:30 - Retour</li></ul>
-                <div class="mt-1.5 text-emerald-400">GPS: 55.855, -3.230 | 10km | +400m | 3h</div>
+                <ul class="mt-1 space-y-0.5 text-slate-300"><li>13:30 - Route <a href="https://www.google.com/maps/search/Flotterstone+Pentland+Hills" target="_blank" rel="noopener" class="spot">Flotterstone</a> (25min)</li><li>14:00 - <a href="https://www.google.com/maps/search/Turnhouse+Hill+Pentlands" target="_blank" rel="noopener" class="spot">Rando Turnhouse Hill</a></li><li>15:30 - <a href="https://www.google.com/maps/search/Carnethy+Hill+Pentlands" target="_blank" rel="noopener" class="spot">Carnethy Hill</a> (573m)</li><li>17:30 - Retour</li></ul>
+                <div class="mt-1.5 text-emerald-400">10km | +400m | 3h</div>
             </div>
         </div>
-        <div class="reveal bg-slate-800 rounded-xl p-2.5 text-center text-xs mb-2"><span class="text-amber-400 font-bold">DINER:</span> <b>The Kitchin</b> Michelin | Leith | <span class="text-rose-400">RESERVER 0131 555 1755</span></div>
+        <div class="reveal bg-slate-800 rounded-xl p-2.5 text-center text-xs mb-2"><span class="text-amber-400 font-bold">DINER:</span> <a href="https://www.google.com/maps/search/The+Kitchin+Edinburgh" target="_blank" rel="noopener" class="spot"><b>The Kitchin</b></a> Michelin | Leith | <a href="tel:+441315551755" class="text-rose-400 hover:underline">RESERVER 0131 555 1755</a></div>
         <a href="https://www.google.com/maps/dir/Mercure+Edinburgh+Haymarket/Holyrood+Park+Edinburgh/Arthurs+Seat+Edinburgh/Flotterstone+Pentland+Hills/The+Kitchin+Edinburgh/" target="_blank" rel="noopener" class="reveal inline-flex items-center gap-1.5 bg-blue-600/20 border border-blue-500/30 text-blue-400 px-3 py-1.5 rounded-lg text-xs hover:bg-blue-600/30 transition mb-2"><svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>Itineraire Google Maps</a>
         <div class="reveal mt-2 mb-2" id="ig-jour4"></div>
         <div class="reveal bg-slate-800 rounded-xl p-3"><div class="font-bold text-xs mb-1.5">Checklist J4</div><div class="grid grid-cols-2 gap-0.5" id="check-j4"></div></div>
@@ -268,11 +271,11 @@
             </div>
         </div>
         <div class="reveal space-y-1.5 bg-orange-900/20 border border-orange-700/20 rounded-xl p-3 text-xs mb-2">
-            <div class="flex gap-2"><div class="text-amber-400 font-mono w-10 shrink-0">08:00</div><div><b>Dean Village</b> moulins, riviere</div></div>
-            <div class="flex gap-2"><div class="text-amber-400 font-mono w-10 shrink-0">09:00</div><div><b>Water of Leith Walk</b></div></div>
-            <div class="flex gap-2"><div class="text-amber-400 font-mono w-10 shrink-0">09:30</div><div><b>The Milkman</b> meilleur cafe</div></div>
+            <div class="flex gap-2"><div class="text-amber-400 font-mono w-10 shrink-0">08:00</div><div><a href="https://www.google.com/maps/search/Dean+Village+Edinburgh" target="_blank" rel="noopener" class="spot"><b>Dean Village</b></a> moulins, riviere</div></div>
+            <div class="flex gap-2"><div class="text-amber-400 font-mono w-10 shrink-0">09:00</div><div><a href="https://www.google.com/maps/search/Water+of+Leith+Walkway+Edinburgh" target="_blank" rel="noopener" class="spot"><b>Water of Leith Walk</b></a></div></div>
+            <div class="flex gap-2"><div class="text-amber-400 font-mono w-10 shrink-0">09:30</div><div><a href="https://www.google.com/maps/search/The+Milkman+Edinburgh+coffee" target="_blank" rel="noopener" class="spot"><b>The Milkman</b></a> meilleur cafe</div></div>
             <div class="flex gap-2"><div class="text-amber-400 font-mono w-10 shrink-0">11:00</div><div><b>Check-out</b> + souvenirs</div></div>
-            <div class="flex gap-2"><div class="text-amber-400 font-mono w-10 shrink-0">15:30</div><div><b>Retour voiture</b> Eastfield Rd Airport (20min check-in)</div></div>
+            <div class="flex gap-2"><div class="text-amber-400 font-mono w-10 shrink-0">15:30</div><div><a href="https://www.google.com/maps/search/Edinburgh+Airport" target="_blank" rel="noopener" class="spot"><b>Retour voiture</b> Airport</a> (20min check-in)</div></div>
             <div class="flex gap-2"><div class="text-amber-400 font-mono w-10 shrink-0">18:35</div><div><b>Vol EDI&#8594;CDG</b> arrivee 21:30</div></div>
         </div>
         <a href="https://www.google.com/maps/dir/Mercure+Edinburgh+Haymarket/Dean+Village+Edinburgh/Edinburgh+Airport/" target="_blank" rel="noopener" class="reveal inline-flex items-center gap-1.5 bg-blue-600/20 border border-blue-500/30 text-blue-400 px-3 py-1.5 rounded-lg text-xs hover:bg-blue-600/30 transition mb-2"><svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>Itineraire Google Maps</a>
@@ -324,7 +327,7 @@
         <div class="reveal bg-slate-800 rounded-xl p-4 text-sm">
             <b>Hotel</b>
             <div class="text-amber-400 font-bold mt-1">Mercure Edinburgh Haymarket</div>
-            <div class="text-xs text-slate-300">38 Gardners Crescent | +44 131 297 0480</div>
+            <div class="text-xs text-slate-300">38 Gardners Crescent | <a href="tel:+441312970480" class="text-slate-300 hover:underline">+44 131 297 0480</a></div>
             <div class="mt-2 bg-slate-700 rounded p-2 text-xs">Ref: <span class="font-mono text-amber-400">9014176920406</span><br>5 nuits | Petit-dej inclus | Check-in 15:00 / out 11:00</div>
         </div>
         <div class="reveal bg-slate-800 rounded-xl p-4 text-sm">
@@ -334,7 +337,7 @@
         <div class="reveal bg-rose-900/20 border border-rose-700/30 rounded-xl p-4 text-sm">
             <b class="text-rose-400">A reserver !</b>
             <div class="mt-2 space-y-1.5">
-                <div class="bg-slate-800 rounded p-2 text-xs"><b>The Kitchin</b> Michelin | Dim soir | 0131 555 1755</div>
+                <div class="bg-slate-800 rounded p-2 text-xs"><b>The Kitchin</b> Michelin | Dim soir | <a href="tel:+441315551755" class="text-rose-400 hover:underline">0131 555 1755</a></div>
                 <div class="bg-slate-800 rounded p-2 text-xs"><b>Black Ivy</b> Rugby | Sam 15:30 | weareblackivy.com</div>
             </div>
         </div>
