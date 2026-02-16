@@ -107,6 +107,22 @@
         .wp-toggle:hover{background:rgba(30,41,59,.95)}
         .wp-toggle.shifted{right:320px}
         @media(max-width:767px){.weather-panel{width:100%;right:-100%;border-radius:1rem 1rem 0 0;top:auto;bottom:0;max-height:70vh}.weather-panel.open{right:0}.wp-toggle.shifted{right:0;bottom:70vh;top:auto}}
+        .geo-pulse{width:16px;height:16px;border-radius:50%;background:#3b82f6;border:3px solid #fff;box-shadow:0 0 8px rgba(59,130,246,.6);position:relative}
+        .geo-pulse::after{content:'';position:absolute;inset:-6px;border-radius:50%;border:2px solid rgba(59,130,246,.4);animation:geo-ring 2s ease infinite}
+        @keyframes geo-ring{0%{transform:scale(.8);opacity:1}100%{transform:scale(2);opacity:0}}
+        .geo-bar{background:rgba(15,23,42,.9);backdrop-filter:blur(12px);border:1px solid rgba(59,130,246,.2);border-radius:.75rem;padding:10px 14px;margin-top:.75rem}
+        .geo-bar .geo-status{display:flex;align-items:center;gap:8px;font-size:11px;color:#94a3b8;margin-bottom:6px}
+        .geo-bar .geo-status .geo-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+        .geo-bar .geo-status .geo-dot.active{background:#22c55e;box-shadow:0 0 6px rgba(34,197,94,.5)}.geo-bar .geo-status .geo-dot.inactive{background:#64748b}
+        .geo-bar .geo-next{display:flex;align-items:center;gap:8px;background:rgba(59,130,246,.1);border:1px solid rgba(59,130,246,.2);border-radius:8px;padding:8px 10px;margin-top:6px;cursor:pointer;transition:background .2s}
+        .geo-bar .geo-next:hover{background:rgba(59,130,246,.2)}
+        .geo-bar .geo-next .gn-icon{font-size:18px;flex-shrink:0}.geo-bar .geo-next .gn-name{font-size:11px;font-weight:700;color:#fff}
+        .geo-bar .geo-next .gn-dist{font-size:10px;color:#60a5fa}.geo-bar .geo-next .gn-dir{font-size:9px;color:#64748b}
+        .geo-spots{display:flex;flex-direction:column;gap:3px;margin-top:6px;max-height:180px;overflow-y:auto}
+        .geo-spot{display:flex;align-items:center;gap:8px;padding:5px 8px;border-radius:6px;font-size:10px;cursor:pointer;transition:background .2s;border:1px solid transparent}
+        .geo-spot:hover{background:rgba(255,255,255,.04)}.geo-spot.nearest{background:rgba(59,130,246,.08);border-color:rgba(59,130,246,.2)}
+        .geo-spot .gs-color{width:6px;height:6px;border-radius:50%;flex-shrink:0}.geo-spot .gs-name{flex:1;color:#cbd5e1;font-weight:600}
+        .geo-spot .gs-dist{color:#60a5fa;font-weight:700;white-space:nowrap}.geo-spot .gs-nav{color:#3b82f6;text-decoration:none;font-size:9px}
         .music-btn{position:fixed;bottom:20px;left:20px;z-index:9999;width:48px;height:48px;border-radius:50%;border:1px solid rgba(245,158,11,.3);background:rgba(15,23,42,.85);backdrop-filter:blur(12px);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:transform .2s,box-shadow .2s,border-color .3s;box-shadow:0 4px 15px rgba(0,0,0,.4)}
         .music-btn:hover{transform:scale(1.1);box-shadow:0 6px 25px rgba(245,158,11,.2);border-color:rgba(245,158,11,.6)}
         .music-btn.playing{border-color:rgba(245,158,11,.6);animation:music-pulse 2s ease infinite}
@@ -402,7 +418,7 @@
 
 <section id="map" class="mb-14">
     <h2 class="text-2xl font-serif font-bold mb-2 reveal">Carte satellite</h2>
-    <p class="text-slate-400 text-xs mb-3 reveal">Vue satellite ESRI | Cliquez les marqueurs</p>
+    <p class="text-slate-400 text-xs mb-3 reveal">Vue satellite ESRI | Cliquez les marqueurs | GPS en direct</p>
     <div class="reveal"><div id="map-container" class="h-[350px] md:h-[450px] rounded-xl overflow-hidden border border-slate-700"></div></div>
     <div class="mt-2 flex flex-wrap gap-1.5 reveal">
         <button onclick="flyTo('edinburgh')" class="px-2.5 py-1 bg-rose-700 rounded-full text-[11px] hover:bg-rose-600 transition">Edimbourg</button>
@@ -410,6 +426,12 @@
         <button onclick="flyTo('pentland')" class="px-2.5 py-1 bg-emerald-700 rounded-full text-[11px] hover:bg-emerald-600 transition">Pentlands</button>
         <button onclick="flyTo('glencoe')" class="px-2.5 py-1 bg-purple-700 rounded-full text-[11px] hover:bg-purple-600 transition">Glencoe</button>
         <button onclick="flyTo('all')" class="px-2.5 py-1 bg-amber-600 rounded-full text-[11px] hover:bg-amber-500 transition">Tout</button>
+        <button onclick="geoLocate()" id="geoBtn" class="px-2.5 py-1 bg-blue-600 rounded-full text-[11px] hover:bg-blue-500 transition flex items-center gap-1"><svg width="12" height="12" fill="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2a1 1 0 011 1v2.07A7.004 7.004 0 0118.93 11H21a1 1 0 110 2h-2.07A7.004 7.004 0 0113 18.93V21a1 1 0 11-2 0v-2.07A7.004 7.004 0 015.07 13H3a1 1 0 110-2h2.07A7.004 7.004 0 0111 5.07V3a1 1 0 011-1z"/></svg>Ma position</button>
+    </div>
+    <div class="geo-bar reveal" id="geoBar" style="display:none">
+        <div class="geo-status"><div class="geo-dot" id="geoDot"></div><span id="geoStatus">Localisation...</span></div>
+        <div id="geoNext"></div>
+        <div class="geo-spots" id="geoSpots"></div>
     </div>
 </section>
 
@@ -561,6 +583,121 @@ var i=L.divIcon({className:'',html:'<div style="background:'+s.c+';width:14px;he
 L.marker([s.la,s.lo],{icon:i}).addTo(map).bindPopup('<div style="color:#1e293b"><b>'+s.n+'</b><br><span style="font-size:11px;color:#888">'+s.d+'</span></div>')});
 ft={edinburgh:{c:[55.949,-3.19],z:14},northberwick:{c:[56.057,-2.68],z:13},pentland:{c:[55.855,-3.23],z:13},glencoe:{c:[56.67,-5.1],z:12},all:{c:[56.2,-3.8],z:7}}}();
 function flyTo(t){var x=ft[t];if(x)map.flyTo(x.c,x.z)}
+
+// GEOLOCATION
+var geoMarker=null,geoCircle=null,geoWatchId=null,geoActive=false;
+var geoSpots=[
+{la:55.9488,lo:-3.1943,n:'Victoria Street',d:'J1',c:'#e11d48'},
+{la:55.9472,lo:-3.1955,n:'Grassmarket',d:'J1',c:'#e11d48'},
+{la:55.9486,lo:-3.1999,n:'Edinburgh Castle',d:'J1',c:'#e11d48'},
+{la:55.9553,lo:-3.1828,n:'Calton Hill',d:'J1',c:'#e11d48'},
+{la:55.9476,lo:-3.1965,n:'The Vennel',d:'J1',c:'#e11d48'},
+{la:55.9458,lo:-3.2186,n:'Mercure Hotel',d:'Hotel',c:'#f59e0b'},
+{la:55.9441,lo:-3.1618,n:"Arthur's Seat",d:'J4',c:'#059669'},
+{la:55.855,lo:-3.23,n:'Pentland Hills',d:'J4',c:'#059669'},
+{la:55.978,lo:-3.168,n:'The Kitchin',d:'J4',c:'#059669'},
+{la:56.059,lo:-2.719,n:'North Berwick',d:'J3',c:'#0284c7'},
+{la:56.054,lo:-2.646,n:'Tantallon Castle',d:'J3',c:'#0284c7'},
+{la:56.652,lo:-5.052,n:'Buachaille Etive Mor',d:'J2',c:'#9333ea'},
+{la:56.617,lo:-5.134,n:'Glen Etive',d:'J2',c:'#9333ea'},
+{la:56.668,lo:-5.07,n:'Three Sisters',d:'J2',c:'#9333ea'},
+{la:56.678,lo:-5.098,n:'Lost Valley',d:'J2',c:'#9333ea'},
+{la:56.683,lo:-5.139,n:'Clachaig Inn',d:'J2',c:'#9333ea'},
+{la:56.687,lo:-5.108,n:'Glencoe Lochan',d:'J2',c:'#9333ea'},
+{la:55.9524,lo:-3.2177,n:'Dean Village',d:'J5',c:'#ea580c'},
+{la:55.9498,lo:-3.1886,n:'Greyfriars Bobby',d:'J1',c:'#e11d48'},
+{la:55.9462,lo:-3.1911,n:'Elephant House',d:'J1',c:'#e11d48'},
+{la:56.0587,lo:-2.7184,n:'North Berwick Law',d:'J3',c:'#0284c7'},
+{la:55.9489,lo:-3.1723,n:'Holyrood Palace',d:'J4',c:'#059669'},
+{la:55.9524,lo:-3.2163,n:'Dean Bridge',d:'J5',c:'#ea580c'},
+{la:55.949,lo:-3.1919,n:'George Heriot School',d:'J1',c:'#e11d48'}
+];
+
+function haversine(lat1,lon1,lat2,lon2){
+var R=6371,dLat=(lat2-lat1)*Math.PI/180,dLon=(lon2-lon1)*Math.PI/180;
+var a=Math.sin(dLat/2)*Math.sin(dLat/2)+Math.cos(lat1*Math.PI/180)*Math.cos(lat2*Math.PI/180)*Math.sin(dLon/2)*Math.sin(dLon/2);
+return R*2*Math.atan2(Math.sqrt(a),Math.sqrt(1-a));
+}
+
+function formatDist(km){return km<1?Math.round(km*1000)+'m':km.toFixed(1)+'km';}
+
+function bearing(lat1,lon1,lat2,lon2){
+var dLon=(lon2-lon1)*Math.PI/180;
+var y=Math.sin(dLon)*Math.cos(lat2*Math.PI/180);
+var x=Math.cos(lat1*Math.PI/180)*Math.sin(lat2*Math.PI/180)-Math.sin(lat1*Math.PI/180)*Math.cos(lat2*Math.PI/180)*Math.cos(dLon);
+var b=Math.atan2(y,x)*180/Math.PI;
+return(b+360)%360;
+}
+
+function bearingToDir(b){var d=['N','NE','E','SE','S','SO','O','NO'];return d[Math.round(b/45)%8];}
+
+function updateGeoUI(lat,lon,acc){
+var bar=document.getElementById('geoBar');bar.style.display='block';
+var dot=document.getElementById('geoDot');dot.className='geo-dot active';
+var status=document.getElementById('geoStatus');
+status.innerHTML='GPS actif | Precision: '+Math.round(acc)+'m | <span style="color:#60a5fa">'+lat.toFixed(4)+', '+lon.toFixed(4)+'</span>';
+
+// Calculate distances & sort
+var spots=geoSpots.map(function(s){
+var dist=haversine(lat,lon,s.la,s.lo);
+var bear=bearing(lat,lon,s.la,s.lo);
+return{n:s.n,d:s.d,c:s.c,la:s.la,lo:s.lo,dist:dist,dir:bearingToDir(bear)};
+}).sort(function(a,b){return a.dist-b.dist});
+
+// Nearest spot card
+var nearest=spots[0];
+var nextEl=document.getElementById('geoNext');
+nextEl.innerHTML='<div class="geo-next" onclick="window.open(\'https://www.google.com/maps/dir/'+lat+','+lon+'/'+nearest.la+','+nearest.lo+'\',\'_blank\')">'+
+'<div class="gn-icon">\uD83D\uDCCD</div>'+
+'<div style="flex:1"><div class="gn-name">'+nearest.n+' <span style="font-size:9px;color:'+nearest.c+'">'+nearest.d+'</span></div>'+
+'<div class="gn-dist">'+formatDist(nearest.dist)+' '+nearest.dir+'</div>'+
+'<div class="gn-dir">Cliquer pour naviguer \u2192</div></div>'+
+'<div style="font-size:20px">\u2794</div></div>';
+
+// All spots list
+var spotsEl=document.getElementById('geoSpots');
+var html='<div style="font-size:9px;font-weight:700;color:#475569;margin-bottom:3px">TOUS LES SPOTS</div>';
+spots.slice(0,12).forEach(function(s,idx){
+html+='<div class="geo-spot'+(idx===0?' nearest':'')+'" onclick="window.open(\'https://www.google.com/maps/dir/'+lat+','+lon+'/'+s.la+','+s.lo+'\',\'_blank\')">'+
+'<div class="gs-color" style="background:'+s.c+'"></div>'+
+'<span class="gs-name">'+s.n+'</span>'+
+'<span style="font-size:9px;color:'+s.c+'">'+s.d+'</span>'+
+'<span class="gs-dist">'+formatDist(s.dist)+'</span>'+
+'<span style="font-size:9px;color:#64748b">'+s.dir+'</span>'+
+'<span class="gs-nav">\u2794</span></div>';
+});
+spotsEl.innerHTML=html;
+}
+
+function geoLocate(){
+if(!navigator.geolocation){alert('Geolocalisation non supportee par ce navigateur');return}
+var btn=document.getElementById('geoBtn');
+if(geoActive){
+navigator.geolocation.clearWatch(geoWatchId);
+if(geoMarker){map.removeLayer(geoMarker);geoMarker=null}
+if(geoCircle){map.removeLayer(geoCircle);geoCircle=null}
+document.getElementById('geoBar').style.display='none';
+btn.classList.remove('bg-green-600');btn.classList.add('bg-blue-600');
+geoActive=false;return;
+}
+btn.classList.remove('bg-blue-600');btn.classList.add('bg-green-600');
+document.getElementById('geoBar').style.display='block';
+document.getElementById('geoStatus').textContent='Recherche GPS...';
+document.getElementById('geoDot').className='geo-dot inactive';
+geoActive=true;
+
+var geoIcon=L.divIcon({className:'',html:'<div class="geo-pulse"></div>',iconSize:[16,16],iconAnchor:[8,8]});
+
+geoWatchId=navigator.geolocation.watchPosition(function(pos){
+var lat=pos.coords.latitude,lon=pos.coords.longitude,acc=pos.coords.accuracy;
+if(geoMarker){geoMarker.setLatLng([lat,lon]);geoCircle.setLatLng([lat,lon]).setRadius(acc)}
+else{geoMarker=L.marker([lat,lon],{icon:geoIcon,zIndexOffset:1000}).addTo(map);geoCircle=L.circle([lat,lon],{radius:acc,color:'#3b82f6',fillColor:'#3b82f6',fillOpacity:.1,weight:1}).addTo(map);map.flyTo([lat,lon],14)}
+updateGeoUI(lat,lon,acc);
+},function(err){
+document.getElementById('geoStatus').textContent='Erreur: '+err.message;
+document.getElementById('geoDot').className='geo-dot inactive';
+},{enableHighAccuracy:true,maximumAge:5000,timeout:15000});
+}
 
 // INSTAGRAM GRID - High-quality location photos from Wikimedia Commons
 !function(){var W='https://upload.wikimedia.org/wikipedia/commons/thumb/';
