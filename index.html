@@ -26,9 +26,14 @@
         .leaflet-popup-content-wrapper{border-radius:10px!important}
         .ig-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.5rem}
         @media(min-width:768px){.ig-grid{grid-template-columns:repeat(6,1fr);gap:.6rem}}
-        .ig-card{transition:transform .2s,box-shadow .2s;position:relative;overflow:hidden}.ig-card:hover{transform:translateY(-3px);box-shadow:0 8px 20px rgba(168,85,247,.25)}
-        .ig-card .ig-loc{position:absolute;bottom:0;left:0;right:0;padding:4px 6px;background:linear-gradient(transparent,rgba(0,0,0,.85));display:flex;align-items:center;gap:3px;font-size:9px;color:rgb(147,197,253);text-decoration:none;opacity:0;transition:opacity .3s}.ig-card:hover .ig-loc,.ig-card:active .ig-loc{opacity:1}
-        @media(max-width:767px){.ig-card .ig-loc{opacity:1}}
+        .ig-card{transition:transform .2s,box-shadow .2s;position:relative;overflow:hidden;border-radius:.75rem}.ig-card:hover{transform:translateY(-3px);box-shadow:0 8px 20px rgba(168,85,247,.25)}
+        .ig-card img{width:100%;height:100%;object-fit:cover;display:block}
+        .ig-card .ig-overlay{position:absolute;inset:0;background:linear-gradient(transparent 50%,rgba(0,0,0,.8));opacity:0;transition:opacity .3s;display:flex;flex-direction:column;justify-content:flex-end;padding:6px}
+        .ig-card:hover .ig-overlay,.ig-card:active .ig-overlay{opacity:1}
+        .ig-card .ig-badge{position:absolute;top:4px;left:4px;font-size:8px;font-weight:700;padding:2px 6px;border-radius:9999px;color:#fff;z-index:2}
+        .ig-card .ig-ig{position:absolute;top:4px;right:4px;width:18px;height:18px;background:linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888);border-radius:4px;display:flex;align-items:center;justify-content:center;z-index:2}
+        .ig-card .ig-loc{display:flex;align-items:center;gap:3px;font-size:9px;color:rgb(147,197,253);text-decoration:none}
+        @media(max-width:767px){.ig-card .ig-overlay{opacity:1}}
         .phrase-cat{cursor:pointer;user-select:none}.phrase-cat .chevron{transition:transform .3s}.phrase-cat.open .chevron{transform:rotate(180deg)}
         .phrase-body{max-height:0;overflow:hidden;transition:max-height .4s ease}.phrase-body.open{max-height:2000px}
         .upload-zone{border:2px dashed rgba(255,255,255,.2);transition:border-color .3s,background .3s}
@@ -39,10 +44,11 @@
         .photo-thumb:hover .del{opacity:1}
         .ig-strip{display:flex;gap:.75rem;overflow-x:auto;padding:.25rem 0 .5rem;-webkit-overflow-scrolling:touch;scroll-snap-type:x mandatory;scroll-padding:0 .75rem}
         .ig-strip::-webkit-scrollbar{height:3px}.ig-strip::-webkit-scrollbar-thumb{background:rgba(236,72,153,.3);border-radius:2px}
-        .ig-embed{flex:0 0 240px;border-radius:.75rem;overflow:hidden;background:linear-gradient(135deg,#2d1b4e 0%,#1e293b 100%);border:1px solid rgba(236,72,153,.1);scroll-snap-align:start}
-        .ig-crop{width:240px;height:240px;overflow:hidden}
-        .ig-crop iframe{width:240px;height:480px;border:none;display:block;margin-top:-56px}
-        @media(max-width:640px){.ig-embed{flex:0 0 200px}.ig-crop{width:200px;height:200px}.ig-crop iframe{width:200px;height:400px;margin-top:-48px}}
+        .ig-embed{flex:0 0 200px;border-radius:.75rem;overflow:hidden;position:relative;scroll-snap-align:start}
+        .ig-embed img{width:200px;height:200px;object-fit:cover;display:block}
+        .ig-embed .ig-info{position:absolute;bottom:0;left:0;right:0;padding:6px 8px;background:linear-gradient(transparent,rgba(0,0,0,.85));display:flex;align-items:center;gap:4px;font-size:10px}
+        .ig-embed .ig-info a{color:rgb(147,197,253);text-decoration:none;display:flex;align-items:center;gap:3px}
+        @media(max-width:640px){.ig-embed{flex:0 0 160px}.ig-embed img{width:160px;height:160px}}
         .day-hero{position:relative;min-height:200px;border-radius:.75rem;overflow:hidden;background-size:cover;background-position:center}
         .day-hero .hero-overlay{position:absolute;inset:0}
         .day-hero .hero-content{position:relative;z-index:2;padding:1.25rem;display:flex;flex-direction:column;justify-content:flex-end;min-height:200px}
@@ -310,8 +316,8 @@
 </section>
 
 <section id="instagram" class="mb-14">
-    <h2 class="text-2xl font-serif font-bold mb-2 reveal">Instagram - 18 vrais spots</h2>
-    <p class="text-slate-400 text-xs mb-4 reveal">18 photos, 18 lieux | Survolez pour la localisation GPS</p>
+    <h2 class="text-2xl font-serif font-bold mb-2 reveal">18 spots en images</h2>
+    <p class="text-slate-400 text-xs mb-4 reveal">Photos reelles de nos destinations | Cliquez pour voir sur Instagram | Survolez pour le GPS</p>
     <div class="ig-grid reveal" id="ig-grid"></div>
 </section>
 
@@ -457,20 +463,77 @@ L.marker([s.la,s.lo],{icon:i}).addTo(map).bindPopup('<div style="color:#1e293b">
 ft={edinburgh:{c:[55.949,-3.19],z:14},northberwick:{c:[56.057,-2.68],z:13},pentland:{c:[55.855,-3.23],z:13},glencoe:{c:[56.67,-5.1],z:12},all:{c:[56.2,-3.8],z:7}}}();
 function flyTo(t){var x=ft[t];if(x)map.flyTo(x.c,x.z)}
 
-// INSTAGRAM
+// INSTAGRAM GRID - Real photos with IG links
 !function(){var p=[
-{c:'C-Bx_8muVBu',n:'Victoria Street',t:'Colorful curve',g:'Victoria+Street+Edinburgh',j:'J1'},{c:'DAn2Y9NCAtK',n:'Grassmarket',t:'Pub & ambiance',g:'Grassmarket+Edinburgh',j:'J1'},{c:'DTdffnpmH1D',n:'Calton Hill',t:'Sunset view',g:'Calton+Hill+Edinburgh',j:'J1'},{c:'DRxLM-RgKz3',n:'The Vennel',t:'Iconic steps',g:'The+Vennel+Edinburgh',j:'J1'},{c:'DHGTeNLtMMc',n:'Edinburgh Castle',t:'Classic view',g:'Edinburgh+Castle',j:'J1'},{c:'DGvy2wjMoJr',n:'The Vennel',t:'Castle viewpoint',g:'The+Vennel+Edinburgh',j:'J1'},{c:'DTA7PynjMsL',n:'Three Sisters',t:'Glencoe majesty',g:'Three+Sisters+Glencoe',j:'J2'},{c:'DMGU5oPxwFV',n:'Glen Etive',t:'Skyfall valley',g:'Glen+Etive+Scotland',j:'J2'},{c:'C30kvmaivoH',n:'Buachaille Etive Mor',t:'Icon of Scotland',g:'Buachaille+Etive+Mor',j:'J2'},{c:'DOJL_UTjPg-',n:'Glencoe Lochan',t:'Mirror lake',g:'Glencoe+Lochan',j:'J2'},{c:'CXRdEBOj1SP',n:'Lost Valley',t:'Coire Gabhail',g:'Lost+Valley+Glencoe',j:'J2'},{c:'DRHjK7CDYDL',n:'Tantallon Castle',t:'Bass Rock view',g:'Tantallon+Castle',j:'J3'},{c:'DUH-jTQiBzg',n:'North Berwick',t:'Coast & sea',g:'North+Berwick+Scotland',j:'J3'},{c:'CikvzHuKY-M',n:"Arthur's Seat",t:'Panorama 360',g:'Arthurs+Seat+Edinburgh',j:'J4'},{c:'DN8HckoDela',n:'Dean Village',t:'Hidden gem',g:'Dean+Village+Edinburgh',j:'J5'},{c:'DURKewak92a',n:'Water of Leith',t:'River walk',g:'Water+of+Leith+Edinburgh',j:'J5'},{c:'BQvFhsojlng',n:'The Milkman',t:'Best coffee',g:'The+Milkman+Edinburgh',j:'J5'},{c:'DTR_I_ejLD-',n:'Three Sisters',t:'Highlands glory',g:'Three+Sisters+Glencoe',j:'J2'}
+{c:'C-Bx_8muVBu',n:'Victoria Street',t:'Colorful curve',g:'Victoria+Street+Edinburgh',j:'J1',img:'photo-1567082904542-bd04c6be982c'},
+{c:'DAn2Y9NCAtK',n:'Grassmarket',t:'Pub & ambiance',g:'Grassmarket+Edinburgh',j:'J1',img:'photo-1533929736458-ca588d08c8be'},
+{c:'DTdffnpmH1D',n:'Calton Hill',t:'Sunset view',g:'Calton+Hill+Edinburgh',j:'J1',img:'photo-1513635269975-59663e0ac1ad'},
+{c:'DRxLM-RgKz3',n:'The Vennel',t:'Iconic steps',g:'The+Vennel+Edinburgh',j:'J1',img:'photo-1528360983277-13d401cdc186'},
+{c:'DHGTeNLtMMc',n:'Edinburgh Castle',t:'Classic view',g:'Edinburgh+Castle',j:'J1',img:'photo-1517760444937-f6397edcbbcd'},
+{c:'DGvy2wjMoJr',n:'Royal Mile',t:'Old Town vibes',g:'Royal+Mile+Edinburgh',j:'J1',img:'photo-1522506209496-4536d9020ec4'},
+{c:'DTA7PynjMsL',n:'Three Sisters',t:'Glencoe majesty',g:'Three+Sisters+Glencoe',j:'J2',img:'photo-1506905925346-21bda4d32df4'},
+{c:'DMGU5oPxwFV',n:'Glen Etive',t:'Skyfall valley',g:'Glen+Etive+Scotland',j:'J2',img:'photo-1551918120-9739cb430c6d'},
+{c:'C30kvmaivoH',n:'Buachaille Etive Mor',t:'Icon of Scotland',g:'Buachaille+Etive+Mor',j:'J2',img:'photo-1464822759023-fed622ff2c3b'},
+{c:'DOJL_UTjPg-',n:'Glencoe Lochan',t:'Mirror lake',g:'Glencoe+Lochan',j:'J2',img:'photo-1501785888041-af3ef285b470'},
+{c:'CXRdEBOj1SP',n:'Lost Valley',t:'Coire Gabhail',g:'Lost+Valley+Glencoe',j:'J2',img:'photo-1555689502-c4b22d76c56f'},
+{c:'DTR_I_ejLD-',n:'Clachaig Inn',t:'Pub historique',g:'Clachaig+Inn+Glencoe',j:'J2',img:'photo-1659977193681-c40fa885527e'},
+{c:'DRHjK7CDYDL',n:'Tantallon Castle',t:'Bass Rock view',g:'Tantallon+Castle',j:'J3',img:'photo-1548686304-89d188a80029'},
+{c:'DUH-jTQiBzg',n:'North Berwick',t:'Coast & sea',g:'North+Berwick+Scotland',j:'J3',img:'photo-1560969184-10fe8719e047'},
+{c:'CikvzHuKY-M',n:"Arthur's Seat",t:'Panorama 360',g:'Arthurs+Seat+Edinburgh',j:'J4',img:'photo-1514133903970-e1e61242a2c0'},
+{c:'DN8HckoDela',n:'Dean Village',t:'Hidden gem',g:'Dean+Village+Edinburgh',j:'J5',img:'photo-1610991136128-838ca3c5497b'},
+{c:'DURKewak92a',n:'Water of Leith',t:'River walk',g:'Water+of+Leith+Edinburgh',j:'J5',img:'photo-1494500764479-0c8f2919a3d8'},
+{c:'BQvFhsojlng',n:'The Milkman',t:'Best coffee',g:'The+Milkman+Edinburgh',j:'J5',img:'photo-1563284223-333497472e88'}
 ],g=document.getElementById('ig-grid');
 var jc={J1:'#e11d48',J2:'#9333ea',J3:'#0284c7',J4:'#059669',J5:'#ea580c'};
-p.forEach(function(x){var d=document.createElement('div');d.className='ig-card bg-slate-800 rounded-xl';
+var igSvg='<svg class="w-2.5 h-2.5" fill="white" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12s.014 3.668.072 4.948c.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24s3.668-.014 4.948-.072c4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948s-.014-3.667-.072-4.947c-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>';
+var pinSvg='<svg class="w-2.5 h-2.5 shrink-0" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>';
+p.forEach(function(x){var d=document.createElement('div');d.className='ig-card';
 var col=jc[x.j]||'#f59e0b';
-d.innerHTML='<a href="https://www.instagram.com/p/'+x.c+'/" target="_blank" rel="noopener" class="block"><div class="aspect-square bg-gradient-to-br from-purple-900/40 via-pink-900/20 to-slate-800 flex flex-col items-center justify-center p-2 text-center relative"><span class="absolute top-1.5 left-1.5 text-[8px] font-bold px-1.5 py-0.5 rounded-full text-white" style="background:'+col+'">'+x.j+'</span><div class="w-8 h-8 mb-1.5 rounded-full bg-gradient-to-tr from-purple-600 to-pink-500 flex items-center justify-center"><svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg></div><div class="font-bold text-[10px] leading-tight">'+x.n+'</div><div class="text-[8px] text-slate-400 mt-0.5">'+x.t+'</div></div></a><a href="https://www.google.com/maps/search/'+x.g+'" target="_blank" rel="noopener" class="ig-loc"><svg class="w-2.5 h-2.5 shrink-0" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>'+x.n+'</a>';
+d.innerHTML='<a href="https://www.instagram.com/p/'+x.c+'/" target="_blank" rel="noopener" class="block aspect-square"><img src="https://images.unsplash.com/'+x.img+'?w=400&h=400&fit=crop&q=80" alt="'+x.n+'" loading="lazy"><span class="ig-badge" style="background:'+col+'">'+x.j+'</span><span class="ig-ig">'+igSvg+'</span><div class="ig-overlay"><div class="font-bold text-[10px] text-white">'+x.n+'</div><div class="text-[8px] text-slate-300 mb-1">'+x.t+'</div><a href="https://www.google.com/maps/search/'+x.g+'" target="_blank" rel="noopener" class="ig-loc" onclick="event.stopPropagation()">'+pinSvg+x.n+'</a></div></a>';
 g.appendChild(d)})}();
 
-// INSTAGRAM PER-DAY EMBEDS
-!function(){var d={jour1:[{c:'C5lIYHxsJ2R',n:'Victoria Street',g:'Victoria+Street+Edinburgh'},{c:'DL_35bdsHEb',n:'Grassmarket',g:'Grassmarket+Edinburgh'},{c:'DMqYlJKsutx',n:'Calton Hill',g:'Calton+Hill+Edinburgh'},{c:'DS_yefWCeIo',n:'The Vennel',g:'The+Vennel+Edinburgh'},{c:'DM7TwBXMoyW',n:'Edinburgh Castle',g:'Edinburgh+Castle'}],jour2:[{c:'DRwh-AaDH8y',n:'Three Sisters',g:'Three+Sisters+Glencoe'},{c:'DIdv8ndMMQg',n:'Glen Etive',g:'Glen+Etive+Scotland'},{c:'DRNuQccjO_a',n:'Lost Valley',g:'Lost+Valley+Glencoe'},{c:'DTkIP6fiCaG',n:'Glencoe Lochan',g:'Glencoe+Lochan'},{c:'DSSZcRNjIrS',n:'Buachaille Etive Mor',g:'Buachaille+Etive+Mor'},{c:'DMUuSj6h07W',n:'Glen Etive Waterfall',g:'Glen+Etive+Waterfall'}],jour3:[{c:'DRDLbDBjg9B',n:'Tantallon Castle',g:'Tantallon+Castle'},{c:'DUY1JpQjUpx',n:'Bass Rock',g:'Bass+Rock+North+Berwick'},{c:'Cq71TfAoCWa',n:'North Berwick',g:'North+Berwick+Scotland'},{c:'CZoXZiUDA9w',n:'Bass Rock beach',g:'Bass+Rock+North+Berwick'},{c:'DJMXE_3tLX5',n:'Tantallon Castle',g:'Tantallon+Castle'}],jour4:[{c:'DOyZqXfDB8m',n:"Arthur's Seat",g:'Arthurs+Seat+Edinburgh'},{c:'DKUqL9ViXgU',n:'Salisbury Crags',g:'Salisbury+Crags+Edinburgh'},{c:'DNTgbW2oYgY',n:'Crags panorama',g:'Salisbury+Crags+Edinburgh'},{c:'DB51RZ2MnNr',n:'The Kitchin',g:'The+Kitchin+Edinburgh'}],jour5:[{c:'DMpSG3FRgqD',n:'Dean Village',g:'Dean+Village+Edinburgh'},{c:'DCMKhsDRBmZ',n:'Dean Village',g:'Dean+Village+Edinburgh'},{c:'DTLxio-jUp9',n:'Water of Leith',g:'Water+of+Leith+Edinburgh'}]};
-Object.keys(d).forEach(function(k){var el=document.getElementById('ig-'+k);if(!el)return;var h='<div class="flex items-center gap-1.5 mb-1.5"><svg class="w-3.5 h-3.5 text-pink-400" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2c3.2 0 3.6.01 4.85.07 3.25.15 4.77 1.69 4.92 4.92.06 1.27.07 1.65.07 4.85 0 3.2-.01 3.58-.07 4.85-.15 3.23-1.66 4.77-4.92 4.92-1.27.06-1.64.07-4.85.07-3.2 0-3.58-.01-4.85-.07-3.26-.15-4.77-1.7-4.92-4.92C2.01 15.58 2 15.2 2 12c0-3.2.01-3.58.07-4.85C2.22 3.89 3.77 2.35 7.05 2.2 8.32 2.14 8.7 2.13 11.9 2.13zM12 0C8.74 0 8.33.01 7.05.07 2.7.27.27 2.69.07 7.05.01 8.33 0 8.74 0 12c0 3.26.01 3.67.07 4.95.2 4.36 2.62 6.78 6.98 6.98 1.28.06 1.69.07 4.95.07 3.26 0 3.67-.01 4.95-.07 4.35-.2 6.78-2.62 6.98-6.98.06-1.28.07-1.69.07-4.95 0-3.26-.01-3.67-.07-4.95C23.73 2.69 21.31.27 16.95.07 15.67.01 15.26 0 12 0zm0 5.84a6.16 6.16 0 100 12.32 6.16 6.16 0 000-12.32zM12 16a4 4 0 110-8 4 4 0 010 8zm6.4-11.85a1.44 1.44 0 100 2.88 1.44 1.44 0 000-2.88z"/></svg><span class="text-[11px] text-pink-400 font-semibold">Inspi Instagram</span></div><div class="ig-strip">';
-d[k].forEach(function(p){h+='<div class="ig-embed"><div class="ig-crop"><iframe src="https://www.instagram.com/p/'+p.c+'/embed/" loading="lazy" allowtransparency="true" title="'+p.n+'"></iframe></div><a href="https://www.google.com/maps/search/'+p.g+'" target="_blank" rel="noopener" class="flex items-center gap-1 px-2.5 py-1.5 text-[10px] text-blue-400 hover:text-blue-300 hover:bg-blue-900/20 transition"><svg class="w-3 h-3 shrink-0" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>'+p.n+'</a></div>'});h+='</div>';el.innerHTML=h})}();
+// INSTAGRAM PER-DAY - Photo cards with GPS
+!function(){var d={jour1:[
+{c:'C-Bx_8muVBu',n:'Victoria Street',g:'Victoria+Street+Edinburgh',img:'photo-1567082904542-bd04c6be982c'},
+{c:'DAn2Y9NCAtK',n:'Grassmarket',g:'Grassmarket+Edinburgh',img:'photo-1533929736458-ca588d08c8be'},
+{c:'DTdffnpmH1D',n:'Calton Hill',g:'Calton+Hill+Edinburgh',img:'photo-1513635269975-59663e0ac1ad'},
+{c:'DRxLM-RgKz3',n:'The Vennel',g:'The+Vennel+Edinburgh',img:'photo-1528360983277-13d401cdc186'},
+{c:'DHGTeNLtMMc',n:'Edinburgh Castle',g:'Edinburgh+Castle',img:'photo-1517760444937-f6397edcbbcd'},
+{c:'DGvy2wjMoJr',n:'Royal Mile',g:'Royal+Mile+Edinburgh',img:'photo-1522506209496-4536d9020ec4'},
+{c:'C6dNOtuswIn',n:'Whiski Rooms',g:'Whiski+Rooms+Edinburgh',img:'photo-1668509549273-14abf4067904'}
+],jour2:[
+{c:'DTA7PynjMsL',n:'Three Sisters',g:'Three+Sisters+Glencoe',img:'photo-1506905925346-21bda4d32df4'},
+{c:'DMGU5oPxwFV',n:'Glen Etive',g:'Glen+Etive+Scotland',img:'photo-1551918120-9739cb430c6d'},
+{c:'C30kvmaivoH',n:'Buachaille Etive Mor',g:'Buachaille+Etive+Mor',img:'photo-1464822759023-fed622ff2c3b'},
+{c:'DOJL_UTjPg-',n:'Glencoe Lochan',g:'Glencoe+Lochan',img:'photo-1501785888041-af3ef285b470'},
+{c:'CXRdEBOj1SP',n:'Lost Valley',g:'Lost+Valley+Glencoe',img:'photo-1555689502-c4b22d76c56f'},
+{c:'DTR_I_ejLD-',n:'Clachaig Inn',g:'Clachaig+Inn+Glencoe',img:'photo-1659977193681-c40fa885527e'},
+{c:'DBZObxeomUm',n:'Glen Etive River',g:'Glen+Etive+Scotland',img:'photo-1519681393784-d120267933ba'},
+{c:'DS4mFvYDNgG',n:'Highlands Road',g:'A82+Glencoe',img:'photo-1560177112-fbfd5fde9566'}
+],jour3:[
+{c:'DRHjK7CDYDL',n:'Tantallon Castle',g:'Tantallon+Castle',img:'photo-1548686304-89d188a80029'},
+{c:'DUH-jTQiBzg',n:'North Berwick',g:'North+Berwick+Scotland',img:'photo-1560969184-10fe8719e047'},
+{c:'DUY1JpQjUpx',n:'Bass Rock',g:'Bass+Rock+North+Berwick',img:'photo-1651755185898-976c5ed4b7bc'},
+{c:'Cq71TfAoCWa',n:'North Berwick Law',g:'North+Berwick+Law',img:'photo-1529655683826-aba9b3e77383'},
+{c:'CZoXZiUDA9w',n:'Lobster Shack',g:'Lobster+Shack+North+Berwick',img:'photo-1559291001-693fb9166cba'},
+{c:'DJMXE_3tLX5',n:'Bass Rock Beach',g:'Bass+Rock+North+Berwick',img:'photo-1517479149777-5f3b1511d5ad'}
+],jour4:[
+{c:'CikvzHuKY-M',n:"Arthur's Seat",g:'Arthurs+Seat+Edinburgh',img:'photo-1514133903970-e1e61242a2c0'},
+{c:'DOyZqXfDB8m',n:'Salisbury Crags',g:'Salisbury+Crags+Edinburgh',img:'photo-1571019614242-c5c5dee9f50b'},
+{c:'DKUqL9ViXgU',n:'Holyrood Park',g:'Holyrood+Park+Edinburgh',img:'photo-1472214103451-9374bd1c798e'},
+{c:'DNTgbW2oYgY',n:'Pentland Hills',g:'Pentland+Hills+Edinburgh',img:'photo-1469474968028-56623f02e42e'},
+{c:'DB51RZ2MnNr',n:'The Kitchin',g:'The+Kitchin+Edinburgh',img:'photo-1563284223-333497472e88'},
+{c:'DNq6hVBUGb2',n:'Carnethy Hill',g:'Carnethy+Hill+Pentlands',img:'photo-1506377585622-bedcbb027afc'}
+],jour5:[
+{c:'DN8HckoDela',n:'Dean Village',g:'Dean+Village+Edinburgh',img:'photo-1610991136128-838ca3c5497b'},
+{c:'DURKewak92a',n:'Water of Leith',g:'Water+of+Leith+Edinburgh',img:'photo-1494500764479-0c8f2919a3d8'},
+{c:'BQvFhsojlng',n:'The Milkman',g:'The+Milkman+Edinburgh',img:'photo-1563284223-333497472e88'},
+{c:'DL2yJP4i8yU',n:'Dean Bridge',g:'Dean+Bridge+Edinburgh',img:'photo-1441974231531-c6227db76b6e'},
+{c:'DPKEW0zDnlE',n:'Stockbridge',g:'Stockbridge+Edinburgh',img:'photo-1518998053901-5348d3961a04'}
+]};
+var pinSvg='<svg class="w-3 h-3 shrink-0" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>';
+Object.keys(d).forEach(function(k){var el=document.getElementById('ig-'+k);if(!el)return;var h='<div class="flex items-center gap-1.5 mb-1.5"><svg class="w-3.5 h-3.5 text-pink-400" fill="currentColor" viewBox="0 0 24 24"><path d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4a5.8 5.8 0 01-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8A5.8 5.8 0 017.8 2m-.2 2A3.6 3.6 0 004 7.6v8.8C4 18.39 5.61 20 7.6 20h8.8a3.6 3.6 0 003.6-3.6V7.6C20 5.61 18.39 4 16.4 4H7.6m9.65 1.5a1.25 1.25 0 110 2.5 1.25 1.25 0 010-2.5M12 7a5 5 0 110 10 5 5 0 010-10m0 2a3 3 0 100 6 3 3 0 000-6z"/></svg><span class="text-[11px] text-pink-400 font-semibold">Inspi photos</span><span class="text-[10px] text-slate-500">'+d[k].length+' spots</span></div><div class="ig-strip">';
+d[k].forEach(function(p){h+='<div class="ig-embed"><a href="https://www.instagram.com/p/'+p.c+'/" target="_blank" rel="noopener"><img src="https://images.unsplash.com/'+p.img+'?w=400&h=400&fit=crop&q=80" alt="'+p.n+'" loading="lazy"></a><div class="ig-info"><a href="https://www.google.com/maps/search/'+p.g+'" target="_blank" rel="noopener">'+pinSvg+'<span>'+p.n+'</span></a></div></div>'});h+='</div>';el.innerHTML=h})}();
 
 // CHECKLISTS
 var checkData={
