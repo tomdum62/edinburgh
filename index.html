@@ -341,8 +341,8 @@
 </section>
 
 <section id="instagram" class="mb-14">
-    <h2 class="text-2xl font-serif font-bold mb-2 reveal">18 spots en images</h2>
-    <p class="text-slate-400 text-xs mb-4 reveal">Photos reelles de nos destinations | Cliquez pour voir sur Instagram | Survolez pour le GPS</p>
+    <h2 class="text-2xl font-serif font-bold mb-2 reveal">18 spots incontournables</h2>
+    <p class="text-slate-400 text-xs mb-4 reveal">Photos HD de nos destinations | Cliquez pour Instagram | Survolez pour le GPS</p>
     <div class="ig-grid reveal" id="ig-grid"></div>
 </section>
 
@@ -488,27 +488,27 @@ L.marker([s.la,s.lo],{icon:i}).addTo(map).bindPopup('<div style="color:#1e293b">
 ft={edinburgh:{c:[55.949,-3.19],z:14},northberwick:{c:[56.057,-2.68],z:13},pentland:{c:[55.855,-3.23],z:13},glencoe:{c:[56.67,-5.1],z:12},all:{c:[56.2,-3.8],z:7}}}();
 function flyTo(t){var x=ft[t];if(x)map.flyTo(x.c,x.z)}
 
-// INSTAGRAM GRID - Real location photos from Wikimedia Commons
+// INSTAGRAM GRID - High-quality location photos from Wikimedia Commons
 !function(){var W='https://upload.wikimedia.org/wikipedia/commons/thumb/';
 var p=[
-{c:'C-Bx_8muVBu',n:'Victoria Street',t:'Colorful curve',g:'Victoria+Street+Edinburgh',j:'J1',img:W+'3/35/Victoria_Street%2C_Edinburgh_-_geograph.org.uk_-_1416264.jpg/400px-Victoria_Street%2C_Edinburgh_-_geograph.org.uk_-_1416264.jpg'},
-{c:'DAn2Y9NCAtK',n:'Grassmarket',t:'Pub & chateau',g:'Grassmarket+Edinburgh',j:'J1',img:W+'e/ef/Grassmarket%2C_Edinburgh_%281982%29.JPG/400px-Grassmarket%2C_Edinburgh_%281982%29.JPG'},
-{c:'DTdffnpmH1D',n:'Calton Hill',t:'Dugald Stewart',g:'Calton+Hill+Edinburgh',j:'J1',img:W+'8/8a/Edinburgh_from_Calton_Hill_with_Dugald_Stewart_Monument_3.JPG/400px-Edinburgh_from_Calton_Hill_with_Dugald_Stewart_Monument_3.JPG'},
-{c:'DRxLM-RgKz3',n:'The Vennel',t:'Steps & Castle',g:'The+Vennel+Edinburgh',j:'J1',img:W+'1/17/Flodden_Wall%2C_the_Vennel%2C_Edinburgh.JPG/400px-Flodden_Wall%2C_the_Vennel%2C_Edinburgh.JPG'},
-{c:'DHGTeNLtMMc',n:'Edinburgh Castle',t:'Classic view',g:'Edinburgh+Castle',j:'J1',img:W+'c/c1/Edinburgh_Castle_from_the_south_east.JPG/400px-Edinburgh_Castle_from_the_south_east.JPG'},
-{c:'DGvy2wjMoJr',n:'Royal Mile',t:'Historic street',g:'Royal+Mile+Edinburgh',j:'J1',img:W+'3/33/Royal_mile.JPG/400px-Royal_mile.JPG'},
-{c:'DTA7PynjMsL',n:'Three Sisters',t:'Glencoe majesty',g:'Three+Sisters+Glencoe',j:'J2',img:W+'1/17/The_Three_Sisters_of_Glen_Coe%2C_the_classic_view_-_geograph.org.uk_-_350853.jpg/400px-The_Three_Sisters_of_Glen_Coe%2C_the_classic_view_-_geograph.org.uk_-_350853.jpg'},
-{c:'DMGU5oPxwFV',n:'Glen Etive',t:'Route Skyfall',g:'Glen+Etive+Scotland',j:'J2',img:W+'0/0e/Glen_Etive_Road_-_geograph.org.uk_-_843024.jpg/400px-Glen_Etive_Road_-_geograph.org.uk_-_843024.jpg'},
-{c:'C30kvmaivoH',n:'Buachaille Etive Mor',t:'Icon of Scotland',g:'Buachaille+Etive+Mor',j:'J2',img:W+'3/3b/Buachaille_etive_mor_in_march.jpg/400px-Buachaille_etive_mor_in_march.jpg'},
-{c:'DOJL_UTjPg-',n:'Glencoe Lochan',t:'Lac miroir',g:'Glencoe+Lochan',j:'J2',img:W+'4/44/Glencoe_Lochan_reflections_3_20211022.jpg/400px-Glencoe_Lochan_reflections_3_20211022.jpg'},
-{c:'CXRdEBOj1SP',n:'Lost Valley',t:'Coire Gabhail',g:'Lost+Valley+Glencoe',j:'J2',img:W+'8/8f/Lost_Valley_Glen_Coe_-_geograph.org.uk_-_1512063.jpg/400px-Lost_Valley_Glen_Coe_-_geograph.org.uk_-_1512063.jpg'},
-{c:'DTR_I_ejLD-',n:'Clachaig Inn',t:'Pub historique',g:'Clachaig+Inn+Glencoe',j:'J2',img:W+'b/b5/Clachaig_Inn_Glencoe_-_geograph.org.uk_-_1166538.jpg/400px-Clachaig_Inn_Glencoe_-_geograph.org.uk_-_1166538.jpg'},
-{c:'DRHjK7CDYDL',n:'Tantallon Castle',t:'Ruines & Bass Rock',g:'Tantallon+Castle',j:'J3',img:W+'3/3f/Tantallon_Castle%2C_2015.JPG/400px-Tantallon_Castle%2C_2015.JPG'},
-{c:'DUH-jTQiBzg',n:'North Berwick',t:'Plage & cote',g:'North+Berwick+Scotland',j:'J3',img:W+'a/a0/North_Berwick_Beach.jpg/400px-North_Berwick_Beach.jpg'},
-{c:'CikvzHuKY-M',n:"Arthur's Seat",t:'Volcan 251m',g:'Arthurs+Seat+Edinburgh',j:'J4',img:W+'e/e4/Arthurs_seat_edinburgh.jpg/400px-Arthurs_seat_edinburgh.jpg'},
-{c:'DN8HckoDela',n:'Dean Village',t:'Village medieval',g:'Dean+Village+Edinburgh',j:'J5',img:W+'a/a7/Dean_Village%2C_Edinburgh.jpg/400px-Dean_Village%2C_Edinburgh.jpg'},
-{c:'DURKewak92a',n:'Water of Leith',t:'Riviere cachee',g:'Water+of+Leith+Edinburgh',j:'J5',img:W+'b/bf/Water_of_Leith_at_Colinton_Dell.jpg/400px-Water_of_Leith_at_Colinton_Dell.jpg'},
-{c:'CikvzHuKY-M',n:'Pentland Hills',t:'Collines sauvages',g:'Pentland+Hills+Edinburgh',j:'J4',img:W+'6/6e/Pentland_Hills_Panorama_-_geograph.org.uk_-_1157586.jpg/400px-Pentland_Hills_Panorama_-_geograph.org.uk_-_1157586.jpg'}
+{c:'C-Bx_8muVBu',n:'Victoria Street',t:'Diagon Alley vibes',g:'Victoria+Street+Edinburgh',j:'J1',img:W+'c/c8/Diagon_Alley_%2849520096076%29.jpg/600px-Diagon_Alley_%2849520096076%29.jpg'},
+{c:'DAn2Y9NCAtK',n:'Grassmarket',t:'Pub & chateau',g:'Grassmarket+Edinburgh',j:'J1',img:W+'5/5e/2017-08-26_09-09_Schottland_076_Edinburgh%2C_Grassmarket_%2837619635361%29.jpg/600px-2017-08-26_09-09_Schottland_076_Edinburgh%2C_Grassmarket_%2837619635361%29.jpg'},
+{c:'DTdffnpmH1D',n:'Calton Hill',t:'Sunset panorama',g:'Calton+Hill+Edinburgh',j:'J1',img:W+'7/74/Bench_at_Calton_Hill%2C_Edinburgh%2C_Scotland%2C_GB%2C_IMG_3642_edit.jpg/600px-Bench_at_Calton_Hill%2C_Edinburgh%2C_Scotland%2C_GB%2C_IMG_3642_edit.jpg'},
+{c:'DRxLM-RgKz3',n:'The Vennel',t:'Steps & Castle',g:'The+Vennel+Edinburgh',j:'J1',img:W+'7/7d/Edinburgh_%2C_Vennel_-_geograph.org.uk_-_4960295.jpg/600px-Edinburgh_%2C_Vennel_-_geograph.org.uk_-_4960295.jpg'},
+{c:'DHGTeNLtMMc',n:'Edinburgh Castle',t:'Classic view',g:'Edinburgh+Castle',j:'J1',img:W+'c/c1/Edinburgh_Castle_from_the_south_east.JPG/600px-Edinburgh_Castle_from_the_south_east.JPG'},
+{c:'DGvy2wjMoJr',n:'Royal Mile',t:'Historic street',g:'Royal+Mile+Edinburgh',j:'J1',img:W+'3/33/Royal_mile.JPG/600px-Royal_mile.JPG'},
+{c:'DTA7PynjMsL',n:'Three Sisters',t:'Glencoe majesty',g:'Three+Sisters+Glencoe',j:'J2',img:W+'0/04/The_Three_Sisters%2C_Glencoe%2C_Scotland.jpg/600px-The_Three_Sisters%2C_Glencoe%2C_Scotland.jpg'},
+{c:'DMGU5oPxwFV',n:'Glen Etive',t:'Route Skyfall',g:'Glen+Etive+Scotland',j:'J2',img:W+'c/c6/A_View_Down_Glen_Etive_-_geograph.org.uk_-_4958322.jpg/600px-A_View_Down_Glen_Etive_-_geograph.org.uk_-_4958322.jpg'},
+{c:'C30kvmaivoH',n:'Buachaille Etive Mor',t:'Icon of Scotland',g:'Buachaille+Etive+Mor',j:'J2',img:W+'2/27/Lagangarbh_cottage_with_Buachaille_Etive_M%C3%B2r.jpg/600px-Lagangarbh_cottage_with_Buachaille_Etive_M%C3%B2r.jpg'},
+{c:'DOJL_UTjPg-',n:'Glencoe Lochan',t:'Lac miroir',g:'Glencoe+Lochan',j:'J2',img:W+'f/f4/Glencoe_Lochan_-_Scotland.jpg/600px-Glencoe_Lochan_-_Scotland.jpg'},
+{c:'CXRdEBOj1SP',n:'Lost Valley',t:'Coire Gabhail',g:'Lost+Valley+Glencoe',j:'J2',img:W+'8/8f/Lost_Valley_Glen_Coe_-_geograph.org.uk_-_1512063.jpg/600px-Lost_Valley_Glen_Coe_-_geograph.org.uk_-_1512063.jpg'},
+{c:'DTR_I_ejLD-',n:'Clachaig Inn',t:'Vue & montagnes',g:'Clachaig+Inn+Glencoe',j:'J2',img:W+'c/c9/View_from_Clachaig_Inn_nr._Glencoe_village._-_panoramio.jpg/600px-View_from_Clachaig_Inn_nr._Glencoe_village._-_panoramio.jpg'},
+{c:'DRHjK7CDYDL',n:'Tantallon Castle',t:'Ruines dramatiques',g:'Tantallon+Castle',j:'J3',img:W+'5/58/Ruins_Of_Tantallon_Castle%2C_Scotland.jpg/600px-Ruins_Of_Tantallon_Castle%2C_Scotland.jpg'},
+{c:'DUH-jTQiBzg',n:'North Berwick Law',t:'Vue panoramique',g:'North+Berwick+Law',j:'J3',img:W+'f/f5/North_Berwick_Law_from_Traprain_Law.jpg/600px-North_Berwick_Law_from_Traprain_Law.jpg'},
+{c:'CikvzHuKY-M',n:"Arthur's Seat",t:'Volcan 251m',g:'Arthurs+Seat+Edinburgh',j:'J4',img:W+'e/e4/Arthurs_seat_edinburgh.jpg/600px-Arthurs_seat_edinburgh.jpg'},
+{c:'DN8HckoDela',n:'Dean Village',t:'Village medieval',g:'Dean+Village+Edinburgh',j:'J5',img:W+'a/a7/Dean_Village%2C_Edinburgh.jpg/600px-Dean_Village%2C_Edinburgh.jpg'},
+{c:'DURKewak92a',n:'Dean Bridge',t:'Pont spectaculaire',g:'Dean+Bridge+Edinburgh',j:'J5',img:W+'2/2f/Dean_Bridge%2C_Edinburgh.JPG/600px-Dean_Bridge%2C_Edinburgh.JPG'},
+{c:'CikvzHuKY-M',n:'Pentland Hills',t:'Collines sauvages',g:'Pentland+Hills+Edinburgh',j:'J4',img:W+'8/82/Pentland_Hills_from_Allermuir.jpg/600px-Pentland_Hills_from_Allermuir.jpg'}
 ],g=document.getElementById('ig-grid');
 var jc={J1:'#e11d48',J2:'#9333ea',J3:'#0284c7',J4:'#059669',J5:'#ea580c'};
 var igSvg='<svg class="w-2.5 h-2.5" fill="white" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12s.014 3.668.072 4.948c.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24s3.668-.014 4.948-.072c4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948s-.014-3.667-.072-4.947c-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>';
@@ -518,34 +518,46 @@ var col=jc[x.j]||'#f59e0b';
 d.innerHTML='<a href="https://www.instagram.com/p/'+x.c+'/" target="_blank" rel="noopener" class="block aspect-square"><img src="'+x.img+'" alt="'+x.n+'" loading="lazy"><span class="ig-badge" style="background:'+col+'">'+x.j+'</span><span class="ig-ig">'+igSvg+'</span><div class="ig-overlay"><div class="font-bold text-[10px] text-white">'+x.n+'</div><div class="text-[8px] text-slate-300 mb-1">'+x.t+'</div><a href="https://www.google.com/maps/search/'+x.g+'" target="_blank" rel="noopener" class="ig-loc" onclick="event.stopPropagation()">'+pinSvg+x.n+'</a></div></a>';
 g.appendChild(d)})}();
 
-// INSTAGRAM PER-DAY - Real location photos with GPS
+// INSTAGRAM PER-DAY - High-quality location photos with GPS
 !function(){var W='https://upload.wikimedia.org/wikipedia/commons/thumb/';
 var d={jour1:[
-{c:'C-Bx_8muVBu',n:'Victoria Street',g:'Victoria+Street+Edinburgh',img:W+'3/35/Victoria_Street%2C_Edinburgh_-_geograph.org.uk_-_1416264.jpg/400px-Victoria_Street%2C_Edinburgh_-_geograph.org.uk_-_1416264.jpg'},
-{c:'DAn2Y9NCAtK',n:'Grassmarket',g:'Grassmarket+Edinburgh',img:W+'e/ef/Grassmarket%2C_Edinburgh_%281982%29.JPG/400px-Grassmarket%2C_Edinburgh_%281982%29.JPG'},
-{c:'DTdffnpmH1D',n:'Calton Hill',g:'Calton+Hill+Edinburgh',img:W+'8/8a/Edinburgh_from_Calton_Hill_with_Dugald_Stewart_Monument_3.JPG/400px-Edinburgh_from_Calton_Hill_with_Dugald_Stewart_Monument_3.JPG'},
-{c:'DRxLM-RgKz3',n:'The Vennel',g:'The+Vennel+Edinburgh',img:W+'1/17/Flodden_Wall%2C_the_Vennel%2C_Edinburgh.JPG/400px-Flodden_Wall%2C_the_Vennel%2C_Edinburgh.JPG'},
-{c:'DHGTeNLtMMc',n:'Edinburgh Castle',g:'Edinburgh+Castle',img:W+'c/c1/Edinburgh_Castle_from_the_south_east.JPG/400px-Edinburgh_Castle_from_the_south_east.JPG'},
-{c:'DGvy2wjMoJr',n:'Royal Mile',g:'Royal+Mile+Edinburgh',img:W+'3/33/Royal_mile.JPG/400px-Royal_mile.JPG'}
+{c:'C-Bx_8muVBu',n:'Victoria Street',g:'Victoria+Street+Edinburgh',img:W+'c/c8/Diagon_Alley_%2849520096076%29.jpg/600px-Diagon_Alley_%2849520096076%29.jpg'},
+{c:'DAn2Y9NCAtK',n:'Grassmarket',g:'Grassmarket+Edinburgh',img:W+'5/5e/2017-08-26_09-09_Schottland_076_Edinburgh%2C_Grassmarket_%2837619635361%29.jpg/600px-2017-08-26_09-09_Schottland_076_Edinburgh%2C_Grassmarket_%2837619635361%29.jpg'},
+{c:'DTdffnpmH1D',n:'Calton Hill',g:'Calton+Hill+Edinburgh',img:W+'7/74/Bench_at_Calton_Hill%2C_Edinburgh%2C_Scotland%2C_GB%2C_IMG_3642_edit.jpg/600px-Bench_at_Calton_Hill%2C_Edinburgh%2C_Scotland%2C_GB%2C_IMG_3642_edit.jpg'},
+{c:'DRxLM-RgKz3',n:'The Vennel',g:'The+Vennel+Edinburgh',img:W+'7/7d/Edinburgh_%2C_Vennel_-_geograph.org.uk_-_4960295.jpg/600px-Edinburgh_%2C_Vennel_-_geograph.org.uk_-_4960295.jpg'},
+{c:'DHGTeNLtMMc',n:'Edinburgh Castle',g:'Edinburgh+Castle',img:W+'c/c1/Edinburgh_Castle_from_the_south_east.JPG/600px-Edinburgh_Castle_from_the_south_east.JPG'},
+{c:'DGvy2wjMoJr',n:'Royal Mile',g:'Royal+Mile+Edinburgh',img:W+'3/33/Royal_mile.JPG/600px-Royal_mile.JPG'},
+{c:'DTdffnpmH1D',n:'Dugald Stewart',g:'Calton+Hill+Edinburgh',img:W+'8/8a/Edinburgh_from_Calton_Hill_with_Dugald_Stewart_Monument_3.JPG/600px-Edinburgh_from_Calton_Hill_with_Dugald_Stewart_Monument_3.JPG'},
+{c:'DGvy2wjMoJr',n:'Old Town Panorama',g:'Edinburgh+Old+Town',img:W+'a/a4/Edinburgh_old_town_panorama_20211019.jpg/600px-Edinburgh_old_town_panorama_20211019.jpg'}
 ],jour2:[
-{c:'DTA7PynjMsL',n:'Three Sisters',g:'Three+Sisters+Glencoe',img:W+'1/17/The_Three_Sisters_of_Glen_Coe%2C_the_classic_view_-_geograph.org.uk_-_350853.jpg/400px-The_Three_Sisters_of_Glen_Coe%2C_the_classic_view_-_geograph.org.uk_-_350853.jpg'},
-{c:'DMGU5oPxwFV',n:'Glen Etive',g:'Glen+Etive+Scotland',img:W+'0/0e/Glen_Etive_Road_-_geograph.org.uk_-_843024.jpg/400px-Glen_Etive_Road_-_geograph.org.uk_-_843024.jpg'},
-{c:'C30kvmaivoH',n:'Buachaille Etive Mor',g:'Buachaille+Etive+Mor',img:W+'3/3b/Buachaille_etive_mor_in_march.jpg/400px-Buachaille_etive_mor_in_march.jpg'},
-{c:'DOJL_UTjPg-',n:'Glencoe Lochan',g:'Glencoe+Lochan',img:W+'4/44/Glencoe_Lochan_reflections_3_20211022.jpg/400px-Glencoe_Lochan_reflections_3_20211022.jpg'},
-{c:'CXRdEBOj1SP',n:'Lost Valley',g:'Lost+Valley+Glencoe',img:W+'8/8f/Lost_Valley_Glen_Coe_-_geograph.org.uk_-_1512063.jpg/400px-Lost_Valley_Glen_Coe_-_geograph.org.uk_-_1512063.jpg'},
-{c:'DTR_I_ejLD-',n:'Clachaig Inn',g:'Clachaig+Inn+Glencoe',img:W+'b/b5/Clachaig_Inn_Glencoe_-_geograph.org.uk_-_1166538.jpg/400px-Clachaig_Inn_Glencoe_-_geograph.org.uk_-_1166538.jpg'}
+{c:'DTA7PynjMsL',n:'Three Sisters',g:'Three+Sisters+Glencoe',img:W+'0/04/The_Three_Sisters%2C_Glencoe%2C_Scotland.jpg/600px-The_Three_Sisters%2C_Glencoe%2C_Scotland.jpg'},
+{c:'DMGU5oPxwFV',n:'Glen Etive',g:'Glen+Etive+Scotland',img:W+'c/c6/A_View_Down_Glen_Etive_-_geograph.org.uk_-_4958322.jpg/600px-A_View_Down_Glen_Etive_-_geograph.org.uk_-_4958322.jpg'},
+{c:'C30kvmaivoH',n:'Buachaille Etive Mor',g:'Buachaille+Etive+Mor',img:W+'2/27/Lagangarbh_cottage_with_Buachaille_Etive_M%C3%B2r.jpg/600px-Lagangarbh_cottage_with_Buachaille_Etive_M%C3%B2r.jpg'},
+{c:'DOJL_UTjPg-',n:'Glencoe Lochan',g:'Glencoe+Lochan',img:W+'f/f4/Glencoe_Lochan_-_Scotland.jpg/600px-Glencoe_Lochan_-_Scotland.jpg'},
+{c:'CXRdEBOj1SP',n:'Lost Valley',g:'Lost+Valley+Glencoe',img:W+'8/8f/Lost_Valley_Glen_Coe_-_geograph.org.uk_-_1512063.jpg/600px-Lost_Valley_Glen_Coe_-_geograph.org.uk_-_1512063.jpg'},
+{c:'DTR_I_ejLD-',n:'Clachaig Inn',g:'Clachaig+Inn+Glencoe',img:W+'c/c9/View_from_Clachaig_Inn_nr._Glencoe_village._-_panoramio.jpg/600px-View_from_Clachaig_Inn_nr._Glencoe_village._-_panoramio.jpg'},
+{c:'DTA7PynjMsL',n:'Three Sisters Valley',g:'Three+Sisters+Glencoe',img:W+'1/18/The_Three_Sisters_Valley%2C_Glencoe%2C_Scotland_-_53744377929.jpg/600px-The_Three_Sisters_Valley%2C_Glencoe%2C_Scotland_-_53744377929.jpg'},
+{c:'C30kvmaivoH',n:'Old Glencoe Road',g:'Three+Sisters+Glencoe',img:W+'3/3c/The_Three_Sisters_from_Old_Glencoe_Road_02.jpg/600px-The_Three_Sisters_from_Old_Glencoe_Road_02.jpg'}
 ],jour3:[
-{c:'DRHjK7CDYDL',n:'Tantallon Castle',g:'Tantallon+Castle',img:W+'3/3f/Tantallon_Castle%2C_2015.JPG/400px-Tantallon_Castle%2C_2015.JPG'},
-{c:'DUH-jTQiBzg',n:'North Berwick',g:'North+Berwick+Scotland',img:W+'a/a0/North_Berwick_Beach.jpg/400px-North_Berwick_Beach.jpg'},
-{c:'DUY1JpQjUpx',n:'Bass Rock',g:'Bass+Rock+North+Berwick',img:W+'1/1d/The_Bass_Rock_from_North_Berwick%2C_East_Lothian%2C_Scotland.jpg/400px-The_Bass_Rock_from_North_Berwick%2C_East_Lothian%2C_Scotland.jpg'},
-{c:'Cq71TfAoCWa',n:'Salisbury Crags',g:'Salisbury+Crags+Edinburgh',img:W+'f/f6/Salisbury_Crags_and_Arthur%27s_Seat_in_Edinburgh.jpg/400px-Salisbury_Crags_and_Arthur%27s_Seat_in_Edinburgh.jpg'}
+{c:'DRHjK7CDYDL',n:'Tantallon Castle',g:'Tantallon+Castle',img:W+'5/58/Ruins_Of_Tantallon_Castle%2C_Scotland.jpg/600px-Ruins_Of_Tantallon_Castle%2C_Scotland.jpg'},
+{c:'DUH-jTQiBzg',n:'North Berwick Law',g:'North+Berwick+Law',img:W+'f/f5/North_Berwick_Law_from_Traprain_Law.jpg/600px-North_Berwick_Law_from_Traprain_Law.jpg'},
+{c:'DUY1JpQjUpx',n:'Bass Rock',g:'Bass+Rock+North+Berwick',img:W+'c/ce/Bass_Rock_viewed_from_North_Berwick_-_geograph.org.uk_-_5763136.jpg/600px-Bass_Rock_viewed_from_North_Berwick_-_geograph.org.uk_-_5763136.jpg'},
+{c:'DUH-jTQiBzg',n:'North Berwick Harbour',g:'North+Berwick+Harbour',img:W+'5/5c/North_Berwick_Harbour_-_geograph.org.uk_-_1203681.jpg/600px-North_Berwick_Harbour_-_geograph.org.uk_-_1203681.jpg'},
+{c:'DUH-jTQiBzg',n:'Lobster Shack',g:'Lobster+Shack+North+Berwick',img:W+'2/25/Coastal_East_Lothian_%2C_The_Lobster_Shack_at_North_Berwick_Harbour_-_geograph.org.uk_-_2407860.jpg/600px-Coastal_East_Lothian_%2C_The_Lobster_Shack_at_North_Berwick_Harbour_-_geograph.org.uk_-_2407860.jpg'},
+{c:'DRHjK7CDYDL',n:'Bass Rock & Tantallon',g:'Tantallon+Castle+Bass+Rock',img:W+'8/87/Bass_Rock_from_Tantallon_Castle.jpg/600px-Bass_Rock_from_Tantallon_Castle.jpg'}
 ],jour4:[
-{c:'CikvzHuKY-M',n:"Arthur's Seat",g:'Arthurs+Seat+Edinburgh',img:W+'e/e4/Arthurs_seat_edinburgh.jpg/400px-Arthurs_seat_edinburgh.jpg'},
-{c:'DOyZqXfDB8m',n:'Salisbury Crags',g:'Salisbury+Crags+Edinburgh',img:W+'f/f6/Salisbury_Crags_and_Arthur%27s_Seat_in_Edinburgh.jpg/400px-Salisbury_Crags_and_Arthur%27s_Seat_in_Edinburgh.jpg'},
-{c:'DNTgbW2oYgY',n:'Pentland Hills',g:'Pentland+Hills+Edinburgh',img:W+'6/6e/Pentland_Hills_Panorama_-_geograph.org.uk_-_1157586.jpg/400px-Pentland_Hills_Panorama_-_geograph.org.uk_-_1157586.jpg'}
+{c:'CikvzHuKY-M',n:"Arthur's Seat",g:'Arthurs+Seat+Edinburgh',img:W+'e/e4/Arthurs_seat_edinburgh.jpg/600px-Arthurs_seat_edinburgh.jpg'},
+{c:'DOyZqXfDB8m',n:'Salisbury Crags',g:'Salisbury+Crags+Edinburgh',img:W+'2/28/Salisbury_crags_and_Radical_Road.jpg/600px-Salisbury_crags_and_Radical_Road.jpg'},
+{c:'DNTgbW2oYgY',n:'Pentland Hills',g:'Pentland+Hills+Edinburgh',img:W+'8/82/Pentland_Hills_from_Allermuir.jpg/600px-Pentland_Hills_from_Allermuir.jpg'},
+{c:'CikvzHuKY-M',n:'Holyrood Palace',g:'Holyrood+Palace+Edinburgh',img:W+'6/6f/Holyrood_Palace_main_entrance_20211021.jpg/600px-Holyrood_Palace_main_entrance_20211021.jpg'},
+{c:'CikvzHuKY-M',n:'Edinburgh Panorama',g:'Edinburgh+panorama',img:W+'0/05/Edinburgh_from_Salisbury_Crags_panosphere_20211019.jpg/600px-Edinburgh_from_Salisbury_Crags_panosphere_20211019.jpg'},
+{c:'CikvzHuKY-M',n:'Calton Hill Sunset',g:'Calton+Hill+Edinburgh',img:W+'8/8a/Edinburgh_from_Calton_Hill_with_Dugald_Stewart_Monument_3.JPG/600px-Edinburgh_from_Calton_Hill_with_Dugald_Stewart_Monument_3.JPG'}
 ],jour5:[
-{c:'DN8HckoDela',n:'Dean Village',g:'Dean+Village+Edinburgh',img:W+'a/a7/Dean_Village%2C_Edinburgh.jpg/400px-Dean_Village%2C_Edinburgh.jpg'},
-{c:'DURKewak92a',n:'Water of Leith',g:'Water+of+Leith+Edinburgh',img:W+'b/bf/Water_of_Leith_at_Colinton_Dell.jpg/400px-Water_of_Leith_at_Colinton_Dell.jpg'}
+{c:'DN8HckoDela',n:'Dean Village',g:'Dean+Village+Edinburgh',img:W+'a/a7/Dean_Village%2C_Edinburgh.jpg/600px-Dean_Village%2C_Edinburgh.jpg'},
+{c:'DURKewak92a',n:'Dean Bridge',g:'Dean+Bridge+Edinburgh',img:W+'2/2f/Dean_Bridge%2C_Edinburgh.JPG/600px-Dean_Bridge%2C_Edinburgh.JPG'},
+{c:'DURKewak92a',n:'St Bernard\'s Well',g:'St+Bernards+Well+Edinburgh',img:W+'3/3d/DSCN4168_St_Bernard%27s_Well_from_Dean_Gardens.jpg/600px-DSCN4168_St_Bernard%27s_Well_from_Dean_Gardens.jpg'},
+{c:'DURKewak92a',n:'Gallery of Modern Art',g:'Scottish+National+Gallery+Modern+Art+Edinburgh',img:W+'d/d0/Modern_One%2C_Scottish_National_Gallery_of_Modern_Art%2C_Belford_Road%2C_Edinburgh.jpg/600px-Modern_One%2C_Scottish_National_Gallery_of_Modern_Art%2C_Belford_Road%2C_Edinburgh.jpg'},
+{c:'DURKewak92a',n:'Water of Leith',g:'Water+of+Leith+Edinburgh',img:W+'a/a6/Water_of_Leith_at_Dean_village_-_geograph.org.uk_-_936835.jpg/600px-Water_of_Leith_at_Dean_village_-_geograph.org.uk_-_936835.jpg'}
 ]};
 var pinSvg='<svg class="w-3 h-3 shrink-0" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>';
 Object.keys(d).forEach(function(k){var el=document.getElementById('ig-'+k);if(!el)return;var h='<div class="flex items-center gap-1.5 mb-1.5"><svg class="w-3.5 h-3.5 text-pink-400" fill="currentColor" viewBox="0 0 24 24"><path d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4a5.8 5.8 0 01-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8A5.8 5.8 0 017.8 2m-.2 2A3.6 3.6 0 004 7.6v8.8C4 18.39 5.61 20 7.6 20h8.8a3.6 3.6 0 003.6-3.6V7.6C20 5.61 18.39 4 16.4 4H7.6m9.65 1.5a1.25 1.25 0 110 2.5 1.25 1.25 0 010-2.5M12 7a5 5 0 110 10 5 5 0 010-10m0 2a3 3 0 100 6 3 3 0 000-6z"/></svg><span class="text-[11px] text-pink-400 font-semibold">Inspi photos</span><span class="text-[10px] text-slate-500">'+d[k].length+' spots</span></div><div class="ig-strip">';
