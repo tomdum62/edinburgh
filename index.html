@@ -80,6 +80,33 @@
         .weather-day .wd-alert{font-size:8px;font-weight:700;padding:2px 6px;border-radius:9999px;margin-top:4px;display:inline-block}
         .weather-inline{display:inline-flex;align-items:center;gap:6px;background:rgba(30,41,59,.7);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.08);border-radius:8px;padding:4px 10px;font-size:10px;color:#cbd5e1}
         .weather-inline .wi-icon{font-size:16px}
+        .weather-panel{position:fixed;top:60px;right:-340px;width:320px;max-height:calc(100vh - 80px);z-index:40;background:rgba(15,23,42,.92);backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,.08);border-radius:1rem 0 0 1rem;transition:right .35s cubic-bezier(.4,0,.2,1);overflow-y:auto;box-shadow:-4px 0 30px rgba(0,0,0,.4)}
+        .weather-panel.open{right:0}
+        .weather-panel .wp-header{position:sticky;top:0;background:rgba(15,23,42,.95);padding:12px 14px;border-bottom:1px solid rgba(255,255,255,.06);display:flex;align-items:center;justify-content:space-between;z-index:2}
+        .weather-panel .wp-close{width:28px;height:28px;border-radius:50%;border:1px solid rgba(255,255,255,.1);background:transparent;color:#94a3b8;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:14px;transition:background .2s}
+        .weather-panel .wp-close:hover{background:rgba(255,255,255,.1)}
+        .weather-panel .wp-tabs{display:flex;gap:0;padding:0 14px;border-bottom:1px solid rgba(255,255,255,.06)}
+        .weather-panel .wp-tab{flex:1;padding:8px 4px;text-align:center;font-size:10px;font-weight:700;color:#64748b;border-bottom:2px solid transparent;cursor:pointer;transition:color .2s,border-color .2s}
+        .weather-panel .wp-tab.active{color:#fbbf24;border-bottom-color:#fbbf24}
+        .weather-panel .wp-tab:hover{color:#94a3b8}
+        .weather-panel .wp-body{padding:10px 14px}
+        .weather-panel .wp-summary{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px}
+        .weather-panel .wp-stat{background:rgba(30,41,59,.6);border-radius:8px;padding:8px;text-align:center}
+        .weather-panel .wp-stat .ws-val{font-size:16px;font-weight:700}.weather-panel .wp-stat .ws-lbl{font-size:9px;color:#64748b}
+        .weather-panel .wp-hourly{display:flex;flex-direction:column;gap:2px}
+        .weather-panel .wp-hour{display:grid;grid-template-columns:36px 24px 42px 50px 50px;align-items:center;gap:4px;padding:4px 6px;border-radius:6px;font-size:10px;transition:background .2s}
+        .weather-panel .wp-hour:hover{background:rgba(255,255,255,.04)}
+        .weather-panel .wp-hour.now{background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.2)}
+        .weather-panel .wp-hour .wh-time{font-weight:700;color:#94a3b8;font-family:monospace}
+        .weather-panel .wp-hour .wh-icon{font-size:14px;text-align:center}
+        .weather-panel .wp-hour .wh-temp{font-weight:700;color:#fff}
+        .weather-panel .wp-hour .wh-rain{color:#60a5fa}.weather-panel .wp-hour .wh-wind{color:#a78bfa}
+        .weather-panel .wp-precip-bar{height:3px;border-radius:2px;margin-top:1px;background:rgba(96,165,250,.15)}
+        .weather-panel .wp-precip-fill{height:100%;border-radius:2px;background:linear-gradient(90deg,#3b82f6,#60a5fa);transition:width .3s}
+        .wp-toggle{position:fixed;top:70px;right:0;z-index:41;width:36px;height:64px;border-radius:8px 0 0 8px;border:1px solid rgba(96,165,250,.2);border-right:none;background:rgba(15,23,42,.9);backdrop-filter:blur(8px);cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;transition:right .35s,background .2s;color:#60a5fa;font-size:10px}
+        .wp-toggle:hover{background:rgba(30,41,59,.95)}
+        .wp-toggle.shifted{right:320px}
+        @media(max-width:767px){.weather-panel{width:100%;right:-100%;border-radius:1rem 1rem 0 0;top:auto;bottom:0;max-height:70vh}.weather-panel.open{right:0}.wp-toggle.shifted{right:0;bottom:70vh;top:auto}}
         .music-btn{position:fixed;bottom:20px;left:20px;z-index:9999;width:48px;height:48px;border-radius:50%;border:1px solid rgba(245,158,11,.3);background:rgba(15,23,42,.85);backdrop-filter:blur(12px);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:transform .2s,box-shadow .2s,border-color .3s;box-shadow:0 4px 15px rgba(0,0,0,.4)}
         .music-btn:hover{transform:scale(1.1);box-shadow:0 6px 25px rgba(245,158,11,.2);border-color:rgba(245,158,11,.6)}
         .music-btn.playing{border-color:rgba(245,158,11,.6);animation:music-pulse 2s ease infinite}
@@ -774,24 +801,37 @@ renderPhrases('ph-emergency',[
 ])}();
 </script>
 
-<!-- Outlander Music Player -->
+<!-- Outlander Music Player - HTML5 Audio (Archive.org) -->
 <button class="music-btn" id="musicBtn" onclick="toggleMusic()" aria-label="Play Outlander theme">
     <span class="note" id="musicIcon">&#9835;</span>
     <span class="tooltip">&#127926; The Skye Boat Song - Outlander</span>
 </button>
-<div id="yt-player-wrap" style="position:fixed;top:-9999px;left:-9999px;width:1px;height:1px;pointer-events:none;overflow:hidden"><div id="yt-player"></div></div>
+<audio id="bgMusic" loop preload="auto" src="https://archive.org/download/TheSkyeBoatSong/The_skye_boat_song.mp3"></audio>
 <script>
-var ytPlayer,ytReady=false,musicPlaying=false,ytFailed=false;
-var ytVideos=['YrusSXEEv1M','0qrwJDR6bzs','sECPEz5eDvc'],ytIdx=0;
-var tag=document.createElement('script');tag.src='https://www.youtube.com/iframe_api';tag.onerror=function(){ytFailed=true;document.getElementById('musicIcon').textContent='\u2716'};document.head.appendChild(tag);
-function createYTPlayer(vid){
-ytPlayer=new YT.Player('yt-player',{height:'1',width:'1',videoId:vid,host:'https://www.youtube-nocookie.com',
-playerVars:{autoplay:0,loop:1,playlist:vid,controls:0,disablekb:1,fs:0,modestbranding:1,rel:0,enablejsapi:1,origin:location.origin,playsinline:1},
-events:{onReady:function(e){ytReady=true;e.target.setVolume(40);document.getElementById('musicIcon').textContent='\u266B'},
-onError:function(){ytIdx++;if(ytIdx<ytVideos.length){document.getElementById('yt-player').remove();var d=document.createElement('div');d.id='yt-player';document.getElementById('yt-player-wrap').appendChild(d);createYTPlayer(ytVideos[ytIdx])}else{ytFailed=true;document.getElementById('musicIcon').textContent='\u2716'}},
-onStateChange:function(e){if(e.data===YT.PlayerState.ENDED){e.target.playVideo()}}}});}
-function onYouTubeIframeAPIReady(){createYTPlayer(ytVideos[0]);}
-function toggleMusic(){if(ytFailed||!ytReady)return;var b=document.getElementById('musicBtn'),ic=document.getElementById('musicIcon');if(musicPlaying){ytPlayer.pauseVideo();b.classList.remove('playing');ic.textContent='\u266B';musicPlaying=false}else{ytPlayer.playVideo();b.classList.add('playing');ic.textContent='\u266C';musicPlaying=true}}
+var bgAudio=document.getElementById('bgMusic'),musicPlaying=false,musicReady=false;
+bgAudio.volume=0.3;
+bgAudio.addEventListener('canplaythrough',function(){musicReady=true;document.getElementById('musicIcon').textContent='\u266B'});
+bgAudio.addEventListener('error',function(){document.getElementById('musicIcon').textContent='\u2716'});
+function toggleMusic(){if(!musicReady)return;var b=document.getElementById('musicBtn'),ic=document.getElementById('musicIcon');
+if(musicPlaying){bgAudio.pause();b.classList.remove('playing');ic.textContent='\u266B';musicPlaying=false}
+else{bgAudio.play().then(function(){b.classList.add('playing');ic.textContent='\u266C';musicPlaying=true}).catch(function(){ic.textContent='\u2716'})}}
+</script>
+
+<!-- Weather Side Panel Toggle -->
+<button class="wp-toggle" id="wpToggle" onclick="toggleWeatherPanel()">
+    <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z"/></svg>
+    <span style="font-size:8px;font-weight:700">METEO</span>
+</button>
+<div class="weather-panel" id="weatherPanel">
+    <div class="wp-header">
+        <div style="display:flex;align-items:center;gap:6px"><svg width="16" height="16" fill="#60a5fa" viewBox="0 0 24 24"><path d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z"/></svg><b style="font-size:12px">Meteo detaillee</b></div>
+        <button class="wp-close" onclick="toggleWeatherPanel()">&times;</button>
+    </div>
+    <div class="wp-tabs" id="wpTabs"></div>
+    <div class="wp-body" id="wpBody"><div class="text-slate-500 text-xs text-center py-4">Chargement...</div></div>
+</div>
+<script>
+function toggleWeatherPanel(){var p=document.getElementById('weatherPanel'),t=document.getElementById('wpToggle');p.classList.toggle('open');t.classList.toggle('shifted')}
 </script>
 
 <!-- Weather Widget - Open-Meteo API (no key needed) -->
@@ -799,14 +839,24 @@ function toggleMusic(){if(ytFailed||!ytReady)return;var b=document.getElementByI
 !function(){
 var WMO={0:['Ciel degage','\u2600\uFE0F'],1:['Peu nuageux','\u26C5'],2:['Partiellement nuageux','\u26C5'],3:['Couvert','\u2601\uFE0F'],45:['Brouillard','\uD83C\uDF2B\uFE0F'],48:['Brouillard givrant','\uD83C\uDF2B\uFE0F'],51:['Bruine legere','\uD83C\uDF26\uFE0F'],53:['Bruine','\uD83C\uDF26\uFE0F'],55:['Bruine forte','\uD83C\uDF27\uFE0F'],56:['Bruine verglacante','\u2744\uFE0F'],57:['Bruine vergl. forte','\u2744\uFE0F'],61:['Pluie legere','\uD83C\uDF27\uFE0F'],63:['Pluie moderee','\uD83C\uDF27\uFE0F'],65:['Pluie forte','\uD83C\uDF27\uFE0F'],66:['Pluie verglacante','\u2744\uFE0F'],67:['Pluie vergl. forte','\u2744\uFE0F'],71:['Neige legere','\uD83C\uDF28\uFE0F'],73:['Neige moderee','\uD83C\uDF28\uFE0F'],75:['Neige forte','\uD83C\uDF28\uFE0F'],77:['Grains de neige','\uD83C\uDF28\uFE0F'],80:['Averses legeres','\uD83C\uDF26\uFE0F'],81:['Averses','\uD83C\uDF27\uFE0F'],82:['Averses violentes','\u26C8\uFE0F'],85:['Averses de neige','\uD83C\uDF28\uFE0F'],86:['Fortes av. neige','\uD83C\uDF28\uFE0F'],95:['Orage','\u26A1'],96:['Orage + grele','\u26A1'],99:['Orage + grele forte','\u26A1']};
 var DAYS=['J1 Jeu 19','J2 Ven 20','J3 Sam 21','J4 Dim 22','J5 Lun 23'];
+var DAYS_SHORT=['J1','J2','J3','J4','J5'];
 var LOCS=[{n:'Edinburgh',la:55.95,lo:-3.19},{n:'Glencoe',la:56.68,lo:-5.05},{n:'Edinburgh',la:55.95,lo:-3.19},{n:'Edinburgh',la:55.95,lo:-3.19},{n:'Edinburgh',la:55.95,lo:-3.19}];
-var COLORS=['rose','purple','sky','emerald','orange'];
+var ACTIVITIES=[
+['10:00 Arrivee','12:00 Grassmarket','14:00 Victoria St','16:00 Royal Mile','17:00 Calton Hill'],
+['06:30 Depart','09:00 Buachaille','10:45 Three Sisters','11:15 Lost Valley','15:15 Glencoe Lochan'],
+['08:00 Route cote','09:00 NB Law','11:00 Tantallon','16:40 Match rugby'],
+['09:00 Holyrood','10:15 Arthur Seat','14:00 Pentlands','19:30 The Kitchin'],
+['08:00 Dean Village','09:30 The Milkman','15:30 Aeroport','18:35 Vol retour']
+];
+var storedEdi=null,storedGlen=null,activeTab=0;
 
 function wmoInfo(c){return WMO[c]||['Inconnu','\u2753'];}
 
 function fetchWeather(lat,lon){
-return fetch('https://api.open-meteo.com/v1/forecast?latitude='+lat+'&longitude='+lon+'&daily=temperature_2m_max,temperature_2m_min,precipitation_sum,precipitation_probability_max,windspeed_10m_max,weathercode&hourly=temperature_2m,precipitation_probability,weathercode,windspeed_10m&timezone=Europe/London&start_date=2026-02-19&end_date=2026-02-23').then(function(r){return r.json()});
+return fetch('https://api.open-meteo.com/v1/forecast?latitude='+lat+'&longitude='+lon+'&daily=temperature_2m_max,temperature_2m_min,precipitation_sum,precipitation_probability_max,windspeed_10m_max,weathercode&hourly=temperature_2m,precipitation_probability,precipitation,weathercode,windspeed_10m,winddirection_10m&timezone=Europe/London&start_date=2026-02-19&end_date=2026-02-23').then(function(r){return r.json()});
 }
+
+function windDir(deg){var dirs=['N','NE','E','SE','S','SO','O','NO'];return dirs[Math.round(deg/45)%8];}
 
 function renderOverview(ediData,glenData){
 var c=document.getElementById('weather-overview');if(!c)return;
@@ -818,11 +868,11 @@ var rain=d.daily.precipitation_sum[i],rainP=d.daily.precipitation_probability_ma
 var wind=d.daily.windspeed_10m_max[i],code=d.daily.weathercode[i];
 var w=wmoInfo(code);
 var alert='';
-if(code>=71&&code<=77)alert='<div class="wd-alert bg-sky-500/20 text-sky-300">NEIGE</div>';
-else if(wind>30)alert='<div class="wd-alert bg-amber-500/20 text-amber-300">VENT FORT</div>';
-else if(rain>10)alert='<div class="wd-alert bg-blue-500/20 text-blue-300">PLUIE</div>';
-else if(rainP<20&&code<=2)alert='<div class="wd-alert bg-emerald-500/20 text-emerald-300">BEAU</div>';
-html+='<div class="weather-day" data-day="'+i+'" onclick="document.getElementById(\'jour'+(i+1)+'\').scrollIntoView({behavior:\'smooth\'})">';
+if(code>=71&&code<=77)alert='<div class="wd-alert bg-sky-500/20 text-sky-300">\u2744 NEIGE</div>';
+else if(wind>30)alert='<div class="wd-alert bg-amber-500/20 text-amber-300">\uD83D\uDCA8 VENT FORT</div>';
+else if(rain>10)alert='<div class="wd-alert bg-blue-500/20 text-blue-300">\uD83C\uDF27 FORTE PLUIE</div>';
+else if(rainP<20&&code<=2)alert='<div class="wd-alert bg-emerald-500/20 text-emerald-300">\u2600 BEAU</div>';
+html+='<div class="weather-day" data-day="'+i+'" onclick="openWeatherDay('+i+')">';
 html+='<div class="wd-icon">'+w[1]+'</div>';
 html+='<div class="wd-day">'+DAYS[i]+' <span style="color:#64748b;font-weight:400">'+LOCS[i].n+'</span></div>';
 html+='<div class="wd-temp">'+Math.round(tmax)+'\u00B0 <span>/ '+Math.round(tmin)+'\u00B0</span></div>';
@@ -835,7 +885,7 @@ html+=alert;
 html+='</div>';
 }
 c.innerHTML=html;
-document.getElementById('weather-updated').textContent='Mis a jour: '+new Date().toLocaleString('fr-FR',{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'});
+document.getElementById('weather-updated').textContent='Mis a jour: '+new Date().toLocaleString('fr-FR',{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'})+' | Cliquer pour detail heure par heure \u2192';
 }
 
 function renderInline(ediData,glenData){
@@ -846,8 +896,108 @@ var tmax=d.daily.temperature_2m_max[i],tmin=d.daily.temperature_2m_min[i];
 var code=d.daily.weathercode[i],rainP=d.daily.precipitation_probability_max[i];
 var w=wmoInfo(code);
 el.innerHTML='<span class="wi-icon">'+w[1]+'</span><b>'+Math.round(tmax)+'\u00B0</b>/'+Math.round(tmin)+'\u00B0 <span style="color:#60a5fa">\uD83D\uDCA7'+rainP+'%</span>';
+el.style.cursor='pointer';
+el.onclick=function(idx){return function(){openWeatherDay(idx)}}(i);
 }
 }
+
+function renderTabs(){
+var tabs=document.getElementById('wpTabs');if(!tabs)return;
+var html='';
+for(var i=0;i<5;i++){
+html+='<div class="wp-tab'+(i===activeTab?' active':'')+'" onclick="switchWeatherTab('+i+')">'+DAYS_SHORT[i]+'</div>';
+}
+tabs.innerHTML=html;
+}
+
+function renderPanel(dayIdx){
+var body=document.getElementById('wpBody');if(!body)return;
+var d=dayIdx===1?storedGlen:storedEdi;if(!d||!d.hourly)return;
+var start=dayIdx*24,end=start+24;
+var tmax=d.daily.temperature_2m_max[dayIdx],tmin=d.daily.temperature_2m_min[dayIdx];
+var rain=d.daily.precipitation_sum[dayIdx],rainP=d.daily.precipitation_probability_max[dayIdx];
+var wind=d.daily.windspeed_10m_max[dayIdx],code=d.daily.weathercode[dayIdx];
+var w=wmoInfo(code);
+
+var html='<div class="wp-summary">';
+html+='<div class="wp-stat"><div class="ws-val" style="color:#fbbf24">'+w[1]+' '+w[0]+'</div><div class="ws-lbl">'+LOCS[dayIdx].n+'</div></div>';
+html+='<div class="wp-stat"><div class="ws-val">'+Math.round(tmax)+'\u00B0 <span style="font-size:11px;color:#64748b">/ '+Math.round(tmin)+'\u00B0</span></div><div class="ws-lbl">Temperature</div></div>';
+html+='<div class="wp-stat"><div class="ws-val" style="color:#60a5fa">\uD83D\uDCA7 '+rain.toFixed(1)+'mm</div><div class="ws-lbl">Precipitations ('+rainP+'%)</div></div>';
+html+='<div class="wp-stat"><div class="ws-val" style="color:#a78bfa">\uD83D\uDCA8 '+Math.round(wind)+'km/h</div><div class="ws-lbl">Vent max</div></div>';
+html+='</div>';
+
+// Activities for this day
+var acts=ACTIVITIES[dayIdx];
+html+='<div style="margin-bottom:8px"><div style="font-size:9px;font-weight:700;color:#64748b;margin-bottom:4px">ACTIVITES PREVUES</div>';
+html+='<div style="display:flex;flex-wrap:wrap;gap:4px">';
+for(var a=0;a<acts.length;a++){
+var actHour=parseInt(acts[a].split(':')[0]);
+var actCode=d.hourly.weathercode[start+actHour];
+var actW=wmoInfo(actCode);
+var actRain=d.hourly.precipitation_probability[start+actHour];
+var rainClass=actRain>60?' style="color:#ef4444;font-weight:700"':actRain>30?' style="color:#f59e0b"':'';
+html+='<div style="font-size:8px;background:rgba(30,41,59,.8);border:1px solid rgba(255,255,255,.06);border-radius:6px;padding:3px 6px">';
+html+='<span style="font-weight:700">'+acts[a]+'</span> ';
+html+=actW[1]+' <span'+rainClass+'>\uD83D\uDCA7'+actRain+'%</span></div>';
+}
+html+='</div></div>';
+
+// Alerts
+if(code>=71&&code<=77) html+='<div style="background:rgba(56,189,248,.1);border:1px solid rgba(56,189,248,.2);border-radius:8px;padding:6px 8px;margin-bottom:8px;font-size:10px;color:#7dd3fc">\u2744\uFE0F <b>ALERTE NEIGE</b> - Prevoyez des chaussures adaptees et des vetements chauds. Routes potentiellement verglacees.</div>';
+else if(wind>30) html+='<div style="background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.2);border-radius:8px;padding:6px 8px;margin-bottom:8px;font-size:10px;color:#fbbf24">\uD83D\uDCA8 <b>VENT FORT</b> - Prudence en rando, surtout en altitude. Pensez au coupe-vent.</div>';
+
+// Hourly table header
+html+='<div style="font-size:9px;font-weight:700;color:#64748b;margin-bottom:4px">HEURE PAR HEURE</div>';
+html+='<div style="display:grid;grid-template-columns:36px 24px 42px 50px 50px;gap:4px;padding:2px 6px;font-size:8px;color:#475569;font-weight:700;margin-bottom:2px">';
+html+='<span>HEURE</span><span></span><span>TEMP</span><span>PLUIE</span><span>VENT</span></div>';
+html+='<div class="wp-hourly">';
+
+var now=new Date();
+var tripDate=new Date(2026,1,19+dayIdx);
+var isToday=now.toDateString()===tripDate.toDateString();
+
+for(var h=0;h<24;h++){
+var idx=start+h;
+var temp=d.hourly.temperature_2m[idx];
+var rainProb=d.hourly.precipitation_probability[idx];
+var precip=d.hourly.precipitation[idx];
+var hCode=d.hourly.weathercode[idx];
+var hWind=d.hourly.windspeed_10m[idx];
+var hWindDir=d.hourly.winddirection_10m[idx];
+var hW=wmoInfo(hCode);
+var isNow=isToday&&now.getHours()===h;
+var isActivity=false;
+for(var a2=0;a2<acts.length;a2++){if(parseInt(acts[a2].split(':')[0])===h)isActivity=true;}
+var rowClass='wp-hour'+(isNow?' now':'');
+var rainColor=rainProb>60?'#ef4444':rainProb>30?'#f59e0b':'#60a5fa';
+
+html+='<div class="'+rowClass+'"'+(isActivity?' style="background:rgba(245,158,11,.06);border-left:2px solid rgba(245,158,11,.3)"':'')+'>';
+html+='<span class="wh-time">'+(h<10?'0':'')+h+':00</span>';
+html+='<span class="wh-icon">'+hW[1]+'</span>';
+html+='<span class="wh-temp">'+Math.round(temp)+'\u00B0</span>';
+html+='<span class="wh-rain" style="color:'+rainColor+'">'+rainProb+'%'+(precip>0?' '+precip.toFixed(1)+'mm':'')+'</span>';
+html+='<span class="wh-wind">'+Math.round(hWind)+' '+windDir(hWindDir)+'</span>';
+html+='</div>';
+if(precip>0){
+html+='<div class="wp-precip-bar"><div class="wp-precip-fill" style="width:'+Math.min(precip*20,100)+'%"></div></div>';
+}
+}
+html+='</div>';
+body.innerHTML=html;
+}
+
+window.openWeatherDay=function(idx){
+activeTab=idx;
+renderTabs();
+renderPanel(idx);
+var p=document.getElementById('weatherPanel');
+if(!p.classList.contains('open'))toggleWeatherPanel();
+};
+window.switchWeatherTab=function(idx){
+activeTab=idx;
+renderTabs();
+renderPanel(idx);
+};
 
 function highlightActiveDay(){
 var days=document.querySelectorAll('.weather-day');
@@ -858,11 +1008,17 @@ var el=document.getElementById(sections[i]);
 if(el&&el.getBoundingClientRect().top<=200){active=i;break;}
 }
 days.forEach(function(d,idx){d.classList.toggle('active',idx===active)});
+if(active>=0&&document.getElementById('weatherPanel').classList.contains('open')&&active!==activeTab){
+activeTab=active;renderTabs();renderPanel(active);
+}
 }
 
 Promise.all([fetchWeather(55.95,-3.19),fetchWeather(56.68,-5.05)]).then(function(res){
+storedEdi=res[0];storedGlen=res[1];
 renderOverview(res[0],res[1]);
 renderInline(res[0],res[1]);
+renderTabs();
+renderPanel(0);
 window.addEventListener('scroll',highlightActiveDay);
 highlightActiveDay();
 }).catch(function(e){
