@@ -32,10 +32,11 @@
         .photo-thumb img{width:100%;height:100%;object-fit:cover}
         .photo-thumb .del{position:absolute;top:4px;right:4px;background:rgba(0,0,0,.6);border-radius:50%;width:24px;height:24px;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .2s;cursor:pointer}
         .photo-thumb:hover .del{opacity:1}
-        .ig-strip{display:flex;gap:.75rem;overflow-x:auto;padding:.25rem 0 .5rem;-webkit-overflow-scrolling:touch}
+        .ig-strip{display:flex;gap:.75rem;overflow-x:auto;padding:.25rem 0 .5rem;-webkit-overflow-scrolling:touch;scroll-snap-type:x mandatory;scroll-padding:0 .75rem}
         .ig-strip::-webkit-scrollbar{height:3px}.ig-strip::-webkit-scrollbar-thumb{background:rgba(236,72,153,.3);border-radius:2px}
-        .ig-embed{flex:0 0 240px;border-radius:.75rem;overflow:hidden;background:linear-gradient(135deg,#2d1b4e 0%,#1e293b 100%);border:1px solid rgba(236,72,153,.1)}
-        .ig-embed iframe{width:240px;height:300px;border:none;display:block}
+        .ig-embed{flex:0 0 280px;border-radius:.75rem;overflow:hidden;background:linear-gradient(135deg,#2d1b4e 0%,#1e293b 100%);border:1px solid rgba(236,72,153,.1);scroll-snap-align:start}
+        .ig-embed iframe{width:280px;height:350px;border:none;display:block}
+        @media(max-width:640px){.ig-embed{flex:0 0 260px}.ig-embed iframe{width:260px;height:330px}}
         .day-hero{position:relative;min-height:200px;border-radius:.75rem;overflow:hidden;background-size:cover;background-position:center}
         .day-hero .hero-overlay{position:absolute;inset:0}
         .day-hero .hero-content{position:relative;z-index:2;padding:1.25rem;display:flex;flex-direction:column;justify-content:flex-end;min-height:200px}
@@ -86,9 +87,9 @@
     </div>
     <div class="space-y-2">
         <a href="#jour1" class="day-card reveal block bg-rose-900/30 border border-rose-700/30 rounded-lg p-3"><div class="flex items-center gap-3"><div class="w-8 h-8 bg-rose-700 rounded-full flex items-center justify-center font-bold text-xs shrink-0">J1</div><div><div class="font-bold text-sm">Jeu 19 - Arrivee & Vieille Ville</div><div class="text-slate-400 text-xs">Vol 10:00 CDG&#8594;EDI 10:50 | Victoria St, Grassmarket, Calton Hill</div></div></div></a>
-        <a href="#jour2" class="day-card reveal block bg-emerald-900/30 border border-emerald-700/30 rounded-lg p-3"><div class="flex items-center gap-3"><div class="w-8 h-8 bg-emerald-700 rounded-full flex items-center justify-center font-bold text-xs shrink-0">J2</div><div><div class="font-bold text-sm">Ven 20 - Arthur's Seat & Pentlands</div><div class="text-slate-400 text-xs">18km | +650m D+ | The Kitchin Michelin</div></div></div></a>
+        <a href="#jour2" class="day-card reveal block bg-purple-900/30 border border-purple-700/30 rounded-lg p-3 relative"><span class="absolute -top-1.5 -right-1.5 bg-amber-500 text-slate-900 text-[10px] font-bold px-1.5 py-0.5 rounded-full">EPIQUE</span><div class="flex items-center gap-3"><div class="w-8 h-8 bg-purple-700 rounded-full flex items-center justify-center font-bold text-xs shrink-0">J2</div><div><div class="font-bold text-sm">Ven 20 - Glencoe & Highlands</div><div class="text-slate-400 text-xs">300km A/R | Three Sisters | Lost Valley | Glen Etive</div></div></div></a>
         <a href="#jour3" class="day-card reveal block bg-sky-900/30 border border-sky-700/30 rounded-lg p-3"><div class="flex items-center gap-3"><div class="w-8 h-8 bg-sky-700 rounded-full flex items-center justify-center font-bold text-xs shrink-0">J3</div><div><div class="font-bold text-sm">Sam 21 - North Berwick & Rugby</div><div class="text-slate-400 text-xs">Cote + Bass Rock | Wales vs Scotland 16:40</div></div></div></a>
-        <a href="#jour4" class="day-card reveal block bg-purple-900/30 border border-purple-700/30 rounded-lg p-3 relative"><span class="absolute -top-1.5 -right-1.5 bg-amber-500 text-slate-900 text-[10px] font-bold px-1.5 py-0.5 rounded-full">EPIQUE</span><div class="flex items-center gap-3"><div class="w-8 h-8 bg-purple-700 rounded-full flex items-center justify-center font-bold text-xs shrink-0">J4</div><div><div class="font-bold text-sm">Dim 22 - Glencoe & Highlands</div><div class="text-slate-400 text-xs">300km A/R | Three Sisters | Lost Valley | Glen Etive</div></div></div></a>
+        <a href="#jour4" class="day-card reveal block bg-emerald-900/30 border border-emerald-700/30 rounded-lg p-3"><div class="flex items-center gap-3"><div class="w-8 h-8 bg-emerald-700 rounded-full flex items-center justify-center font-bold text-xs shrink-0">J4</div><div><div class="font-bold text-sm">Dim 22 - Arthur's Seat & Pentlands</div><div class="text-slate-400 text-xs">18km | +650m D+ | The Kitchin Michelin</div></div></div></a>
         <a href="#jour5" class="day-card reveal block bg-orange-900/30 border border-orange-700/30 rounded-lg p-3"><div class="flex items-center gap-3"><div class="w-8 h-8 bg-orange-600 rounded-full flex items-center justify-center font-bold text-xs shrink-0">J5</div><div><div class="font-bold text-sm">Lun 23 - Dean Village & Depart</div><div class="text-slate-400 text-xs">Water of Leith | Vol 18:35 EDI&#8594;CDG 21:30</div></div></div></a>
     </div>
 </section>
@@ -168,28 +169,32 @@
     </div>
 
     <div id="jour2" class="mb-8 scroll-mt-20">
-        <div class="reveal day-hero mb-2" id="hero-j2" style="background-image:url('https://images.unsplash.com/photo-1514133903970-e1e61242a2c0?w=900&h=450&fit=crop&q=80')">
-            <div class="hero-overlay bg-gradient-to-t from-slate-900 via-emerald-900/50 to-emerald-800/20"></div>
+        <div class="reveal day-hero mb-2" id="hero-j2" style="background-image:url('https://images.unsplash.com/photo-1659977193681-c40fa885527e?w=900&h=450&fit=crop&q=80')">
+            <div class="hero-overlay bg-gradient-to-t from-slate-900 via-purple-900/50 to-purple-800/20"></div>
             <div class="hero-content">
-                <div class="flex items-center gap-2 mb-1"><span class="bg-emerald-700 w-7 h-7 rounded-full flex items-center justify-center font-bold text-xs shadow-lg">J2</span><span class="text-slate-200 text-xs font-medium">Ven 20 fev</span></div>
-                <h3 class="text-xl md:text-2xl font-serif font-bold drop-shadow-lg">Arthur's Seat & Pentland Hills</h3>
-                <p class="text-slate-300 text-xs mt-1 drop-shadow">Sommet 251m, vue 360, collines sauvages</p>
-                <div class="flex gap-2 mt-2 text-[10px]"><span class="bg-white/15 backdrop-blur-sm px-2.5 py-0.5 rounded-full">18km</span><span class="bg-white/15 backdrop-blur-sm px-2.5 py-0.5 rounded-full">+650m D+</span><span class="bg-white/15 backdrop-blur-sm px-2.5 py-0.5 rounded-full">6h rando</span></div>
+                <span class="absolute top-3 right-3 bg-amber-500 text-slate-900 text-[10px] font-bold px-2 py-0.5 rounded-full shadow-lg z-10">JOURNEE EXCEPTIONNELLE</span>
+                <div class="flex items-center gap-2 mb-1"><span class="bg-purple-700 w-7 h-7 rounded-full flex items-center justify-center font-bold text-xs shadow-lg">J2</span><span class="text-slate-200 text-xs font-medium">Ven 20 fev</span></div>
+                <h3 class="text-xl md:text-2xl font-serif font-bold drop-shadow-lg">Glencoe & Les Highlands</h3>
+                <p class="text-slate-300 text-xs mt-1 drop-shadow">Three Sisters, Lost Valley, Glen Etive - route Skyfall</p>
+                <div class="flex gap-2 mt-2 text-[10px]"><span class="bg-white/15 backdrop-blur-sm px-2.5 py-0.5 rounded-full">4h route</span><span class="bg-white/15 backdrop-blur-sm px-2.5 py-0.5 rounded-full">10km rando</span><span class="bg-white/15 backdrop-blur-sm px-2.5 py-0.5 rounded-full">+300m D+</span></div>
             </div>
         </div>
-        <div class="grid md:grid-cols-2 gap-2 mb-2">
-            <div class="reveal bg-emerald-900/20 border border-emerald-700/20 rounded-xl p-3 text-xs">
-                <b>Matin: Arthur's Seat (251m)</b>
-                <ul class="mt-1 space-y-0.5 text-slate-300"><li>09:00 - Holyrood Park depart</li><li>09:30 - Salisbury Crags</li><li>10:15 - Sommet (vue 360)</li><li>11:30 - Descente Dunsapie</li></ul>
-                <div class="mt-1.5 text-emerald-400">GPS: 55.9441, -3.1618 | 8km | +250m | 2.5h</div>
-            </div>
-            <div class="reveal bg-emerald-900/20 border border-emerald-700/20 rounded-xl p-3 text-xs">
-                <b>AM: Pentland Hills</b>
-                <ul class="mt-1 space-y-0.5 text-slate-300"><li>13:30 - Route Flotterstone (25min)</li><li>14:00 - Rando Turnhouse Hill</li><li>15:30 - Carnethy Hill (573m)</li><li>17:30 - Retour</li></ul>
-                <div class="mt-1.5 text-emerald-400">GPS: 55.855, -3.230 | 10km | +400m | 3h</div>
-            </div>
+        <div class="reveal space-y-1.5 bg-purple-900/20 border border-purple-700/20 rounded-xl p-3 text-xs mb-2">
+            <div class="flex gap-2"><div class="text-amber-400 font-mono w-10 shrink-0">06:30</div><div><b>Depart</b> petit-dej emporter</div></div>
+            <div class="flex gap-2"><div class="text-amber-400 font-mono w-10 shrink-0">09:00</div><div><b>Buachaille Etive Mor</b> (56.652,-5.052)</div></div>
+            <div class="flex gap-2"><div class="text-amber-400 font-mono w-10 shrink-0">09:45</div><div><b>Glen Etive</b> route Skyfall, 12mi de lochs</div></div>
+            <div class="flex gap-2"><div class="text-amber-400 font-mono w-10 shrink-0">10:45</div><div><b>Three Sisters</b> viewpoint (56.668,-5.070)</div></div>
+            <div class="flex gap-2"><div class="text-amber-400 font-mono w-10 shrink-0">11:15</div><div><b>Lost Valley</b> rando 2.5h, +300m, pierriers</div></div>
+            <div class="flex gap-2"><div class="text-amber-400 font-mono w-10 shrink-0">14:00</div><div><b>Clachaig Inn</b> pub historique</div></div>
+            <div class="flex gap-2"><div class="text-amber-400 font-mono w-10 shrink-0">15:15</div><div><b>Glencoe Lochan</b> lac miroir (1h facile)</div></div>
+            <div class="flex gap-2"><div class="text-amber-400 font-mono w-10 shrink-0">16:00</div><div><b>Retour</b> 2h30 route</div></div>
+            <div class="flex gap-2"><div class="text-amber-400 font-mono w-10 shrink-0">19:00</div><div><b>Arcade Haggis & Whisky</b></div></div>
         </div>
-        <div class="reveal bg-slate-800 rounded-xl p-2.5 text-center text-xs mb-2"><span class="text-amber-400 font-bold">DINER:</span> <b>The Kitchin</b> Michelin | Leith | <span class="text-rose-400">RESERVER 0131 555 1755</span></div>
+        <div class="reveal bg-slate-800 rounded-xl p-3 mb-2 text-xs">
+            <b>Rando Lost Valley (Coire Gabhail)</b>
+            <div class="grid grid-cols-3 gap-2 mt-2"><div><span class="text-slate-400">Distance</span><br><b>4.5km A/R</b></div><div><span class="text-slate-400">D+</span><br><b>300m</b></div><div><span class="text-slate-400">Duree</span><br><b>2h30-3h</b></div><div><span class="text-slate-400">Difficulte</span><br><b class="text-amber-400">Moderee-dur</b></div><div><span class="text-slate-400">Terrain</span><br><b>Pierriers, riviere</b></div><div><span class="text-slate-400">Highlight</span><br><b>Vallee cachee</b></div></div>
+            <div class="mt-2 text-slate-400">Depart parking A82. Descente riviere, traversee, remontee vallon. Bonnes chaussures obligatoires.</div>
+        </div>
         <div class="reveal mt-2 mb-2" id="ig-jour2"></div>
         <div class="reveal bg-slate-800 rounded-xl p-3"><div class="font-bold text-xs mb-1.5">Checklist J2</div><div class="grid grid-cols-2 gap-0.5" id="check-j2"></div></div>
     </div>
@@ -222,32 +227,28 @@
     </div>
 
     <div id="jour4" class="mb-8 scroll-mt-20">
-        <div class="reveal day-hero mb-2" id="hero-j4" style="background-image:url('https://images.unsplash.com/photo-1659977193681-c40fa885527e?w=900&h=450&fit=crop&q=80')">
-            <div class="hero-overlay bg-gradient-to-t from-slate-900 via-purple-900/50 to-purple-800/20"></div>
+        <div class="reveal day-hero mb-2" id="hero-j4" style="background-image:url('https://images.unsplash.com/photo-1514133903970-e1e61242a2c0?w=900&h=450&fit=crop&q=80')">
+            <div class="hero-overlay bg-gradient-to-t from-slate-900 via-emerald-900/50 to-emerald-800/20"></div>
             <div class="hero-content">
-                <span class="absolute top-3 right-3 bg-amber-500 text-slate-900 text-[10px] font-bold px-2 py-0.5 rounded-full shadow-lg z-10">JOURNEE EXCEPTIONNELLE</span>
-                <div class="flex items-center gap-2 mb-1"><span class="bg-purple-700 w-7 h-7 rounded-full flex items-center justify-center font-bold text-xs shadow-lg">J4</span><span class="text-slate-200 text-xs font-medium">Dim 22 fev</span></div>
-                <h3 class="text-xl md:text-2xl font-serif font-bold drop-shadow-lg">Glencoe & Les Highlands</h3>
-                <p class="text-slate-300 text-xs mt-1 drop-shadow">Three Sisters, Lost Valley, Glen Etive - route Skyfall</p>
-                <div class="flex gap-2 mt-2 text-[10px]"><span class="bg-white/15 backdrop-blur-sm px-2.5 py-0.5 rounded-full">4h route</span><span class="bg-white/15 backdrop-blur-sm px-2.5 py-0.5 rounded-full">10km rando</span><span class="bg-white/15 backdrop-blur-sm px-2.5 py-0.5 rounded-full">+300m D+</span></div>
+                <div class="flex items-center gap-2 mb-1"><span class="bg-emerald-700 w-7 h-7 rounded-full flex items-center justify-center font-bold text-xs shadow-lg">J4</span><span class="text-slate-200 text-xs font-medium">Dim 22 fev</span></div>
+                <h3 class="text-xl md:text-2xl font-serif font-bold drop-shadow-lg">Arthur's Seat & Pentland Hills</h3>
+                <p class="text-slate-300 text-xs mt-1 drop-shadow">Sommet 251m, vue 360, collines sauvages</p>
+                <div class="flex gap-2 mt-2 text-[10px]"><span class="bg-white/15 backdrop-blur-sm px-2.5 py-0.5 rounded-full">18km</span><span class="bg-white/15 backdrop-blur-sm px-2.5 py-0.5 rounded-full">+650m D+</span><span class="bg-white/15 backdrop-blur-sm px-2.5 py-0.5 rounded-full">6h rando</span></div>
             </div>
         </div>
-        <div class="reveal space-y-1.5 bg-purple-900/20 border border-purple-700/20 rounded-xl p-3 text-xs mb-2">
-            <div class="flex gap-2"><div class="text-amber-400 font-mono w-10 shrink-0">06:30</div><div><b>Depart</b> petit-dej emporter</div></div>
-            <div class="flex gap-2"><div class="text-amber-400 font-mono w-10 shrink-0">09:00</div><div><b>Buachaille Etive Mor</b> (56.652,-5.052)</div></div>
-            <div class="flex gap-2"><div class="text-amber-400 font-mono w-10 shrink-0">09:45</div><div><b>Glen Etive</b> route Skyfall, 12mi de lochs</div></div>
-            <div class="flex gap-2"><div class="text-amber-400 font-mono w-10 shrink-0">10:45</div><div><b>Three Sisters</b> viewpoint (56.668,-5.070)</div></div>
-            <div class="flex gap-2"><div class="text-amber-400 font-mono w-10 shrink-0">11:15</div><div><b>Lost Valley</b> rando 2.5h, +300m, pierriers</div></div>
-            <div class="flex gap-2"><div class="text-amber-400 font-mono w-10 shrink-0">14:00</div><div><b>Clachaig Inn</b> pub historique</div></div>
-            <div class="flex gap-2"><div class="text-amber-400 font-mono w-10 shrink-0">15:15</div><div><b>Glencoe Lochan</b> lac miroir (1h facile)</div></div>
-            <div class="flex gap-2"><div class="text-amber-400 font-mono w-10 shrink-0">16:00</div><div><b>Retour</b> 2h30 route</div></div>
-            <div class="flex gap-2"><div class="text-amber-400 font-mono w-10 shrink-0">19:00</div><div><b>Arcade Haggis & Whisky</b></div></div>
+        <div class="grid md:grid-cols-2 gap-2 mb-2">
+            <div class="reveal bg-emerald-900/20 border border-emerald-700/20 rounded-xl p-3 text-xs">
+                <b>Matin: Arthur's Seat (251m)</b>
+                <ul class="mt-1 space-y-0.5 text-slate-300"><li>09:00 - Holyrood Park depart</li><li>09:30 - Salisbury Crags</li><li>10:15 - Sommet (vue 360)</li><li>11:30 - Descente Dunsapie</li></ul>
+                <div class="mt-1.5 text-emerald-400">GPS: 55.9441, -3.1618 | 8km | +250m | 2.5h</div>
+            </div>
+            <div class="reveal bg-emerald-900/20 border border-emerald-700/20 rounded-xl p-3 text-xs">
+                <b>AM: Pentland Hills</b>
+                <ul class="mt-1 space-y-0.5 text-slate-300"><li>13:30 - Route Flotterstone (25min)</li><li>14:00 - Rando Turnhouse Hill</li><li>15:30 - Carnethy Hill (573m)</li><li>17:30 - Retour</li></ul>
+                <div class="mt-1.5 text-emerald-400">GPS: 55.855, -3.230 | 10km | +400m | 3h</div>
+            </div>
         </div>
-        <div class="reveal bg-slate-800 rounded-xl p-3 mb-2 text-xs">
-            <b>Rando Lost Valley (Coire Gabhail)</b>
-            <div class="grid grid-cols-3 gap-2 mt-2"><div><span class="text-slate-400">Distance</span><br><b>4.5km A/R</b></div><div><span class="text-slate-400">D+</span><br><b>300m</b></div><div><span class="text-slate-400">Duree</span><br><b>2h30-3h</b></div><div><span class="text-slate-400">Difficulte</span><br><b class="text-amber-400">Moderee-dur</b></div><div><span class="text-slate-400">Terrain</span><br><b>Pierriers, riviere</b></div><div><span class="text-slate-400">Highlight</span><br><b>Vallee cachee</b></div></div>
-            <div class="mt-2 text-slate-400">Depart parking A82. Descente riviere, traversee, remontee vallon. Bonnes chaussures obligatoires.</div>
-        </div>
+        <div class="reveal bg-slate-800 rounded-xl p-2.5 text-center text-xs mb-2"><span class="text-amber-400 font-bold">DINER:</span> <b>The Kitchin</b> Michelin | Leith | <span class="text-rose-400">RESERVER 0131 555 1755</span></div>
         <div class="reveal mt-2 mb-2" id="ig-jour4"></div>
         <div class="reveal bg-slate-800 rounded-xl p-3"><div class="font-bold text-xs mb-1.5">Checklist J4</div><div class="grid grid-cols-2 gap-0.5" id="check-j4"></div></div>
     </div>
@@ -328,7 +329,7 @@
         <div class="reveal bg-rose-900/20 border border-rose-700/30 rounded-xl p-4 text-sm">
             <b class="text-rose-400">A reserver !</b>
             <div class="mt-2 space-y-1.5">
-                <div class="bg-slate-800 rounded p-2 text-xs"><b>The Kitchin</b> Michelin | Ven soir | 0131 555 1755</div>
+                <div class="bg-slate-800 rounded p-2 text-xs"><b>The Kitchin</b> Michelin | Dim soir | 0131 555 1755</div>
                 <div class="bg-slate-800 rounded p-2 text-xs"><b>Black Ivy</b> Rugby | Sam 15:30 | weareblackivy.com</div>
             </div>
         </div>
@@ -385,7 +386,7 @@ var map,ft={};
 !function(){map=L.map('map-container',{scrollWheelZoom:false}).setView([56.2,-3.8],7);
 L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',{attribution:'Esri',maxZoom:18}).addTo(map);
 L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}',{maxZoom:18}).addTo(map);
-[{la:55.9488,lo:-3.1943,n:'Victoria Street',d:'J1',c:'#e11d48'},{la:55.9472,lo:-3.1955,n:'Grassmarket',d:'J1',c:'#e11d48'},{la:55.9486,lo:-3.1999,n:'Edinburgh Castle',d:'J1',c:'#e11d48'},{la:55.9553,lo:-3.1828,n:'Calton Hill',d:'J1',c:'#e11d48'},{la:55.9476,lo:-3.1965,n:'The Vennel',d:'J1',c:'#e11d48'},{la:55.9458,lo:-3.2186,n:'Mercure Hotel',d:'Hotel',c:'#f59e0b'},{la:55.9441,lo:-3.1618,n:"Arthur's Seat",d:'J2',c:'#059669'},{la:55.855,lo:-3.23,n:'Pentland Hills',d:'J2',c:'#059669'},{la:55.978,lo:-3.168,n:'The Kitchin',d:'J2',c:'#059669'},{la:56.059,lo:-2.719,n:'North Berwick',d:'J3',c:'#0284c7'},{la:56.054,lo:-2.646,n:'Tantallon Castle',d:'J3',c:'#0284c7'},{la:56.652,lo:-5.052,n:'Buachaille Etive Mor',d:'J4',c:'#9333ea'},{la:56.617,lo:-5.134,n:'Glen Etive',d:'J4',c:'#9333ea'},{la:56.668,lo:-5.07,n:'Three Sisters',d:'J4',c:'#9333ea'},{la:56.678,lo:-5.098,n:'Lost Valley',d:'J4',c:'#9333ea'},{la:56.683,lo:-5.139,n:'Clachaig Inn',d:'J4',c:'#9333ea'},{la:56.687,lo:-5.108,n:'Glencoe Lochan',d:'J4',c:'#9333ea'},{la:55.9524,lo:-3.2177,n:'Dean Village',d:'J5',c:'#ea580c'}].forEach(function(s){
+[{la:55.9488,lo:-3.1943,n:'Victoria Street',d:'J1',c:'#e11d48'},{la:55.9472,lo:-3.1955,n:'Grassmarket',d:'J1',c:'#e11d48'},{la:55.9486,lo:-3.1999,n:'Edinburgh Castle',d:'J1',c:'#e11d48'},{la:55.9553,lo:-3.1828,n:'Calton Hill',d:'J1',c:'#e11d48'},{la:55.9476,lo:-3.1965,n:'The Vennel',d:'J1',c:'#e11d48'},{la:55.9458,lo:-3.2186,n:'Mercure Hotel',d:'Hotel',c:'#f59e0b'},{la:55.9441,lo:-3.1618,n:"Arthur's Seat",d:'J4',c:'#059669'},{la:55.855,lo:-3.23,n:'Pentland Hills',d:'J4',c:'#059669'},{la:55.978,lo:-3.168,n:'The Kitchin',d:'J4',c:'#059669'},{la:56.059,lo:-2.719,n:'North Berwick',d:'J3',c:'#0284c7'},{la:56.054,lo:-2.646,n:'Tantallon Castle',d:'J3',c:'#0284c7'},{la:56.652,lo:-5.052,n:'Buachaille Etive Mor',d:'J2',c:'#9333ea'},{la:56.617,lo:-5.134,n:'Glen Etive',d:'J2',c:'#9333ea'},{la:56.668,lo:-5.07,n:'Three Sisters',d:'J2',c:'#9333ea'},{la:56.678,lo:-5.098,n:'Lost Valley',d:'J2',c:'#9333ea'},{la:56.683,lo:-5.139,n:'Clachaig Inn',d:'J2',c:'#9333ea'},{la:56.687,lo:-5.108,n:'Glencoe Lochan',d:'J2',c:'#9333ea'},{la:55.9524,lo:-3.2177,n:'Dean Village',d:'J5',c:'#ea580c'}].forEach(function(s){
 var i=L.divIcon({className:'',html:'<div style="background:'+s.c+';width:14px;height:14px;border-radius:50%;border:2px solid #fff;box-shadow:0 0 6px rgba(0,0,0,.5)"></div>',iconSize:[14,14],iconAnchor:[7,7]});
 L.marker([s.la,s.lo],{icon:i}).addTo(map).bindPopup('<div style="color:#1e293b"><b>'+s.n+'</b><br><span style="font-size:11px;color:#888">'+s.d+'</span></div>')});
 ft={edinburgh:{c:[55.949,-3.19],z:14},northberwick:{c:[56.057,-2.68],z:13},pentland:{c:[55.855,-3.23],z:13},glencoe:{c:[56.67,-5.1],z:12},all:{c:[56.2,-3.8],z:7}}}();
@@ -400,16 +401,16 @@ a.innerHTML='<div class="aspect-square bg-gradient-to-br from-purple-900/40 via-
 g.appendChild(a)})}();
 
 // INSTAGRAM PER-DAY EMBEDS
-!function(){var d={jour1:[{c:'C-Bx_8muVBu',n:'Victoria Street'},{c:'DRXvBLBAHH1',n:'Victoria St neige'},{c:'DTdffnpmH1D',n:'Calton Hill'},{c:'DP17AQUDfQ4',n:'The Vennel'},{c:'DHGTeNLtMMc',n:'Edinburgh Castle'}],jour2:[{c:'CikvzHuKY-M',n:"Arthur's Seat"}],jour3:[{c:'CgUM8Noo_b_',n:'Bass Rock'},{c:'DUH-jTQiBzg',n:'North Berwick'}],jour4:[{c:'DPrUWXtgumw',n:'Three Sisters'},{c:'CHcW6kdDyw3',n:'Buachaille'},{c:'DURKXUtDlZ8',n:'Glencoe'},{c:'DOAk2D8CKjx',n:'Glencoe'}],jour5:[{c:'DN8HckoDela',n:'Dean Village'},{c:'DL2yJP4i8yU',n:'Dean Village'}]};
+!function(){var d={jour1:[{c:'C-Bx_8muVBu',n:'Victoria Street'},{c:'DRXvBLBAHH1',n:'Victoria St neige'},{c:'DTdffnpmH1D',n:'Calton Hill'},{c:'DP17AQUDfQ4',n:'The Vennel'},{c:'DHGTeNLtMMc',n:'Edinburgh Castle'}],jour2:[{c:'DPrUWXtgumw',n:'Three Sisters'},{c:'CHcW6kdDyw3',n:'Buachaille'},{c:'DURKXUtDlZ8',n:'Glencoe'},{c:'DOAk2D8CKjx',n:'Glencoe'}],jour3:[{c:'CgUM8Noo_b_',n:'Bass Rock'},{c:'DUH-jTQiBzg',n:'North Berwick'}],jour4:[{c:'CikvzHuKY-M',n:"Arthur's Seat"},{c:'Cq5e3dYvPHs',n:"Salisbury Crags"},{c:'B1o8LK2MBtc',n:"Holyrood Park"}],jour5:[{c:'DN8HckoDela',n:'Dean Village'},{c:'DL2yJP4i8yU',n:'Dean Village'}]};
 Object.keys(d).forEach(function(k){var el=document.getElementById('ig-'+k);if(!el)return;var h='<div class="flex items-center gap-1.5 mb-1.5"><svg class="w-3.5 h-3.5 text-pink-400" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2c3.2 0 3.6.01 4.85.07 3.25.15 4.77 1.69 4.92 4.92.06 1.27.07 1.65.07 4.85 0 3.2-.01 3.58-.07 4.85-.15 3.23-1.66 4.77-4.92 4.92-1.27.06-1.64.07-4.85.07-3.2 0-3.58-.01-4.85-.07-3.26-.15-4.77-1.7-4.92-4.92C2.01 15.58 2 15.2 2 12c0-3.2.01-3.58.07-4.85C2.22 3.89 3.77 2.35 7.05 2.2 8.32 2.14 8.7 2.13 11.9 2.13zM12 0C8.74 0 8.33.01 7.05.07 2.7.27.27 2.69.07 7.05.01 8.33 0 8.74 0 12c0 3.26.01 3.67.07 4.95.2 4.36 2.62 6.78 6.98 6.98 1.28.06 1.69.07 4.95.07 3.26 0 3.67-.01 4.95-.07 4.35-.2 6.78-2.62 6.98-6.98.06-1.28.07-1.69.07-4.95 0-3.26-.01-3.67-.07-4.95C23.73 2.69 21.31.27 16.95.07 15.67.01 15.26 0 12 0zm0 5.84a6.16 6.16 0 100 12.32 6.16 6.16 0 000-12.32zM12 16a4 4 0 110-8 4 4 0 010 8zm6.4-11.85a1.44 1.44 0 100 2.88 1.44 1.44 0 000-2.88z"/></svg><span class="text-[11px] text-pink-400 font-semibold">Inspi Instagram</span></div><div class="ig-strip">';
 d[k].forEach(function(p){h+='<div class="ig-embed"><iframe src="https://www.instagram.com/p/'+p.c+'/embed/" loading="lazy" allowtransparency="true" title="'+p.n+'"></iframe></div>'});h+='</div>';el.innerHTML=h})}();
 
 // CHECKLISTS
 var checkData={
 'check-j1':['Victoria Street','Grassmarket','Royal Mile','The Vennel','Calton Hill sunset','Whiski Rooms'],
-'check-j2':['Salisbury Crags','Sommet Arthur\'s Seat','Pentland Hills','The Kitchin'],
+'check-j2':['Buachaille Etive Mor','Glen Etive (Skyfall)','Three Sisters','Lost Valley','Clachaig Inn','Glencoe Lochan'],
 'check-j3':['North Berwick Law','Tantallon Castle','Lobster Shack','Match Rugby'],
-'check-j4':['Buachaille Etive Mor','Glen Etive (Skyfall)','Three Sisters','Lost Valley','Clachaig Inn','Glencoe Lochan'],
+'check-j4':['Salisbury Crags','Sommet Arthur\'s Seat','Pentland Hills','The Kitchin'],
 'check-j5':['Dean Village','Water of Leith','The Milkman','Retour voiture']
 };
 var packItems=['Chaussures rando','Veste pluie','Couches laine/polaire','Snacks & gourde','Batterie externe','Bonnet & gants','Lampe frontale','Appareil photo','Permis+Passeport+CB'];
