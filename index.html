@@ -6,1147 +6,404 @@
     <title>Edimbourg & Highlands - Fevrier 2026</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <!-- Leaflet Map -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <style>
-        .font-serif { font-family: 'Playfair Display', serif; }
-        .font-sans { font-family: 'Inter', sans-serif; }
-        html { scroll-behavior: smooth; }
-
-        /* Hero parallax */
-        .hero-bg { transition: transform 0.1s linear; }
-
-        /* Scroll animations */
-        .reveal {
-            opacity: 0;
-            transform: translateY(40px);
-            transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1), transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
-        }
-        .reveal.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        .reveal-left {
-            opacity: 0;
-            transform: translateX(-40px);
-            transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1), transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
-        }
-        .reveal-left.visible {
-            opacity: 1;
-            transform: translateX(0);
-        }
-        .reveal-right {
-            opacity: 0;
-            transform: translateX(40px);
-            transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1), transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
-        }
-        .reveal-right.visible {
-            opacity: 1;
-            transform: translateX(0);
-        }
-        .reveal-scale {
-            opacity: 0;
-            transform: scale(0.9);
-            transition: opacity 0.6s ease, transform 0.6s ease;
-        }
-        .reveal-scale.visible {
-            opacity: 1;
-            transform: scale(1);
-        }
-        /* Stagger children */
-        .stagger > * { transition-delay: calc(var(--i, 0) * 0.08s); }
-
-        /* Photo cards */
-        .photo-card:hover img { transform: scale(1.08); }
-        .photo-card img { transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1); }
-        .photo-card { transition: transform 0.3s ease, box-shadow 0.3s ease; }
-        .photo-card:hover { transform: translateY(-4px); box-shadow: 0 20px 40px rgba(0,0,0,0.3); }
-
-        /* Instagram button glow */
-        .instagram-link { transition: transform 0.2s ease, box-shadow 0.2s ease; }
-        .instagram-link:hover { transform: scale(1.05); box-shadow: 0 0 20px rgba(168, 85, 247, 0.4); }
-
-        /* Nav active pill */
-        .nav-link { transition: background-color 0.3s ease, color 0.3s ease; }
-        .nav-link.active { background-color: rgb(245 158 11); color: rgb(15 23 42); }
-
-        /* Countdown pulse */
-        @keyframes pulse-glow {
-            0%, 100% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.4); }
-            50% { box-shadow: 0 0 20px 5px rgba(245, 158, 11, 0.2); }
-        }
-        .countdown-card { animation: pulse-glow 3s ease-in-out infinite; }
-
-        /* Back to top */
-        .back-to-top {
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.3s ease, transform 0.3s ease;
-            pointer-events: none;
-        }
-        .back-to-top.show {
-            opacity: 1;
-            transform: translateY(0);
-            pointer-events: auto;
-        }
-
-        /* Checklist */
-        .check-item input:checked + label { text-decoration: line-through; color: rgb(100 116 139); }
-        .check-item input:checked + label::before { content: none; }
-
-        /* Map */
-        #map { border-radius: 1rem; z-index: 1; }
-        .leaflet-popup-content-wrapper { border-radius: 12px !important; }
-
-        /* Hero gradient */
-        .bg-gradient-hero {
-            background: linear-gradient(to bottom, rgba(15,23,42,0) 0%, rgba(15,23,42,0.6) 40%, rgba(15,23,42,1) 100%);
-        }
-
-        /* Day card hover */
-        .day-summary { transition: transform 0.2s ease, box-shadow 0.2s ease; }
-        .day-summary:hover { transform: translateX(8px); box-shadow: -4px 0 0 rgb(245 158 11); }
-
-        /* Floating shapes background */
-        .bg-pattern {
-            background-image: radial-gradient(circle at 20% 50%, rgba(245, 158, 11, 0.03) 0%, transparent 50%),
-                              radial-gradient(circle at 80% 20%, rgba(168, 85, 247, 0.03) 0%, transparent 50%),
-                              radial-gradient(circle at 50% 80%, rgba(59, 130, 246, 0.03) 0%, transparent 50%);
-        }
+        .font-serif{font-family:'Playfair Display',serif}.font-sans{font-family:'Inter',sans-serif}
+        html{scroll-behavior:smooth}
+        .reveal{opacity:0;transform:translateY(30px);transition:opacity .6s ease,transform .6s ease}
+        .reveal.visible{opacity:1;transform:translateY(0)}
+        .nav-link{transition:background .3s,color .3s}.nav-link.active{background:rgb(245 158 11);color:rgb(15 23 42)}
+        .day-card{transition:transform .2s,box-shadow .2s}.day-card:hover{transform:translateX(6px);box-shadow:-3px 0 0 rgb(245 158 11)}
+        .back-to-top{opacity:0;transform:translateY(20px);transition:opacity .3s,transform .3s;pointer-events:none}
+        .back-to-top.show{opacity:1;transform:translateY(0);pointer-events:auto}
+        @keyframes pulse-glow{0%,100%{box-shadow:0 0 0 0 rgba(245,158,11,.3)}50%{box-shadow:0 0 15px 3px rgba(245,158,11,.15)}}
+        .countdown-card{animation:pulse-glow 3s ease infinite}
+        .check-item input:checked+span{text-decoration:line-through;color:rgb(100 116 139)}
+        .star{cursor:pointer;transition:transform .15s}.star:hover{transform:scale(1.3)}
+        .bg-gradient-hero{background:linear-gradient(to bottom,rgba(15,23,42,0) 0%,rgba(15,23,42,.7) 50%,rgba(15,23,42,1) 100%)}
+        #map-container{border-radius:1rem;z-index:1}
+        .leaflet-popup-content-wrapper{border-radius:10px!important}
+        .ig-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:.75rem}
+        .ig-card{transition:transform .2s,box-shadow .2s}.ig-card:hover{transform:translateY(-3px);box-shadow:0 8px 20px rgba(168,85,247,.2)}
+        .upload-zone{border:2px dashed rgba(255,255,255,.2);transition:border-color .3s,background .3s}
+        .upload-zone:hover,.upload-zone.dragover{border-color:rgb(245 158 11);background:rgba(245,158,11,.05)}
+        .photo-thumb{position:relative;overflow:hidden;border-radius:.75rem}
+        .photo-thumb img{width:100%;height:100%;object-fit:cover}
+        .photo-thumb .del{position:absolute;top:4px;right:4px;background:rgba(0,0,0,.6);border-radius:50%;width:24px;height:24px;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .2s;cursor:pointer}
+        .photo-thumb:hover .del{opacity:1}
     </style>
 </head>
-<body class="bg-slate-900 text-white font-sans bg-pattern">
+<body class="bg-slate-900 text-white font-sans">
 
-    <!-- HERO -->
-    <header class="relative h-screen max-h-[650px] overflow-hidden">
-        <img src="https://images.unsplash.com/photo-1506377585622-bedcbb5f6be9?w=1400&q=80"
-             alt="Edinburgh" class="hero-bg w-full h-full object-cover">
-        <div class="absolute inset-0 bg-gradient-hero"></div>
-        <div class="absolute bottom-0 left-0 right-0 p-8 md:p-12">
-            <div class="max-w-5xl mx-auto">
-                <p class="text-amber-400 font-medium tracking-widest mb-2">19 - 23 FEVRIER 2026</p>
-                <h1 class="text-5xl md:text-7xl font-serif font-bold mb-2">EDIMBOURG</h1>
-                <h2 class="text-2xl md:text-3xl text-amber-400 font-serif">& Les Highlands Ecossais</h2>
-                <p class="mt-4 text-slate-300 flex items-center gap-2">
-                    <span>Thomas & Emilie</span>
-                </p>
-                <!-- Countdown -->
-                <div id="countdown" class="mt-6 inline-flex gap-3 flex-wrap"></div>
+<header class="relative h-screen max-h-[550px] overflow-hidden">
+    <div class="w-full h-full bg-gradient-to-br from-indigo-900 via-slate-900 to-purple-900 flex items-center justify-center">
+        <div class="text-center opacity-[.07] text-[180px] font-serif select-none">EDI</div>
+    </div>
+    <div class="absolute inset-0 bg-gradient-hero"></div>
+    <div class="absolute bottom-0 left-0 right-0 p-6 md:p-10">
+        <div class="max-w-5xl mx-auto">
+            <p class="text-amber-400 font-medium tracking-widest text-sm mb-1">19 - 23 FEVRIER 2026</p>
+            <h1 class="text-4xl md:text-6xl font-serif font-bold mb-1">EDIMBOURG</h1>
+            <h2 class="text-xl md:text-2xl text-amber-400 font-serif">& Les Highlands Ecossais</h2>
+            <p class="mt-2 text-slate-300 text-sm">Thomas & Emilie</p>
+            <div id="countdown" class="mt-4 inline-flex gap-2 flex-wrap"></div>
+        </div>
+    </div>
+</header>
+
+<nav class="sticky top-0 z-50 bg-slate-800/95 backdrop-blur border-b border-slate-700">
+    <div class="max-w-5xl mx-auto px-3 py-2.5 flex gap-1.5 overflow-x-auto">
+        <a href="#overview" class="nav-link px-3 py-1.5 rounded-lg text-xs whitespace-nowrap">Apercu</a>
+        <a href="#transport" class="nav-link px-3 py-1.5 rounded-lg text-xs whitespace-nowrap">Vols</a>
+        <a href="#itinerary" class="nav-link px-3 py-1.5 rounded-lg text-xs whitespace-nowrap">Programme</a>
+        <a href="#map" class="nav-link px-3 py-1.5 rounded-lg text-xs whitespace-nowrap">Carte</a>
+        <a href="#instagram" class="nav-link px-3 py-1.5 rounded-lg text-xs whitespace-nowrap">Instagram</a>
+        <a href="#photos" class="nav-link px-3 py-1.5 rounded-lg text-xs whitespace-nowrap">Photos</a>
+        <a href="#practical" class="nav-link px-3 py-1.5 rounded-lg text-xs whitespace-nowrap">Pratique</a>
+    </div>
+</nav>
+
+<main class="max-w-5xl mx-auto px-4 py-8">
+
+<section id="overview" class="mb-14">
+    <h2 class="text-2xl font-serif font-bold mb-5 reveal">Le voyage en un coup d'oeil</h2>
+    <div class="grid grid-cols-2 md:grid-cols-5 gap-2 mb-8">
+        <div class="reveal bg-slate-800 rounded-xl p-3 text-center"><div class="text-xl font-bold text-amber-400">5</div><div class="text-slate-400 text-xs">jours</div></div>
+        <div class="reveal bg-slate-800 rounded-xl p-3 text-center"><div class="text-xl font-bold text-amber-400">48km</div><div class="text-slate-400 text-xs">rando</div></div>
+        <div class="reveal bg-slate-800 rounded-xl p-3 text-center"><div class="text-xl font-bold text-amber-400">300km</div><div class="text-slate-400 text-xs">route</div></div>
+        <div class="reveal bg-slate-800 rounded-xl p-3 text-center"><div class="text-xl font-bold text-amber-400">20+</div><div class="text-slate-400 text-xs">spots</div></div>
+        <div class="reveal bg-slate-800 rounded-xl p-3 text-center"><div class="text-xl font-bold text-amber-400">&#163;180</div><div class="text-slate-400 text-xs">voiture</div></div>
+    </div>
+    <div class="space-y-2">
+        <a href="#jour1" class="day-card reveal block bg-rose-900/30 border border-rose-700/30 rounded-lg p-3"><div class="flex items-center gap-3"><div class="w-8 h-8 bg-rose-700 rounded-full flex items-center justify-center font-bold text-xs shrink-0">J1</div><div><div class="font-bold text-sm">Jeu 19 - Arrivee & Vieille Ville</div><div class="text-slate-400 text-xs">Vol 10:00 CDG&#8594;EDI 10:50 | Victoria St, Grassmarket, Calton Hill</div></div></div></a>
+        <a href="#jour2" class="day-card reveal block bg-emerald-900/30 border border-emerald-700/30 rounded-lg p-3"><div class="flex items-center gap-3"><div class="w-8 h-8 bg-emerald-700 rounded-full flex items-center justify-center font-bold text-xs shrink-0">J2</div><div><div class="font-bold text-sm">Ven 20 - Arthur's Seat & Pentlands</div><div class="text-slate-400 text-xs">18km | +650m D+ | The Kitchin Michelin</div></div></div></a>
+        <a href="#jour3" class="day-card reveal block bg-sky-900/30 border border-sky-700/30 rounded-lg p-3"><div class="flex items-center gap-3"><div class="w-8 h-8 bg-sky-700 rounded-full flex items-center justify-center font-bold text-xs shrink-0">J3</div><div><div class="font-bold text-sm">Sam 21 - North Berwick & Rugby</div><div class="text-slate-400 text-xs">Cote + Bass Rock | Wales vs Scotland 16:40</div></div></div></a>
+        <a href="#jour4" class="day-card reveal block bg-purple-900/30 border border-purple-700/30 rounded-lg p-3 relative"><span class="absolute -top-1.5 -right-1.5 bg-amber-500 text-slate-900 text-[10px] font-bold px-1.5 py-0.5 rounded-full">EPIQUE</span><div class="flex items-center gap-3"><div class="w-8 h-8 bg-purple-700 rounded-full flex items-center justify-center font-bold text-xs shrink-0">J4</div><div><div class="font-bold text-sm">Dim 22 - Glencoe & Highlands</div><div class="text-slate-400 text-xs">300km A/R | Three Sisters | Lost Valley | Glen Etive</div></div></div></a>
+        <a href="#jour5" class="day-card reveal block bg-orange-900/30 border border-orange-700/30 rounded-lg p-3"><div class="flex items-center gap-3"><div class="w-8 h-8 bg-orange-600 rounded-full flex items-center justify-center font-bold text-xs shrink-0">J5</div><div><div class="font-bold text-sm">Lun 23 - Dean Village & Depart</div><div class="text-slate-400 text-xs">Water of Leith | Vol 18:35 EDI&#8594;CDG 21:30</div></div></div></a>
+    </div>
+</section>
+
+<section id="transport" class="mb-14">
+    <h2 class="text-2xl font-serif font-bold mb-5 reveal">Vols & Transport</h2>
+    <div class="grid md:grid-cols-2 gap-3 mb-3">
+        <div class="reveal bg-gradient-to-br from-orange-900/40 to-slate-800 border border-orange-700/30 rounded-xl p-4">
+            <div class="flex justify-between items-center mb-2"><span class="text-xs bg-orange-600 px-2 py-0.5 rounded font-bold">ALLER</span><span class="text-slate-400 text-xs">easyJet EZY3246</span></div>
+            <div class="flex items-center justify-between mb-3">
+                <div class="text-center"><div class="text-xl font-bold">CDG</div><div class="text-xs text-slate-400">Paris T2D</div><div class="text-amber-400 font-mono text-sm">10:00</div></div>
+                <div class="flex-1 px-3"><div class="border-t border-dashed border-slate-600 relative"><div class="absolute -top-2 left-1/2 -translate-x-1/2 text-slate-500 text-[10px] bg-slate-800 px-1">0h50</div></div></div>
+                <div class="text-center"><div class="text-xl font-bold">EDI</div><div class="text-xs text-slate-400">Edimbourg</div><div class="text-amber-400 font-mono text-sm">10:50</div></div>
+            </div>
+            <div class="grid grid-cols-2 gap-2 text-xs"><div class="bg-slate-700/50 rounded p-2">Thomas <b>13A</b></div><div class="bg-slate-700/50 rounded p-2">Emilie <b>13B</b></div></div>
+            <div class="mt-2 text-[10px] text-slate-500">Porte 09:30 | Ref KC1HRMF | Cabine 45x36x20cm</div>
+        </div>
+        <div class="reveal bg-gradient-to-br from-blue-900/40 to-slate-800 border border-blue-700/30 rounded-xl p-4">
+            <div class="flex justify-between items-center mb-2"><span class="text-xs bg-blue-600 px-2 py-0.5 rounded font-bold">RETOUR</span><span class="text-slate-400 text-xs">easyJet EZY3243</span></div>
+            <div class="flex items-center justify-between mb-3">
+                <div class="text-center"><div class="text-xl font-bold">EDI</div><div class="text-xs text-slate-400">Edimbourg</div><div class="text-amber-400 font-mono text-sm">18:35</div></div>
+                <div class="flex-1 px-3"><div class="border-t border-dashed border-slate-600 relative"><div class="absolute -top-2 left-1/2 -translate-x-1/2 text-slate-500 text-[10px] bg-slate-800 px-1">2h55</div></div></div>
+                <div class="text-center"><div class="text-xl font-bold">CDG</div><div class="text-xs text-slate-400">Paris T2D</div><div class="text-amber-400 font-mono text-sm">21:30</div></div>
+            </div>
+            <div class="grid grid-cols-2 gap-2 text-xs"><div class="bg-slate-700/50 rounded p-2">Thomas <b>25E</b></div><div class="bg-slate-700/50 rounded p-2">Emilie <b>25F</b></div></div>
+            <div class="mt-2 text-[10px] text-slate-500">Porte 18:05 | Ref KC1HRMF</div>
+        </div>
+    </div>
+    <div class="reveal bg-slate-800 rounded-xl p-3 flex flex-col sm:flex-row items-center justify-between gap-2 mb-3">
+        <div><b class="text-sm">Cartes d'embarquement</b><div class="text-xs text-slate-400">4 boarding pass PDF</div></div>
+        <a href="Boarding_Pass_KC1HRMF_0f724e05f4.pdf" download class="bg-amber-500 text-slate-900 px-4 py-1.5 rounded-lg font-bold text-sm hover:bg-amber-400 transition shrink-0">Telecharger PDF</a>
+    </div>
+    <div class="reveal bg-gradient-to-br from-emerald-900/30 to-slate-800 border border-emerald-700/30 rounded-xl p-4">
+        <div class="flex justify-between items-start mb-3"><div><b>Location Voiture</b><div class="text-xs text-slate-400">Arnold Clark via Indigo Car Hire</div></div><span class="text-[10px] bg-emerald-700 px-2 py-0.5 rounded font-bold">#10542640</span></div>
+        <div class="grid grid-cols-3 gap-2 mb-3 text-xs">
+            <div class="bg-slate-700/50 rounded-lg p-2"><div class="text-slate-400">Vehicule</div><b>Kia Ceed Manuel</b><div class="text-slate-500">Km illimite, 2e conducteur gratuit</div></div>
+            <div class="bg-slate-700/50 rounded-lg p-2"><div class="text-slate-400">Pickup</div><b class="text-emerald-400">Jeu 19 - 11:00</b><div class="text-slate-500">Edinburgh Airport</div></div>
+            <div class="bg-slate-700/50 rounded-lg p-2"><div class="text-slate-400">Retour</div><b class="text-emerald-400">Lun 23 - 17:00</b><div class="text-slate-500">Edinburgh Airport</div></div>
+        </div>
+        <div class="grid grid-cols-2 gap-2 mb-2 text-xs">
+            <div class="bg-slate-700/50 rounded-lg p-2"><div class="text-slate-400">Prix total</div><b class="text-amber-400">GBP 180</b> (40 prepaye + 140 sur place)</div>
+            <div class="bg-slate-700/50 rounded-lg p-2"><div class="text-slate-400">Appeler a l'arrivee</div><b class="text-amber-400">0044 131 333 0347</b></div>
+        </div>
+        <div class="bg-rose-900/30 border border-rose-700/30 rounded-lg p-2 text-xs">
+            <b class="text-rose-400">Documents:</b> Permis physique + Passeport + CB physique (au nom conducteur, 3 mois+)
+            <div class="text-rose-400 mt-0.5">Apple Pay, Revolut, Wise, N26 = NON acceptes</div>
+        </div>
+    </div>
+</section>
+
+<section id="itinerary" class="mb-14">
+    <h2 class="text-2xl font-serif font-bold mb-5 reveal">Programme jour par jour</h2>
+
+    <div id="jour1" class="mb-8 scroll-mt-20">
+        <div class="reveal bg-gradient-to-r from-rose-900/40 to-slate-800 rounded-xl p-4 mb-2">
+            <div class="flex items-center gap-2 mb-1"><span class="bg-rose-700 w-7 h-7 rounded-full flex items-center justify-center font-bold text-xs">J1</span><span class="text-slate-300 text-xs">Jeu 19 fev</span></div>
+            <h3 class="text-lg font-serif font-bold">Arrivee & Vieille Ville</h3>
+            <div class="flex gap-2 mt-1 text-[10px]"><span class="bg-slate-700 px-2 py-0.5 rounded-full">5km</span><span class="bg-slate-700 px-2 py-0.5 rounded-full">~5h visite</span></div>
+        </div>
+        <div class="reveal space-y-1.5 bg-slate-800/50 rounded-xl p-3 text-xs mb-2">
+            <div class="flex gap-2"><div class="text-amber-400 font-mono w-10 shrink-0">10:00</div><div><b>Vol CDG&#8594;EDI</b> EZY3246</div></div>
+            <div class="flex gap-2"><div class="text-amber-400 font-mono w-10 shrink-0">10:50</div><div><b>Arrivee</b> + appel Arnold Clark</div></div>
+            <div class="flex gap-2"><div class="text-amber-400 font-mono w-10 shrink-0">11:00</div><div><b>Pickup voiture</b> Edinburgh Airport</div></div>
+            <div class="flex gap-2"><div class="text-amber-400 font-mono w-10 shrink-0">12:00</div><div><b>Dejeuner Grassmarket</b></div></div>
+            <div class="flex gap-2"><div class="text-amber-400 font-mono w-10 shrink-0">14:00</div><div><b>Victoria Street</b> + Victoria Terrace</div></div>
+            <div class="flex gap-2"><div class="text-amber-400 font-mono w-10 shrink-0">15:00</div><div><b>Check-in Mercure</b> Chambre Privilege</div></div>
+            <div class="flex gap-2"><div class="text-amber-400 font-mono w-10 shrink-0">16:00</div><div><b>Royal Mile + The Vennel</b></div></div>
+            <div class="flex gap-2"><div class="text-amber-400 font-mono w-10 shrink-0">17:00</div><div><b>Calton Hill</b> coucher de soleil</div></div>
+            <div class="flex gap-2"><div class="text-amber-400 font-mono w-10 shrink-0">19:30</div><div><b>Whiski Rooms</b> Haggis + whisky + vue chateau</div></div>
+        </div>
+        <div class="reveal bg-slate-800 rounded-xl p-3"><div class="font-bold text-xs mb-1.5">Checklist J1</div><div class="grid grid-cols-2 gap-0.5" id="check-j1"></div></div>
+    </div>
+
+    <div id="jour2" class="mb-8 scroll-mt-20">
+        <div class="reveal bg-gradient-to-r from-emerald-900/40 to-slate-800 rounded-xl p-4 mb-2">
+            <div class="flex items-center gap-2 mb-1"><span class="bg-emerald-700 w-7 h-7 rounded-full flex items-center justify-center font-bold text-xs">J2</span><span class="text-slate-300 text-xs">Ven 20 fev</span></div>
+            <h3 class="text-lg font-serif font-bold">Arthur's Seat & Pentland Hills</h3>
+            <div class="flex gap-2 mt-1 text-[10px]"><span class="bg-slate-700 px-2 py-0.5 rounded-full">18km</span><span class="bg-slate-700 px-2 py-0.5 rounded-full">+650m</span><span class="bg-slate-700 px-2 py-0.5 rounded-full">6h rando</span></div>
+        </div>
+        <div class="grid md:grid-cols-2 gap-2 mb-2">
+            <div class="reveal bg-emerald-900/20 border border-emerald-700/20 rounded-xl p-3 text-xs">
+                <b>Matin: Arthur's Seat (251m)</b>
+                <ul class="mt-1 space-y-0.5 text-slate-300"><li>09:00 - Holyrood Park depart</li><li>09:30 - Salisbury Crags</li><li>10:15 - Sommet (vue 360)</li><li>11:30 - Descente Dunsapie</li></ul>
+                <div class="mt-1.5 text-emerald-400">GPS: 55.9441, -3.1618 | 8km | +250m | 2.5h</div>
+            </div>
+            <div class="reveal bg-emerald-900/20 border border-emerald-700/20 rounded-xl p-3 text-xs">
+                <b>AM: Pentland Hills</b>
+                <ul class="mt-1 space-y-0.5 text-slate-300"><li>13:30 - Route Flotterstone (25min)</li><li>14:00 - Rando Turnhouse Hill</li><li>15:30 - Carnethy Hill (573m)</li><li>17:30 - Retour</li></ul>
+                <div class="mt-1.5 text-emerald-400">GPS: 55.855, -3.230 | 10km | +400m | 3h</div>
             </div>
         </div>
-    </header>
+        <div class="reveal bg-slate-800 rounded-xl p-2.5 text-center text-xs mb-2"><span class="text-amber-400 font-bold">DINER:</span> <b>The Kitchin</b> Michelin | Leith | <span class="text-rose-400">RESERVER 0131 555 1755</span></div>
+        <div class="reveal bg-slate-800 rounded-xl p-3"><div class="font-bold text-xs mb-1.5">Checklist J2</div><div class="grid grid-cols-2 gap-0.5" id="check-j2"></div></div>
+    </div>
 
-    <!-- NAV -->
-    <nav id="main-nav" class="sticky top-0 z-50 bg-slate-800/95 backdrop-blur border-b border-slate-700">
-        <div class="max-w-5xl mx-auto px-4 py-3 flex gap-2 overflow-x-auto">
-            <a href="#overview" class="nav-link px-4 py-2 rounded-lg font-medium whitespace-nowrap text-sm">Apercu</a>
-            <a href="#edinburgh" class="nav-link px-4 py-2 rounded-lg font-medium whitespace-nowrap text-sm">Edimbourg</a>
-            <a href="#itinerary" class="nav-link px-4 py-2 rounded-lg font-medium whitespace-nowrap text-sm">Programme</a>
-            <a href="#map" class="nav-link px-4 py-2 rounded-lg font-medium whitespace-nowrap text-sm">Carte</a>
-            <a href="#instagram" class="nav-link px-4 py-2 rounded-lg font-medium whitespace-nowrap text-sm">Instagram</a>
-            <a href="#practical" class="nav-link px-4 py-2 rounded-lg font-medium whitespace-nowrap text-sm">Pratique</a>
+    <div id="jour3" class="mb-8 scroll-mt-20">
+        <div class="reveal bg-gradient-to-r from-sky-900/40 to-slate-800 rounded-xl p-4 mb-2">
+            <div class="flex items-center gap-2 mb-1"><span class="bg-sky-700 w-7 h-7 rounded-full flex items-center justify-center font-bold text-xs">J3</span><span class="text-slate-300 text-xs">Sam 21 fev</span></div>
+            <h3 class="text-lg font-serif font-bold">North Berwick & Rugby</h3>
+            <div class="flex gap-2 mt-1 text-[10px]"><span class="bg-slate-700 px-2 py-0.5 rounded-full">12km</span><span class="bg-slate-700 px-2 py-0.5 rounded-full">1h30 route</span><span class="bg-slate-700 px-2 py-0.5 rounded-full">Match 16:40</span></div>
         </div>
-    </nav>
-
-    <main class="max-w-5xl mx-auto px-4 py-12">
-
-        <!-- OVERVIEW -->
-        <section id="overview" class="mb-20">
-            <h2 class="text-3xl font-serif font-bold mb-8 reveal">Votre voyage en un coup d'oeil</h2>
-
-            <!-- Stats -->
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12 stagger">
-                <div class="reveal-scale bg-slate-800 rounded-2xl p-6 text-center hover:bg-slate-750 transition" style="--i:0">
-                    <div class="text-3xl mb-2">&#x1F4C5;</div>
-                    <div class="text-3xl font-bold text-amber-400">5</div>
-                    <div class="text-slate-400">jours</div>
-                </div>
-                <div class="reveal-scale bg-slate-800 rounded-2xl p-6 text-center" style="--i:1">
-                    <div class="text-3xl mb-2">&#x1F97E;</div>
-                    <div class="text-3xl font-bold text-amber-400">48 km</div>
-                    <div class="text-slate-400">de randonnee</div>
-                </div>
-                <div class="reveal-scale bg-slate-800 rounded-2xl p-6 text-center" style="--i:2">
-                    <div class="text-3xl mb-2">&#x1F697;</div>
-                    <div class="text-3xl font-bold text-amber-400">6h30</div>
-                    <div class="text-slate-400">de route</div>
-                </div>
-                <div class="reveal-scale bg-slate-800 rounded-2xl p-6 text-center" style="--i:3">
-                    <div class="text-3xl mb-2">&#x1F4F8;</div>
-                    <div class="text-3xl font-bold text-amber-400">20+</div>
-                    <div class="text-slate-400">spots photo</div>
-                </div>
+        <div class="grid md:grid-cols-2 gap-2 mb-2">
+            <div class="reveal bg-sky-900/20 border border-sky-700/20 rounded-xl p-3 text-xs">
+                <b>Matin: North Berwick</b>
+                <ul class="mt-1 space-y-0.5 text-slate-300"><li>08:00 - Route cotiere (40min)</li><li>09:00 - North Berwick Law (187m)</li><li>11:00 - Tantallon Castle</li><li>12:30 - Lobster Shack</li></ul>
+                <div class="mt-1.5 text-sky-400">GPS: 56.059, -2.719 | Vue Bass Rock</div>
             </div>
-
-            <!-- Day Summary -->
-            <div class="space-y-4">
-                <a href="#jour1" class="day-summary reveal block bg-rose-900/30 hover:bg-rose-900/50 border border-rose-700/50 rounded-xl p-4 transition">
-                    <div class="flex items-center gap-4">
-                        <div class="w-14 h-14 bg-rose-700 rounded-full flex items-center justify-center text-2xl shrink-0">&#x1F3F0;</div>
-                        <div class="flex-1">
-                            <div class="font-bold text-lg">Jour 1 &#8212; Arrivee & Vieille Ville</div>
-                            <div class="text-slate-400">Jeudi 19 fevrier &#8226; Victoria Street, Grassmarket</div>
-                        </div>
-                        <svg class="w-5 h-5 text-slate-500 shrink-0 hidden md:block" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
-                    </div>
-                </a>
-                <a href="#jour2" class="day-summary reveal block bg-emerald-900/30 hover:bg-emerald-900/50 border border-emerald-700/50 rounded-xl p-4 transition">
-                    <div class="flex items-center gap-4">
-                        <div class="w-14 h-14 bg-emerald-700 rounded-full flex items-center justify-center text-2xl shrink-0">&#x26F0;&#xFE0F;</div>
-                        <div class="flex-1">
-                            <div class="font-bold text-lg">Jour 2 &#8212; Volcans & Pentland Hills</div>
-                            <div class="text-slate-400">Vendredi 20 fevrier &#8226; Arthur's Seat, Pentland Hills</div>
-                        </div>
-                        <svg class="w-5 h-5 text-slate-500 shrink-0 hidden md:block" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
-                    </div>
-                </a>
-                <a href="#jour3" class="day-summary reveal block bg-sky-900/30 hover:bg-sky-900/50 border border-sky-700/50 rounded-xl p-4 transition">
-                    <div class="flex items-center gap-4">
-                        <div class="w-14 h-14 bg-sky-700 rounded-full flex items-center justify-center text-2xl shrink-0">&#x1F30A;</div>
-                        <div class="flex-1">
-                            <div class="font-bold text-lg">Jour 3 &#8212; Cote & Rugby &#x1F3C9;</div>
-                            <div class="text-slate-400">Samedi 21 fevrier &#8226; North Berwick, Wales vs Scotland</div>
-                        </div>
-                        <svg class="w-5 h-5 text-slate-500 shrink-0 hidden md:block" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
-                    </div>
-                </a>
-                <a href="#jour4" class="day-summary reveal block bg-purple-900/30 hover:bg-purple-900/50 border border-purple-700/50 rounded-xl p-4 transition relative">
-                    <span class="absolute -top-2 -right-2 bg-amber-500 text-slate-900 text-xs font-bold px-2 py-1 rounded-full animate-bounce">EPIQUE</span>
-                    <div class="flex items-center gap-4">
-                        <div class="w-14 h-14 bg-purple-700 rounded-full flex items-center justify-center text-2xl shrink-0">&#x1F3D4;&#xFE0F;</div>
-                        <div class="flex-1">
-                            <div class="font-bold text-lg">Jour 4 &#8212; Glencoe & Highlands</div>
-                            <div class="text-slate-400">Dimanche 22 fevrier &#8226; Three Sisters, Lost Valley</div>
-                        </div>
-                        <svg class="w-5 h-5 text-slate-500 shrink-0 hidden md:block" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
-                    </div>
-                </a>
-                <a href="#jour5" class="day-summary reveal block bg-orange-900/30 hover:bg-orange-900/50 border border-orange-700/50 rounded-xl p-4 transition">
-                    <div class="flex items-center gap-4">
-                        <div class="w-14 h-14 bg-orange-600 rounded-full flex items-center justify-center text-2xl shrink-0">&#x2708;&#xFE0F;</div>
-                        <div class="flex-1">
-                            <div class="font-bold text-lg">Jour 5 &#8212; Dean Village & Depart</div>
-                            <div class="text-slate-400">Lundi 23 fevrier &#8226; Water of Leith</div>
-                        </div>
-                        <svg class="w-5 h-5 text-slate-500 shrink-0 hidden md:block" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
-                    </div>
-                </a>
+            <div class="reveal bg-slate-800 rounded-xl p-3 text-xs">
+                <b>Soir: Six Nations</b>
+                <div class="text-center my-2"><div class="text-base font-bold">WALES vs SCOTLAND</div><div class="text-amber-400">Kick-off: 16:40</div></div>
+                <div class="bg-slate-700 rounded p-2"><b>Black Ivy Pub</b> | 9 ecrans | Pies gratuits</div>
+                <div class="text-rose-400 mt-1">RESERVER: weareblackivy.com</div>
             </div>
-        </section>
+        </div>
+        <div class="reveal bg-slate-800 rounded-xl p-3"><div class="font-bold text-xs mb-1.5">Checklist J3</div><div class="grid grid-cols-2 gap-0.5" id="check-j3"></div></div>
+    </div>
 
-        <!-- EDINBURGH SPOTS -->
-        <section id="edinburgh" class="mb-20">
-            <h2 class="text-3xl font-serif font-bold mb-2 reveal">Decouvrir Edimbourg</h2>
-            <p class="text-slate-400 mb-8 reveal">Les incontournables de la capitale ecossaise</p>
+    <div id="jour4" class="mb-8 scroll-mt-20">
+        <div class="reveal bg-gradient-to-r from-purple-900/40 to-slate-800 rounded-xl p-4 mb-2 relative">
+            <span class="absolute top-2 right-2 bg-amber-500 text-slate-900 text-[10px] font-bold px-1.5 py-0.5 rounded-full">JOURNEE EXCEPTIONNELLE</span>
+            <div class="flex items-center gap-2 mb-1"><span class="bg-purple-700 w-7 h-7 rounded-full flex items-center justify-center font-bold text-xs">J4</span><span class="text-slate-300 text-xs">Dim 22 fev</span></div>
+            <h3 class="text-lg font-serif font-bold">Glencoe & Les Highlands</h3>
+            <div class="flex gap-2 mt-1 text-[10px]"><span class="bg-slate-700 px-2 py-0.5 rounded-full">4h route</span><span class="bg-slate-700 px-2 py-0.5 rounded-full">10km rando</span><span class="bg-slate-700 px-2 py-0.5 rounded-full">+300m</span></div>
+        </div>
+        <div class="reveal space-y-1.5 bg-purple-900/20 border border-purple-700/20 rounded-xl p-3 text-xs mb-2">
+            <div class="flex gap-2"><div class="text-amber-400 font-mono w-10 shrink-0">06:30</div><div><b>Depart</b> petit-dej emporter</div></div>
+            <div class="flex gap-2"><div class="text-amber-400 font-mono w-10 shrink-0">09:00</div><div><b>Buachaille Etive Mor</b> (56.652,-5.052)</div></div>
+            <div class="flex gap-2"><div class="text-amber-400 font-mono w-10 shrink-0">09:45</div><div><b>Glen Etive</b> route Skyfall, 12mi de lochs</div></div>
+            <div class="flex gap-2"><div class="text-amber-400 font-mono w-10 shrink-0">10:45</div><div><b>Three Sisters</b> viewpoint (56.668,-5.070)</div></div>
+            <div class="flex gap-2"><div class="text-amber-400 font-mono w-10 shrink-0">11:15</div><div><b>Lost Valley</b> rando 2.5h, +300m, pierriers</div></div>
+            <div class="flex gap-2"><div class="text-amber-400 font-mono w-10 shrink-0">14:00</div><div><b>Clachaig Inn</b> pub historique</div></div>
+            <div class="flex gap-2"><div class="text-amber-400 font-mono w-10 shrink-0">15:15</div><div><b>Glencoe Lochan</b> lac miroir (1h facile)</div></div>
+            <div class="flex gap-2"><div class="text-amber-400 font-mono w-10 shrink-0">16:00</div><div><b>Retour</b> 2h30 route</div></div>
+            <div class="flex gap-2"><div class="text-amber-400 font-mono w-10 shrink-0">19:00</div><div><b>Arcade Haggis & Whisky</b></div></div>
+        </div>
+        <div class="reveal bg-slate-800 rounded-xl p-3 mb-2 text-xs">
+            <b>Rando Lost Valley (Coire Gabhail)</b>
+            <div class="grid grid-cols-3 gap-2 mt-2"><div><span class="text-slate-400">Distance</span><br><b>4.5km A/R</b></div><div><span class="text-slate-400">D+</span><br><b>300m</b></div><div><span class="text-slate-400">Duree</span><br><b>2h30-3h</b></div><div><span class="text-slate-400">Difficulte</span><br><b class="text-amber-400">Moderee-dur</b></div><div><span class="text-slate-400">Terrain</span><br><b>Pierriers, riviere</b></div><div><span class="text-slate-400">Highlight</span><br><b>Vallee cachee</b></div></div>
+            <div class="mt-2 text-slate-400">Depart parking A82. Descente riviere, traversee, remontee vallon. Bonnes chaussures obligatoires.</div>
+        </div>
+        <div class="reveal bg-slate-800 rounded-xl p-3"><div class="font-bold text-xs mb-1.5">Checklist J4</div><div class="grid grid-cols-2 gap-0.5" id="check-j4"></div></div>
+    </div>
 
-            <div class="grid md:grid-cols-2 gap-6">
-                <!-- Victoria Street -->
-                <div class="photo-card reveal bg-slate-800 rounded-2xl overflow-hidden">
-                    <div class="overflow-hidden h-48">
-                        <img src="https://images.unsplash.com/photo-1588974269162-4c9e654ae573?w=600&q=80" alt="Victoria Street" class="w-full h-full object-cover" loading="lazy">
-                    </div>
-                    <div class="p-5">
-                        <div class="flex justify-between items-start mb-2">
-                            <h3 class="font-bold text-xl">Victoria Street</h3>
-                            <span class="text-xs bg-rose-700 px-2 py-1 rounded">Must-see</span>
-                        </div>
-                        <p class="text-slate-400 mb-3">Rue coloree en courbe, inspiration du Chemin de Traverse (Harry Potter). Boutiques independantes et cafes.</p>
-                        <div class="flex items-center gap-2 text-sm text-slate-500 mb-3">
-                            <span>Matin tot</span>
-                            <span>&#8226;</span>
-                            <span>Vue depuis Victoria Terrace</span>
-                        </div>
-                        <a href="https://www.instagram.com/explore/tags/victoriastreetedinburgh/" target="_blank"
-                           class="instagram-link inline-flex items-center gap-2 bg-gradient-to-r from-purple-600 to-pink-600 px-4 py-2 rounded-lg text-sm font-medium">
-                            Voir sur Instagram
-                        </a>
-                    </div>
-                </div>
+    <div id="jour5" class="mb-8 scroll-mt-20">
+        <div class="reveal bg-gradient-to-r from-orange-900/40 to-slate-800 rounded-xl p-4 mb-2">
+            <div class="flex items-center gap-2 mb-1"><span class="bg-orange-600 w-7 h-7 rounded-full flex items-center justify-center font-bold text-xs">J5</span><span class="text-slate-300 text-xs">Lun 23 fev</span></div>
+            <h3 class="text-lg font-serif font-bold">Dean Village & Depart</h3>
+            <div class="flex gap-2 mt-1 text-[10px]"><span class="bg-slate-700 px-2 py-0.5 rounded-full">3km</span><span class="bg-slate-700 px-2 py-0.5 rounded-full">Vol 18:35</span></div>
+        </div>
+        <div class="reveal space-y-1.5 bg-orange-900/20 border border-orange-700/20 rounded-xl p-3 text-xs mb-2">
+            <div class="flex gap-2"><div class="text-amber-400 font-mono w-10 shrink-0">08:00</div><div><b>Dean Village</b> moulins, riviere</div></div>
+            <div class="flex gap-2"><div class="text-amber-400 font-mono w-10 shrink-0">09:00</div><div><b>Water of Leith Walk</b></div></div>
+            <div class="flex gap-2"><div class="text-amber-400 font-mono w-10 shrink-0">09:30</div><div><b>The Milkman</b> meilleur cafe</div></div>
+            <div class="flex gap-2"><div class="text-amber-400 font-mono w-10 shrink-0">11:00</div><div><b>Check-out</b> + souvenirs</div></div>
+            <div class="flex gap-2"><div class="text-amber-400 font-mono w-10 shrink-0">15:30</div><div><b>Retour voiture</b> Eastfield Rd Airport (20min check-in)</div></div>
+            <div class="flex gap-2"><div class="text-amber-400 font-mono w-10 shrink-0">18:35</div><div><b>Vol EDI&#8594;CDG</b> arrivee 21:30</div></div>
+        </div>
+        <div class="reveal bg-slate-800 rounded-xl p-3"><div class="font-bold text-xs mb-1.5">Checklist J5</div><div class="grid grid-cols-2 gap-0.5" id="check-j5"></div></div>
+    </div>
 
-                <!-- Grassmarket -->
-                <div class="photo-card reveal bg-slate-800 rounded-2xl overflow-hidden">
-                    <div class="overflow-hidden h-48">
-                        <img src="https://images.unsplash.com/photo-1591632531132-8a5ea7c8bbf8?w=600&q=80" alt="Grassmarket" class="w-full h-full object-cover" loading="lazy">
-                    </div>
-                    <div class="p-5">
-                        <div class="flex justify-between items-start mb-2">
-                            <h3 class="font-bold text-xl">Grassmarket</h3>
-                            <span class="text-xs bg-amber-600 px-2 py-1 rounded">Quartier</span>
-                        </div>
-                        <p class="text-slate-400 mb-3">Place historique au pied du chateau. Ancienne place d'execution, aujourd'hui animee avec pubs et restos.</p>
-                        <div class="flex items-center gap-2 text-sm text-slate-500 mb-3">
-                            <span>Fin d'apres-midi</span>
-                            <span>&#8226;</span>
-                            <span>The Last Drop pub</span>
-                        </div>
-                        <a href="https://www.instagram.com/explore/tags/grassmarket/" target="_blank"
-                           class="instagram-link inline-flex items-center gap-2 bg-gradient-to-r from-purple-600 to-pink-600 px-4 py-2 rounded-lg text-sm font-medium">
-                            Voir sur Instagram
-                        </a>
-                    </div>
-                </div>
+    <div class="reveal bg-gradient-to-r from-amber-900/30 to-slate-800 border border-amber-700/30 rounded-xl p-4">
+        <h3 class="font-bold mb-3">Nos Notes</h3>
+        <div id="ratings-box"></div>
+    </div>
+</section>
 
-                <!-- Calton Hill -->
-                <div class="photo-card reveal bg-slate-800 rounded-2xl overflow-hidden">
-                    <div class="overflow-hidden h-48">
-                        <img src="https://images.unsplash.com/photo-1565270808635-becba2d06880?w=600&q=80" alt="Calton Hill" class="w-full h-full object-cover" loading="lazy">
-                    </div>
-                    <div class="p-5">
-                        <div class="flex justify-between items-start mb-2">
-                            <h3 class="font-bold text-xl">Calton Hill</h3>
-                            <span class="text-xs bg-orange-600 px-2 py-1 rounded">Panorama</span>
-                        </div>
-                        <p class="text-slate-400 mb-3">Colline avec monuments grecs (National Monument), vue 360 sur la ville et la mer.</p>
-                        <div class="flex items-center gap-2 text-sm text-slate-500 mb-3">
-                            <span>Lever/coucher soleil</span>
-                            <span>&#8226;</span>
-                            <span>Dugald Stewart Monument</span>
-                        </div>
-                        <a href="https://www.instagram.com/explore/tags/caltonhill/" target="_blank"
-                           class="instagram-link inline-flex items-center gap-2 bg-gradient-to-r from-purple-600 to-pink-600 px-4 py-2 rounded-lg text-sm font-medium">
-                            Voir sur Instagram
-                        </a>
-                    </div>
-                </div>
+<section id="map" class="mb-14">
+    <h2 class="text-2xl font-serif font-bold mb-2 reveal">Carte satellite</h2>
+    <p class="text-slate-400 text-xs mb-3 reveal">Vue satellite ESRI | Cliquez les marqueurs</p>
+    <div class="reveal"><div id="map-container" class="h-[350px] md:h-[450px] rounded-xl overflow-hidden border border-slate-700"></div></div>
+    <div class="mt-2 flex flex-wrap gap-1.5 reveal">
+        <button onclick="flyTo('edinburgh')" class="px-2.5 py-1 bg-rose-700 rounded-full text-[11px] hover:bg-rose-600 transition">Edimbourg</button>
+        <button onclick="flyTo('northberwick')" class="px-2.5 py-1 bg-sky-700 rounded-full text-[11px] hover:bg-sky-600 transition">North Berwick</button>
+        <button onclick="flyTo('pentland')" class="px-2.5 py-1 bg-emerald-700 rounded-full text-[11px] hover:bg-emerald-600 transition">Pentlands</button>
+        <button onclick="flyTo('glencoe')" class="px-2.5 py-1 bg-purple-700 rounded-full text-[11px] hover:bg-purple-600 transition">Glencoe</button>
+        <button onclick="flyTo('all')" class="px-2.5 py-1 bg-amber-600 rounded-full text-[11px] hover:bg-amber-500 transition">Tout</button>
+    </div>
+</section>
 
-                <!-- Dean Village -->
-                <div class="photo-card reveal bg-slate-800 rounded-2xl overflow-hidden">
-                    <div class="overflow-hidden h-48">
-                        <img src="https://images.unsplash.com/photo-1599479193883-2275e639c794?w=600&q=80" alt="Dean Village" class="w-full h-full object-cover" loading="lazy">
-                    </div>
-                    <div class="p-5">
-                        <div class="flex justify-between items-start mb-2">
-                            <h3 class="font-bold text-xl">Dean Village</h3>
-                            <span class="text-xs bg-emerald-600 px-2 py-1 rounded">Secret</span>
-                        </div>
-                        <p class="text-slate-400 mb-3">Village cache au coeur d'Edimbourg. Moulins medievaux, riviere, architecture feerique.</p>
-                        <div class="flex items-center gap-2 text-sm text-slate-500 mb-3">
-                            <span>Matin</span>
-                            <span>&#8226;</span>
-                            <span>Peu de touristes</span>
-                        </div>
-                        <a href="https://www.instagram.com/explore/tags/deanvillage/" target="_blank"
-                           class="instagram-link inline-flex items-center gap-2 bg-gradient-to-r from-purple-600 to-pink-600 px-4 py-2 rounded-lg text-sm font-medium">
-                            Voir sur Instagram
-                        </a>
-                    </div>
-                </div>
+<section id="instagram" class="mb-14">
+    <h2 class="text-2xl font-serif font-bold mb-2 reveal">Instagram - Vrais spots</h2>
+    <p class="text-slate-400 text-xs mb-4 reveal">Posts publics | Cliquez pour ouvrir Instagram</p>
+    <div class="ig-grid reveal" id="ig-grid"></div>
+</section>
 
-                <!-- Arthur's Seat -->
-                <div class="photo-card reveal bg-slate-800 rounded-2xl overflow-hidden">
-                    <div class="overflow-hidden h-48">
-                        <img src="https://images.unsplash.com/photo-1565799738755-ed6e63eeb79a?w=600&q=80" alt="Arthur's Seat" class="w-full h-full object-cover" loading="lazy">
-                    </div>
-                    <div class="p-5">
-                        <div class="flex justify-between items-start mb-2">
-                            <h3 class="font-bold text-xl">Arthur's Seat</h3>
-                            <span class="text-xs bg-emerald-700 px-2 py-1 rounded">Rando</span>
-                        </div>
-                        <p class="text-slate-400 mb-3">Volcan eteint de 251m, vue panoramique sur toute la ville. 2h aller-retour.</p>
-                        <div class="flex items-center gap-2 text-sm text-slate-500 mb-3">
-                            <span>Matin clair</span>
-                            <span>&#8226;</span>
-                            <span>Salisbury Crags en montant</span>
-                        </div>
-                        <a href="https://www.instagram.com/explore/tags/arthursseat/" target="_blank"
-                           class="instagram-link inline-flex items-center gap-2 bg-gradient-to-r from-purple-600 to-pink-600 px-4 py-2 rounded-lg text-sm font-medium">
-                            Voir sur Instagram
-                        </a>
-                    </div>
-                </div>
+<section id="photos" class="mb-14">
+    <h2 class="text-2xl font-serif font-bold mb-2 reveal">Nos Photos</h2>
+    <p class="text-slate-400 text-xs mb-3 reveal">Upload vos photos | Sauvegarde locale</p>
+    <div class="reveal">
+        <div class="upload-zone rounded-xl p-5 text-center cursor-pointer mb-3" id="upload-zone" onclick="document.getElementById('photo-input').click()">
+            <input type="file" id="photo-input" accept="image/*" multiple class="hidden" onchange="handleUpload(event)">
+            <div class="text-2xl mb-1">+</div>
+            <div class="text-slate-400 text-xs">Cliquez ou glissez des photos</div>
+        </div>
+        <div class="grid grid-cols-3 md:grid-cols-5 gap-2" id="photo-gallery"></div>
+    </div>
+</section>
 
-                <!-- The Vennel -->
-                <div class="photo-card reveal bg-slate-800 rounded-2xl overflow-hidden">
-                    <div class="overflow-hidden h-48">
-                        <img src="https://images.unsplash.com/photo-1567955760951-debe6c23920f?w=600&q=80" alt="Edinburgh Castle from Vennel" class="w-full h-full object-cover" loading="lazy">
-                    </div>
-                    <div class="p-5">
-                        <div class="flex justify-between items-start mb-2">
-                            <h3 class="font-bold text-xl">The Vennel</h3>
-                            <span class="text-xs bg-slate-600 px-2 py-1 rounded">Vue chateau</span>
-                        </div>
-                        <p class="text-slate-400 mb-3">Escalier secret avec LA meilleure vue sur le chateau. Moins de touristes qu'ailleurs!</p>
-                        <div class="flex items-center gap-2 text-sm text-slate-500 mb-3">
-                            <span>Nuit</span>
-                            <span>&#8226;</span>
-                            <span>Lampadaires = ambiance</span>
-                        </div>
-                        <a href="https://www.instagram.com/explore/tags/thevennel/" target="_blank"
-                           class="instagram-link inline-flex items-center gap-2 bg-gradient-to-r from-purple-600 to-pink-600 px-4 py-2 rounded-lg text-sm font-medium">
-                            Voir sur Instagram
-                        </a>
-                    </div>
-                </div>
+<section id="practical" class="mb-14">
+    <h2 class="text-2xl font-serif font-bold mb-5 reveal">Pratique</h2>
+    <div class="grid md:grid-cols-2 gap-3">
+        <div class="reveal bg-slate-800 rounded-xl p-4 text-sm">
+            <b>Hotel</b>
+            <div class="text-amber-400 font-bold mt-1">Mercure Edinburgh Haymarket</div>
+            <div class="text-xs text-slate-300">38 Gardners Crescent | +44 131 297 0480</div>
+            <div class="mt-2 bg-slate-700 rounded p-2 text-xs">Ref: <span class="font-mono text-amber-400">9014176920406</span><br>5 nuits | Petit-dej inclus | Check-in 15:00 / out 11:00</div>
+        </div>
+        <div class="reveal bg-slate-800 rounded-xl p-4 text-sm">
+            <b>Equipement</b><div class="text-[10px] text-slate-500 mb-1">Cochez au fur et a mesure</div>
+            <div id="checklist-pack" class="grid grid-cols-1 gap-0.5"></div>
+        </div>
+        <div class="reveal bg-rose-900/20 border border-rose-700/30 rounded-xl p-4 text-sm">
+            <b class="text-rose-400">A reserver !</b>
+            <div class="mt-2 space-y-1.5">
+                <div class="bg-slate-800 rounded p-2 text-xs"><b>The Kitchin</b> Michelin | Ven soir | 0131 555 1755</div>
+                <div class="bg-slate-800 rounded p-2 text-xs"><b>Black Ivy</b> Rugby | Sam 15:30 | weareblackivy.com</div>
             </div>
-
-            <!-- Harry Potter Section -->
-            <div class="mt-12 reveal bg-gradient-to-r from-purple-900/50 to-indigo-900/50 border border-purple-700/50 rounded-2xl p-6">
-                <h3 class="text-2xl font-serif font-bold mb-4">Edimbourg & Harry Potter</h3>
-                <p class="text-slate-300 mb-6">J.K. Rowling a ecrit une grande partie de Harry Potter dans les cafes d'Edimbourg. La ville a fortement inspire l'univers magique.</p>
-                <div class="grid md:grid-cols-2 gap-4">
-                    <div class="bg-white/10 rounded-lg p-4 hover:bg-white/15 transition">
-                        <div class="font-bold">Victoria Street</div>
-                        <div class="text-sm text-slate-400">Inspiration pour le Chemin de Traverse</div>
-                    </div>
-                    <div class="bg-white/10 rounded-lg p-4 hover:bg-white/15 transition">
-                        <div class="font-bold">Greyfriars Kirkyard</div>
-                        <div class="text-sm text-slate-400">Tombe de Tom Riddle (Voldemort)</div>
-                    </div>
-                    <div class="bg-white/10 rounded-lg p-4 hover:bg-white/15 transition">
-                        <div class="font-bold">George Heriot's School</div>
-                        <div class="text-sm text-slate-400">Inspiration pour Poudlard</div>
-                    </div>
-                    <div class="bg-white/10 rounded-lg p-4 hover:bg-white/15 transition">
-                        <div class="font-bold">The Elephant House</div>
-                        <div class="text-sm text-slate-400">Cafe ou JKR a ecrit (vue externe)</div>
-                    </div>
-                </div>
+        </div>
+        <div class="reveal bg-slate-800 rounded-xl p-4 text-sm">
+            <b>Meteo Fevrier</b>
+            <div class="grid grid-cols-3 gap-2 mt-2 text-center text-xs">
+                <div><div class="text-lg font-bold text-amber-400">3-8&#176;C</div>Temp</div>
+                <div><div class="text-lg font-bold text-amber-400">07:30</div>Lever</div>
+                <div><div class="text-lg font-bold text-amber-400">17:30</div>Coucher</div>
             </div>
+        </div>
+    </div>
+    <div class="reveal mt-3 bg-gradient-to-r from-purple-900/30 to-indigo-900/30 border border-purple-700/30 rounded-xl p-4">
+        <b class="text-sm">Harry Potter</b>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-1.5 mt-2 text-xs">
+            <div class="bg-white/10 rounded p-2"><b>Victoria St</b><div class="text-slate-400">Chemin de Traverse</div></div>
+            <div class="bg-white/10 rounded p-2"><b>Greyfriars</b><div class="text-slate-400">Tom Riddle</div></div>
+            <div class="bg-white/10 rounded p-2"><b>Heriot's</b><div class="text-slate-400">Poudlard</div></div>
+            <div class="bg-white/10 rounded p-2"><b>Elephant House</b><div class="text-slate-400">Cafe JKR</div></div>
+        </div>
+    </div>
+    <div class="reveal mt-3 bg-slate-800 rounded-xl p-4">
+        <b class="text-sm">Gouter</b>
+        <div class="grid grid-cols-3 md:grid-cols-6 gap-2 mt-2 text-center text-xs">
+            <div>&#x1F95F;<br><b>Haggis</b></div><div>&#x1F967;<br><b>Scotch Pie</b></div><div>&#x1F943;<br><b>Whisky</b></div>
+            <div>&#x1F370;<br><b>Cranachan</b></div><div>&#x1F41F;<br><b>Fish&Chips</b></div><div>&#x1F35E;<br><b>Shortbread</b></div>
+        </div>
+    </div>
+</section>
+</main>
 
-            <!-- Food Section -->
-            <div class="mt-8 reveal bg-slate-800 rounded-2xl p-6">
-                <h3 class="text-2xl font-serif font-bold mb-6">Specialites ecossaises a gouter</h3>
-                <div class="grid grid-cols-2 md:grid-cols-3 gap-6">
-                    <div class="text-center group">
-                        <div class="text-4xl mb-2 group-hover:scale-125 transition-transform">&#x1F95F;</div>
-                        <div class="font-bold">Haggis</div>
-                        <div class="text-sm text-slate-400">Panse farcie (meilleur que ca en a l'air!)</div>
-                    </div>
-                    <div class="text-center group">
-                        <div class="text-4xl mb-2 group-hover:scale-125 transition-transform">&#x1F967;</div>
-                        <div class="font-bold">Scotch Pie</div>
-                        <div class="text-sm text-slate-400">Tourte a la viande</div>
-                    </div>
-                    <div class="text-center group">
-                        <div class="text-4xl mb-2 group-hover:scale-125 transition-transform">&#x1F943;</div>
-                        <div class="font-bold">Whisky</div>
-                        <div class="text-sm text-slate-400">Single malt, tourbe ou non</div>
-                    </div>
-                    <div class="text-center group">
-                        <div class="text-4xl mb-2 group-hover:scale-125 transition-transform">&#x1F370;</div>
-                        <div class="font-bold">Cranachan</div>
-                        <div class="text-sm text-slate-400">Dessert framboises & whisky</div>
-                    </div>
-                    <div class="text-center group">
-                        <div class="text-4xl mb-2 group-hover:scale-125 transition-transform">&#x1F41F;</div>
-                        <div class="font-bold">Fish & Chips</div>
-                        <div class="text-sm text-slate-400">Avec mushy peas</div>
-                    </div>
-                    <div class="text-center group">
-                        <div class="text-4xl mb-2 group-hover:scale-125 transition-transform">&#x1F35E;</div>
-                        <div class="font-bold">Shortbread</div>
-                        <div class="text-sm text-slate-400">Biscuit au beurre</div>
-                    </div>
-                </div>
-            </div>
-        </section>
+<footer class="bg-slate-800 py-6 text-center">
+    <p class="text-xl font-serif mb-1">Slainte mhath!</p>
+    <p class="text-amber-400 text-sm font-serif">Bon voyage Thomas & Emilie</p>
+    <p class="text-slate-500 text-xs mt-2">Edimbourg & Highlands | Fevrier 2026</p>
+</footer>
 
-        <!-- ITINERARY -->
-        <section id="itinerary" class="mb-20">
-            <h2 class="text-3xl font-serif font-bold mb-8 reveal">Programme jour par jour</h2>
+<button id="back-to-top" class="back-to-top fixed bottom-4 right-4 z-50 bg-amber-500 text-slate-900 w-9 h-9 rounded-full shadow-lg flex items-center justify-center hover:bg-amber-400 transition" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 15l7-7 7 7"/></svg>
+</button>
 
-            <!-- JOUR 1 -->
-            <div id="jour1" class="mb-12 scroll-mt-20">
-                <div class="reveal relative h-64 rounded-2xl overflow-hidden mb-6">
-                    <img src="https://images.unsplash.com/photo-1567955760951-debe6c23920f?w=1000&q=80" alt="Edinburgh Castle" class="w-full h-full object-cover" loading="lazy">
-                    <div class="absolute inset-0 bg-gradient-to-t from-rose-900 to-transparent"></div>
-                    <div class="absolute bottom-0 left-0 right-0 p-6">
-                        <div class="flex items-center gap-3 mb-2">
-                            <span class="bg-rose-700 w-10 h-10 rounded-full flex items-center justify-center font-bold">J1</span>
-                            <span class="text-slate-300">Jeudi 19 fevrier</span>
-                        </div>
-                        <h3 class="text-2xl font-serif font-bold">Arrivee & Vieille Ville</h3>
-                    </div>
-                </div>
-                <div class="flex flex-wrap gap-3 mb-6 reveal">
-                    <span class="bg-slate-800 px-3 py-1 rounded-full text-sm">5 km</span>
-                    <span class="bg-slate-800 px-3 py-1 rounded-full text-sm">4h de visite</span>
-                    <span class="bg-slate-800 px-3 py-1 rounded-full text-sm">10+ spots</span>
-                </div>
-                <div class="reveal space-y-4 bg-slate-800/50 rounded-xl p-6">
-                    <div class="flex gap-4">
-                        <div class="text-amber-400 font-mono w-14 shrink-0">15:00</div>
-                        <div><span class="font-bold">Check-in Mercure Haymarket</span> &#8212; Installation chambre Privilege</div>
-                    </div>
-                    <div class="flex gap-4">
-                        <div class="text-amber-400 font-mono w-14 shrink-0">16:00</div>
-                        <div><span class="font-bold">Victoria Street</span> &#8212; Rue Harry Potter, photos depuis Victoria Terrace</div>
-                    </div>
-                    <div class="flex gap-4">
-                        <div class="text-amber-400 font-mono w-14 shrink-0">17:00</div>
-                        <div><span class="font-bold">Grassmarket</span> &#8212; Place historique, vue chateau, pubs</div>
-                    </div>
-                    <div class="flex gap-4">
-                        <div class="text-amber-400 font-mono w-14 shrink-0">18:30</div>
-                        <div><span class="font-bold">Royal Mile</span> &#8212; Balade dans la vieille ville</div>
-                    </div>
-                    <div class="flex gap-4">
-                        <div class="text-amber-400 font-mono w-14 shrink-0">19:30</div>
-                        <div><span class="font-bold">Diner: Whiski Rooms</span> &#8212; Haggis + 300 whiskies + vue chateau</div>
-                    </div>
-                </div>
-            </div>
+<script>
+// COUNTDOWN
+!function(){var d=new Date('2026-02-19T10:00:00'),el=document.getElementById('countdown');function u(){var t=d-new Date();if(t<=0){el.innerHTML='<div class="bg-emerald-600 px-3 py-1.5 rounded-lg font-bold text-sm">Bon voyage !</div>';return}var D=Math.floor(t/864e5),h=Math.floor(t%864e5/36e5),m=Math.floor(t%36e5/6e4),s=Math.floor(t%6e4/1e3);el.innerHTML=[{v:D,l:'j'},{v:h,l:'h'},{v:m,l:'m'},{v:s,l:'s'}].map(function(x){return'<div class="countdown-card bg-slate-800/80 backdrop-blur px-2.5 py-1 rounded-lg text-center"><div class="text-lg font-bold text-amber-400">'+x.v+'</div><div class="text-[10px] text-slate-400">'+x.l+'</div></div>'}).join('')}u();setInterval(u,1e3)}();
+// REVEAL
+!function(){var o=new IntersectionObserver(function(e){e.forEach(function(x){if(x.isIntersecting)x.target.classList.add('visible')})},{threshold:.08,rootMargin:'0px 0px -20px 0px'});document.querySelectorAll('.reveal').forEach(function(el){o.observe(el)})}();
+// NAV
+!function(){var s=document.querySelectorAll('section[id]'),n=document.querySelectorAll('.nav-link');new IntersectionObserver(function(e){e.forEach(function(x){if(x.isIntersecting)n.forEach(function(l){l.classList.toggle('active',l.getAttribute('href')==='#'+x.target.id)})})},{threshold:.12,rootMargin:'-60px 0px -50% 0px'}).observe&&s.forEach(function(x){new IntersectionObserver(function(e){e.forEach(function(x){if(x.isIntersecting)n.forEach(function(l){l.classList.toggle('active',l.getAttribute('href')==='#'+x.target.id)})})},{threshold:.12,rootMargin:'-60px 0px -50% 0px'}).observe(x)})}();
+// BACK TOP
+!function(){var b=document.getElementById('back-to-top');window.addEventListener('scroll',function(){b.classList.toggle('show',window.scrollY>400)})}();
 
-            <!-- JOUR 2 -->
-            <div id="jour2" class="mb-12 scroll-mt-20">
-                <div class="reveal relative h-64 rounded-2xl overflow-hidden mb-6">
-                    <img src="https://images.unsplash.com/photo-1565799738755-ed6e63eeb79a?w=1000&q=80" alt="Arthur's Seat" class="w-full h-full object-cover" loading="lazy">
-                    <div class="absolute inset-0 bg-gradient-to-t from-emerald-900 to-transparent"></div>
-                    <div class="absolute bottom-0 left-0 right-0 p-6">
-                        <div class="flex items-center gap-3 mb-2">
-                            <span class="bg-emerald-700 w-10 h-10 rounded-full flex items-center justify-center font-bold">J2</span>
-                            <span class="text-slate-300">Vendredi 20 fevrier</span>
-                        </div>
-                        <h3 class="text-2xl font-serif font-bold">Volcans & Pentland Hills</h3>
-                    </div>
-                </div>
-                <div class="flex flex-wrap gap-3 mb-6 reveal">
-                    <span class="bg-slate-800 px-3 py-1 rounded-full text-sm">18 km</span>
-                    <span class="bg-slate-800 px-3 py-1 rounded-full text-sm">+650m</span>
-                    <span class="bg-slate-800 px-3 py-1 rounded-full text-sm">6h rando</span>
-                </div>
-                <div class="grid md:grid-cols-2 gap-6 mb-6">
-                    <div class="reveal-left bg-emerald-900/30 border border-emerald-700/50 rounded-xl p-5">
-                        <h4 class="font-bold text-lg mb-3">Matin: Arthur's Seat</h4>
-                        <ul class="space-y-2 text-slate-300">
-                            <li>09:00 &#8212; Salisbury Crags (falaises)</li>
-                            <li>10:00 &#8212; Sommet Arthur's Seat (251m)</li>
-                            <li>11:30 &#8212; Descente via Dunsapie Loch</li>
-                            <li>12:30 &#8212; Dejeuner leger</li>
-                        </ul>
-                        <div class="mt-4 text-sm text-emerald-400">8 km &#8226; +250m &#8226; 3h</div>
-                    </div>
-                    <div class="reveal-right bg-emerald-900/30 border border-emerald-700/50 rounded-xl p-5">
-                        <h4 class="font-bold text-lg mb-3">Apres-midi: Pentland Hills</h4>
-                        <ul class="space-y-2 text-slate-300">
-                            <li>14:00 &#8212; Recuperation voiture</li>
-                            <li>14:30 &#8212; Route vers Flotterstone</li>
-                            <li>15:00 &#8212; Rando Turnhouse + Carnethy</li>
-                            <li>18:00 &#8212; Retour Edimbourg</li>
-                        </ul>
-                        <div class="mt-4 text-sm text-emerald-400">10 km &#8226; +400m &#8226; 2-3h</div>
-                    </div>
-                </div>
-                <div class="reveal bg-slate-800 rounded-xl p-4 text-center">
-                    <span class="text-amber-400">DINER:</span> <strong>The Kitchin</strong> Michelin &#8226; Leith &#8226; Fruits de mer &#8226; <span class="text-rose-400">RESERVER!</span>
-                </div>
-            </div>
+// MAP
+var map,ft={};
+!function(){map=L.map('map-container',{scrollWheelZoom:false}).setView([56.2,-3.8],7);
+L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',{attribution:'Esri',maxZoom:18}).addTo(map);
+L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}',{maxZoom:18}).addTo(map);
+[{la:55.9488,lo:-3.1943,n:'Victoria Street',d:'J1',c:'#e11d48'},{la:55.9472,lo:-3.1955,n:'Grassmarket',d:'J1',c:'#e11d48'},{la:55.9486,lo:-3.1999,n:'Edinburgh Castle',d:'J1',c:'#e11d48'},{la:55.9553,lo:-3.1828,n:'Calton Hill',d:'J1',c:'#e11d48'},{la:55.9476,lo:-3.1965,n:'The Vennel',d:'J1',c:'#e11d48'},{la:55.9458,lo:-3.2186,n:'Mercure Hotel',d:'Hotel',c:'#f59e0b'},{la:55.9441,lo:-3.1618,n:"Arthur's Seat",d:'J2',c:'#059669'},{la:55.855,lo:-3.23,n:'Pentland Hills',d:'J2',c:'#059669'},{la:55.978,lo:-3.168,n:'The Kitchin',d:'J2',c:'#059669'},{la:56.059,lo:-2.719,n:'North Berwick',d:'J3',c:'#0284c7'},{la:56.054,lo:-2.646,n:'Tantallon Castle',d:'J3',c:'#0284c7'},{la:56.652,lo:-5.052,n:'Buachaille Etive Mor',d:'J4',c:'#9333ea'},{la:56.617,lo:-5.134,n:'Glen Etive',d:'J4',c:'#9333ea'},{la:56.668,lo:-5.07,n:'Three Sisters',d:'J4',c:'#9333ea'},{la:56.678,lo:-5.098,n:'Lost Valley',d:'J4',c:'#9333ea'},{la:56.683,lo:-5.139,n:'Clachaig Inn',d:'J4',c:'#9333ea'},{la:56.687,lo:-5.108,n:'Glencoe Lochan',d:'J4',c:'#9333ea'},{la:55.9524,lo:-3.2177,n:'Dean Village',d:'J5',c:'#ea580c'}].forEach(function(s){
+var i=L.divIcon({className:'',html:'<div style="background:'+s.c+';width:14px;height:14px;border-radius:50%;border:2px solid #fff;box-shadow:0 0 6px rgba(0,0,0,.5)"></div>',iconSize:[14,14],iconAnchor:[7,7]});
+L.marker([s.la,s.lo],{icon:i}).addTo(map).bindPopup('<div style="color:#1e293b"><b>'+s.n+'</b><br><span style="font-size:11px;color:#888">'+s.d+'</span></div>')});
+ft={edinburgh:{c:[55.949,-3.19],z:14},northberwick:{c:[56.057,-2.68],z:13},pentland:{c:[55.855,-3.23],z:13},glencoe:{c:[56.67,-5.1],z:12},all:{c:[56.2,-3.8],z:7}}}();
+function flyTo(t){var x=ft[t];if(x)map.flyTo(x.c,x.z)}
 
-            <!-- JOUR 3 -->
-            <div id="jour3" class="mb-12 scroll-mt-20">
-                <div class="reveal relative h-64 rounded-2xl overflow-hidden mb-6">
-                    <img src="https://images.unsplash.com/photo-1598970434795-0c54fe7c0642?w=1000&q=80" alt="Scottish Coast" class="w-full h-full object-cover" loading="lazy">
-                    <div class="absolute inset-0 bg-gradient-to-t from-sky-900 to-transparent"></div>
-                    <div class="absolute bottom-0 left-0 right-0 p-6">
-                        <div class="flex items-center gap-3 mb-2">
-                            <span class="bg-sky-700 w-10 h-10 rounded-full flex items-center justify-center font-bold">J3</span>
-                            <span class="text-slate-300">Samedi 21 fevrier</span>
-                        </div>
-                        <h3 class="text-2xl font-serif font-bold">Cote & Rugby</h3>
-                    </div>
-                </div>
-                <div class="flex flex-wrap gap-3 mb-6 reveal">
-                    <span class="bg-slate-800 px-3 py-1 rounded-full text-sm">12 km</span>
-                    <span class="bg-slate-800 px-3 py-1 rounded-full text-sm">1h30 route</span>
-                    <span class="bg-slate-800 px-3 py-1 rounded-full text-sm">Match 16:40</span>
-                </div>
-                <div class="grid md:grid-cols-2 gap-6 mb-6">
-                    <div class="reveal-left bg-sky-900/30 border border-sky-700/50 rounded-xl p-5">
-                        <h4 class="font-bold text-lg mb-3">Matin: North Berwick</h4>
-                        <ul class="space-y-2 text-slate-300">
-                            <li>08:00 &#8212; Route cotiere (40 min)</li>
-                            <li>09:00 &#8212; North Berwick Law (187m)</li>
-                            <li>11:00 &#8212; Rando vers Tantallon Castle</li>
-                            <li>12:30 &#8212; Dejeuner: The Lobster Shack</li>
-                        </ul>
-                        <a href="https://www.instagram.com/explore/tags/northberwick/" target="_blank"
-                           class="mt-4 instagram-link inline-flex items-center gap-2 bg-gradient-to-r from-purple-600 to-pink-600 px-3 py-1 rounded text-sm">
-                            #northberwick
-                        </a>
-                    </div>
-                    <div class="reveal-right bg-slate-800 rounded-xl p-5">
-                        <h4 class="font-bold text-lg mb-3">Soir: Six Nations</h4>
-                        <div class="text-center mb-4">
-                            <div class="text-2xl font-bold">WALES vs SCOTLAND</div>
-                            <div class="text-amber-400">Kick-off: 16:40</div>
-                        </div>
-                        <div class="bg-slate-700 rounded-lg p-3 mb-3">
-                            <div class="font-bold">Black Ivy Pub</div>
-                            <div class="text-sm text-slate-400">9 ecrans HD &#8226; Bagpiper live &#8226; Pies GRATUITS</div>
-                        </div>
-                        <div class="text-rose-400 text-sm">RESERVER: weareblackivy.com</div>
-                    </div>
-                </div>
-                <div class="reveal bg-gradient-to-r from-blue-900/50 to-rose-900/50 border border-slate-600 rounded-xl p-4">
-                    <div class="font-bold mb-1">AULD ALLIANCE</div>
-                    <div class="text-slate-300 text-sm">Alliance France-Ecosse depuis 1295 contre l'Angleterre. Francais tres bienvenus dans les pubs ecossais!</div>
-                </div>
-            </div>
+// INSTAGRAM
+!function(){var p=[
+{c:'C-Bx_8muVBu',n:'Victoria Street',t:'Colorful curve'},{c:'DRXvBLBAHH1',n:'Victoria Street',t:'Snow'},{c:'DN8HckoDela',n:'Dean Village',t:'Hidden Gem'},{c:'DL2yJP4i8yU',n:'Dean Village',t:'River'},{c:'DTdffnpmH1D',n:'Calton Hill',t:'Sunset'},{c:'DP17AQUDfQ4',n:'The Vennel',t:'Castle view'},{c:'DHGTeNLtMMc',n:'Edinburgh Castle',t:'Classic'},{c:'CikvzHuKY-M',n:"Arthur's Seat",t:'Panorama'},{c:'DPrUWXtgumw',n:'Three Sisters',t:'Glencoe'},{c:'CHcW6kdDyw3',n:'Buachaille',t:'Blackrock'},{c:'DURKXUtDlZ8',n:'Glencoe',t:'Highlands'},{c:'CgUM8Noo_b_',n:'Bass Rock',t:'North Berwick'},{c:'DUH-jTQiBzg',n:'North Berwick',t:'Coast'},{c:'DOAk2D8CKjx',n:'Glencoe',t:'Mountain'}
+],g=document.getElementById('ig-grid');
+p.forEach(function(x){var a=document.createElement('a');a.href='https://www.instagram.com/p/'+x.c+'/';a.target='_blank';a.rel='noopener';a.className='ig-card block bg-slate-800 rounded-xl overflow-hidden';
+a.innerHTML='<div class="aspect-square bg-gradient-to-br from-purple-900/40 via-pink-900/20 to-amber-900/20 flex flex-col items-center justify-center p-3 text-center"><div class="w-10 h-10 mb-2 rounded-full bg-gradient-to-tr from-purple-600 to-pink-500 flex items-center justify-center"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg></div><div class="font-bold text-xs">'+x.n+'</div><div class="text-[10px] text-slate-400 mt-0.5">'+x.t+'</div><div class="text-[10px] text-pink-400 mt-1.5">Voir &#8594;</div></div>';
+g.appendChild(a)})}();
 
-            <!-- JOUR 4 - GLENCOE -->
-            <div id="jour4" class="mb-12 scroll-mt-20">
-                <div class="reveal relative h-80 rounded-2xl overflow-hidden mb-6">
-                    <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1000&q=80" alt="Glencoe" class="w-full h-full object-cover" loading="lazy">
-                    <div class="absolute inset-0 bg-gradient-to-t from-purple-900 to-transparent"></div>
-                    <div class="absolute top-4 right-4 bg-amber-500 text-slate-900 font-bold px-3 py-1 rounded-full text-sm">
-                        JOURNEE EXCEPTIONNELLE
-                    </div>
-                    <div class="absolute bottom-0 left-0 right-0 p-6">
-                        <div class="flex items-center gap-3 mb-2">
-                            <span class="bg-purple-700 w-10 h-10 rounded-full flex items-center justify-center font-bold">J4</span>
-                            <span class="text-slate-300">Dimanche 22 fevrier</span>
-                        </div>
-                        <h3 class="text-3xl font-serif font-bold">Glencoe & Les Highlands</h3>
-                    </div>
-                </div>
-                <div class="flex flex-wrap gap-3 mb-6 reveal">
-                    <span class="bg-slate-800 px-3 py-1 rounded-full text-sm">4h (300km)</span>
-                    <span class="bg-slate-800 px-3 py-1 rounded-full text-sm">10 km</span>
-                    <span class="bg-slate-800 px-3 py-1 rounded-full text-sm">+300m</span>
-                    <span class="bg-slate-800 px-3 py-1 rounded-full text-sm">Paysages EPIQUES</span>
-                </div>
+// CHECKLISTS
+var checkData={
+'check-j1':['Victoria Street','Grassmarket','Royal Mile','The Vennel','Calton Hill sunset','Whiski Rooms'],
+'check-j2':['Salisbury Crags','Sommet Arthur\'s Seat','Pentland Hills','The Kitchin'],
+'check-j3':['North Berwick Law','Tantallon Castle','Lobster Shack','Match Rugby'],
+'check-j4':['Buachaille Etive Mor','Glen Etive (Skyfall)','Three Sisters','Lost Valley','Clachaig Inn','Glencoe Lochan'],
+'check-j5':['Dean Village','Water of Leith','The Milkman','Retour voiture']
+};
+var packItems=['Chaussures rando','Veste pluie','Couches laine/polaire','Snacks & gourde','Batterie externe','Bonnet & gants','Lampe frontale','Appareil photo','Permis+Passeport+CB'];
+function buildChecks(){
+Object.keys(checkData).forEach(function(id){var el=document.getElementById(id);if(!el)return;el.innerHTML='';
+checkData[id].forEach(function(t,i){el.innerHTML+='<label class="check-item flex items-center gap-1.5 p-1 rounded hover:bg-slate-700 text-xs cursor-pointer"><input type="checkbox" class="accent-amber-500 shrink-0" data-key="'+id+'-'+i+'" onchange="saveChecks()"><span>'+t+'</span></label>'})});
+var pe=document.getElementById('checklist-pack');if(pe){pe.innerHTML='';packItems.forEach(function(t,i){pe.innerHTML+='<label class="check-item flex items-center gap-1.5 p-1 rounded hover:bg-slate-700 text-xs cursor-pointer"><input type="checkbox" class="accent-amber-500 shrink-0" data-key="pack-'+i+'" onchange="saveChecks()"><span>'+t+'</span></label>'})}
+}
+function saveChecks(){var s={};document.querySelectorAll('[data-key]').forEach(function(el){s[el.dataset.key]=el.checked});localStorage.setItem('edi-checks',JSON.stringify(s))}
+function loadChecks(){try{var s=JSON.parse(localStorage.getItem('edi-checks'));if(s)document.querySelectorAll('[data-key]').forEach(function(el){if(s[el.dataset.key])el.checked=true})}catch(e){}}
+buildChecks();loadChecks();
 
-                <!-- Glencoe Photos -->
-                <div class="grid grid-cols-2 md:grid-cols-3 gap-4 mb-6">
-                    <div class="photo-card reveal-scale rounded-xl overflow-hidden" style="--i:0">
-                        <img src="https://images.unsplash.com/photo-1508704019882-f9cf40e475b4?w=400&q=80" alt="Buachaille Etive Mor" class="w-full h-32 object-cover" loading="lazy">
-                        <div class="bg-slate-800 p-2 text-center text-sm">Buachaille Etive Mor</div>
-                    </div>
-                    <div class="photo-card reveal-scale rounded-xl overflow-hidden" style="--i:1">
-                        <img src="https://images.unsplash.com/photo-1518173946687-a9fa134ce25e?w=400&q=80" alt="Glen Etive" class="w-full h-32 object-cover" loading="lazy">
-                        <div class="bg-slate-800 p-2 text-center text-sm">Glen Etive (Skyfall)</div>
-                    </div>
-                    <div class="photo-card reveal-scale rounded-xl overflow-hidden" style="--i:2">
-                        <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&q=80" alt="Three Sisters" class="w-full h-32 object-cover" loading="lazy">
-                        <div class="bg-slate-800 p-2 text-center text-sm">Three Sisters</div>
-                    </div>
-                </div>
+// RATINGS
+var rPlaces=['Victoria Street','Grassmarket','Calton Hill','The Vennel',"Arthur's Seat",'Pentland Hills','North Berwick','Glencoe','Three Sisters','Lost Valley','Glen Etive','Dean Village','Whiski Rooms','The Kitchin','Clachaig Inn'];
+function buildRatings(){
+var b=document.getElementById('ratings-box'),sv=JSON.parse(localStorage.getItem('edi-ratings')||'{}');
+b.innerHTML='<div class="grid grid-cols-[1fr,auto,auto] gap-2 items-center text-[10px] font-bold text-slate-500 border-b border-slate-700 pb-1 mb-1"><div>Lieu</div><div class="w-20 text-center">Thomas</div><div class="w-20 text-center">Emilie</div></div>';
+rPlaces.forEach(function(p){var r=document.createElement('div');r.className='grid grid-cols-[1fr,auto,auto] gap-2 items-center py-1 border-b border-slate-800/50';
+r.innerHTML='<div class="text-xs">'+p+'</div><div class="flex gap-px">'+stars(p,'t',sv)+'</div><div class="flex gap-px">'+stars(p,'e',sv)+'</div>';b.appendChild(r)})}
+function stars(p,w,sv){var k=p+'_'+w,v=sv[k]||0,h='';for(var i=1;i<=5;i++)h+='<span class="star text-'+(i<=v?'amber-400':'slate-700')+' text-sm" onclick="rate(\''+p.replace(/'/g,"\\'")+'\',\''+w+'\','+i+')">&#9733;</span>';return h}
+function rate(p,w,v){var s=JSON.parse(localStorage.getItem('edi-ratings')||'{}');s[p+'_'+w]=v;localStorage.setItem('edi-ratings',JSON.stringify(s));buildRatings()}
+buildRatings();
 
-                <div class="reveal bg-purple-900/30 border border-purple-700/50 rounded-xl p-6 space-y-3">
-                    <div class="flex gap-4">
-                        <div class="text-amber-400 font-mono w-14 shrink-0">06:30</div>
-                        <div><span class="font-bold">Depart Edimbourg</span> &#8212; Petit-dej a emporter</div>
-                    </div>
-                    <div class="flex gap-4">
-                        <div class="text-amber-400 font-mono w-14 shrink-0">09:00</div>
-                        <div><span class="font-bold">Buachaille Etive Mor</span> &#8212; Montagne pyramide iconique</div>
-                    </div>
-                    <div class="flex gap-4">
-                        <div class="text-amber-400 font-mono w-14 shrink-0">09:45</div>
-                        <div><span class="font-bold">Glen Etive</span> &#8212; Route de Skyfall (James Bond)</div>
-                    </div>
-                    <div class="flex gap-4">
-                        <div class="text-amber-400 font-mono w-14 shrink-0">10:45</div>
-                        <div><span class="font-bold">Three Sisters Viewpoint</span> &#8212; Vue classique de Glencoe</div>
-                    </div>
-                    <div class="flex gap-4">
-                        <div class="text-amber-400 font-mono w-14 shrink-0">11:15</div>
-                        <div><span class="font-bold">Lost Valley Hike</span> &#8212; Vallee cachee &#8226; 2.5h &#8226; 300m D+</div>
-                    </div>
-                    <div class="flex gap-4">
-                        <div class="text-amber-400 font-mono w-14 shrink-0">14:00</div>
-                        <div><span class="font-bold">Dejeuner: Clachaig Inn</span> &#8212; Pub historique des Highlands</div>
-                    </div>
-                    <div class="flex gap-4">
-                        <div class="text-amber-400 font-mono w-14 shrink-0">15:15</div>
-                        <div><span class="font-bold">Glencoe Lochan</span> &#8212; Lac miroir en foret</div>
-                    </div>
-                    <div class="flex gap-4">
-                        <div class="text-amber-400 font-mono w-14 shrink-0">19:30</div>
-                        <div><span class="font-bold">Retour Edimbourg</span> &#8212; Diner: Arcade Haggis & Whisky</div>
-                    </div>
-                </div>
-
-                <div class="flex flex-wrap gap-2 mt-4 reveal">
-                    <a href="https://www.instagram.com/explore/tags/glencoe/" target="_blank" class="instagram-link bg-gradient-to-r from-purple-600 to-pink-600 px-3 py-1 rounded text-sm">#glencoe</a>
-                    <a href="https://www.instagram.com/explore/tags/thethreesisters/" target="_blank" class="instagram-link bg-gradient-to-r from-purple-600 to-pink-600 px-3 py-1 rounded text-sm">#thethreesisters</a>
-                    <a href="https://www.instagram.com/explore/tags/scottishhighlands/" target="_blank" class="instagram-link bg-gradient-to-r from-purple-600 to-pink-600 px-3 py-1 rounded text-sm">#scottishhighlands</a>
-                </div>
-            </div>
-
-            <!-- JOUR 5 -->
-            <div id="jour5" class="mb-12 scroll-mt-20">
-                <div class="reveal relative h-64 rounded-2xl overflow-hidden mb-6">
-                    <img src="https://images.unsplash.com/photo-1599479193883-2275e639c794?w=1000&q=80" alt="Dean Village" class="w-full h-full object-cover" loading="lazy">
-                    <div class="absolute inset-0 bg-gradient-to-t from-orange-900 to-transparent"></div>
-                    <div class="absolute bottom-0 left-0 right-0 p-6">
-                        <div class="flex items-center gap-3 mb-2">
-                            <span class="bg-orange-600 w-10 h-10 rounded-full flex items-center justify-center font-bold">J5</span>
-                            <span class="text-slate-300">Lundi 23 fevrier</span>
-                        </div>
-                        <h3 class="text-2xl font-serif font-bold">Dean Village & Depart</h3>
-                    </div>
-                </div>
-                <div class="flex flex-wrap gap-3 mb-6 reveal">
-                    <span class="bg-slate-800 px-3 py-1 rounded-full text-sm">3 km</span>
-                    <span class="bg-slate-800 px-3 py-1 rounded-full text-sm">2h</span>
-                    <span class="bg-slate-800 px-3 py-1 rounded-full text-sm">Depart 11:00</span>
-                </div>
-                <div class="reveal bg-orange-900/30 border border-orange-700/50 rounded-xl p-6 space-y-3">
-                    <div class="flex gap-4">
-                        <div class="text-amber-400 font-mono w-14 shrink-0">08:00</div>
-                        <div><span class="font-bold">Dean Village</span> &#8212; Village cache, moulins, riviere</div>
-                    </div>
-                    <div class="flex gap-4">
-                        <div class="text-amber-400 font-mono w-14 shrink-0">09:00</div>
-                        <div><span class="font-bold">Water of Leith Walk</span> &#8212; Balade le long de la riviere</div>
-                    </div>
-                    <div class="flex gap-4">
-                        <div class="text-amber-400 font-mono w-14 shrink-0">09:30</div>
-                        <div><span class="font-bold">Cafe: The Milkman</span> &#8212; Meilleur cafe d'Edimbourg</div>
-                    </div>
-                    <div class="flex gap-4">
-                        <div class="text-amber-400 font-mono w-14 shrink-0">10:45</div>
-                        <div><span class="font-bold">Check-out</span> &#8212; Retour hotel</div>
-                    </div>
-                    <div class="flex gap-4">
-                        <div class="text-amber-400 font-mono w-14 shrink-0">11:00</div>
-                        <div><span class="font-bold">Depart</span> &#8212; Slainte mhath!</div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- INTERACTIVE MAP -->
-        <section id="map" class="mb-20">
-            <h2 class="text-3xl font-serif font-bold mb-2 reveal">Carte interactive</h2>
-            <p class="text-slate-400 mb-6 reveal">Tous les spots du voyage &#8212; cliquez sur les marqueurs</p>
-            <div class="reveal">
-                <div id="map-container" class="h-[450px] md:h-[550px] rounded-2xl overflow-hidden border border-slate-700"></div>
-            </div>
-            <div class="mt-4 flex flex-wrap gap-2 reveal">
-                <button onclick="flyTo('edinburgh')" class="px-3 py-1 bg-rose-700 rounded-full text-sm hover:bg-rose-600 transition">Edimbourg</button>
-                <button onclick="flyTo('northberwick')" class="px-3 py-1 bg-sky-700 rounded-full text-sm hover:bg-sky-600 transition">North Berwick</button>
-                <button onclick="flyTo('pentland')" class="px-3 py-1 bg-emerald-700 rounded-full text-sm hover:bg-emerald-600 transition">Pentland Hills</button>
-                <button onclick="flyTo('glencoe')" class="px-3 py-1 bg-purple-700 rounded-full text-sm hover:bg-purple-600 transition">Glencoe</button>
-                <button onclick="flyTo('all')" class="px-3 py-1 bg-amber-600 rounded-full text-sm hover:bg-amber-500 transition">Vue globale</button>
-            </div>
-        </section>
-
-        <!-- INSTAGRAM LINKS -->
-        <section id="instagram" class="mb-20">
-            <h2 class="text-3xl font-serif font-bold mb-2 reveal">Tous les liens Instagram</h2>
-            <p class="text-slate-400 mb-8 reveal">Clique pour voir les photos des autres voyageurs</p>
-
-            <div class="grid md:grid-cols-2 gap-4">
-                <div class="reveal-left bg-slate-800 rounded-xl p-4">
-                    <h3 class="font-bold text-lg mb-4 text-amber-400">Edimbourg</h3>
-                    <div class="space-y-2">
-                        <a href="https://www.instagram.com/explore/tags/victoriastreetedinburgh/" target="_blank" class="flex items-center justify-between p-2 bg-slate-700 rounded hover:bg-slate-600 transition">
-                            <span>Victoria Street</span>
-                            <span class="text-pink-400">#victoriastreetedinburgh</span>
-                        </a>
-                        <a href="https://www.instagram.com/explore/tags/grassmarket/" target="_blank" class="flex items-center justify-between p-2 bg-slate-700 rounded hover:bg-slate-600 transition">
-                            <span>Grassmarket</span>
-                            <span class="text-pink-400">#grassmarket</span>
-                        </a>
-                        <a href="https://www.instagram.com/explore/tags/caltonhill/" target="_blank" class="flex items-center justify-between p-2 bg-slate-700 rounded hover:bg-slate-600 transition">
-                            <span>Calton Hill</span>
-                            <span class="text-pink-400">#caltonhill</span>
-                        </a>
-                        <a href="https://www.instagram.com/explore/tags/deanvillage/" target="_blank" class="flex items-center justify-between p-2 bg-slate-700 rounded hover:bg-slate-600 transition">
-                            <span>Dean Village</span>
-                            <span class="text-pink-400">#deanvillage</span>
-                        </a>
-                        <a href="https://www.instagram.com/explore/tags/arthursseat/" target="_blank" class="flex items-center justify-between p-2 bg-slate-700 rounded hover:bg-slate-600 transition">
-                            <span>Arthur's Seat</span>
-                            <span class="text-pink-400">#arthursseat</span>
-                        </a>
-                        <a href="https://www.instagram.com/explore/tags/royalmile/" target="_blank" class="flex items-center justify-between p-2 bg-slate-700 rounded hover:bg-slate-600 transition">
-                            <span>Royal Mile</span>
-                            <span class="text-pink-400">#royalmile</span>
-                        </a>
-                    </div>
-                </div>
-                <div class="reveal-right bg-slate-800 rounded-xl p-4">
-                    <h3 class="font-bold text-lg mb-4 text-purple-400">Highlands & Cote</h3>
-                    <div class="space-y-2">
-                        <a href="https://www.instagram.com/explore/tags/glencoe/" target="_blank" class="flex items-center justify-between p-2 bg-slate-700 rounded hover:bg-slate-600 transition">
-                            <span>Glencoe</span>
-                            <span class="text-pink-400">#glencoe</span>
-                        </a>
-                        <a href="https://www.instagram.com/explore/tags/thethreesisters/" target="_blank" class="flex items-center justify-between p-2 bg-slate-700 rounded hover:bg-slate-600 transition">
-                            <span>Three Sisters</span>
-                            <span class="text-pink-400">#thethreesisters</span>
-                        </a>
-                        <a href="https://www.instagram.com/explore/tags/buachailleetivemor/" target="_blank" class="flex items-center justify-between p-2 bg-slate-700 rounded hover:bg-slate-600 transition">
-                            <span>Buachaille Etive Mor</span>
-                            <span class="text-pink-400">#buachailleetivemor</span>
-                        </a>
-                        <a href="https://www.instagram.com/explore/tags/glenetive/" target="_blank" class="flex items-center justify-between p-2 bg-slate-700 rounded hover:bg-slate-600 transition">
-                            <span>Glen Etive (Skyfall)</span>
-                            <span class="text-pink-400">#glenetive</span>
-                        </a>
-                        <a href="https://www.instagram.com/explore/tags/northberwick/" target="_blank" class="flex items-center justify-between p-2 bg-slate-700 rounded hover:bg-slate-600 transition">
-                            <span>North Berwick</span>
-                            <span class="text-pink-400">#northberwick</span>
-                        </a>
-                        <a href="https://www.instagram.com/explore/tags/tantalloncastle/" target="_blank" class="flex items-center justify-between p-2 bg-slate-700 rounded hover:bg-slate-600 transition">
-                            <span>Tantallon Castle</span>
-                            <span class="text-pink-400">#tantalloncastle</span>
-                        </a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="mt-6 reveal bg-gradient-to-r from-purple-900/50 to-pink-900/50 border border-purple-700/50 rounded-xl p-4">
-                <h4 class="font-bold mb-2">Hashtags generaux a suivre</h4>
-                <div class="flex flex-wrap gap-2">
-                    <a href="https://www.instagram.com/explore/tags/visitscotland/" target="_blank" class="bg-white/10 px-3 py-1 rounded-full text-sm hover:bg-white/20 transition">#visitscotland</a>
-                    <a href="https://www.instagram.com/explore/tags/scotland/" target="_blank" class="bg-white/10 px-3 py-1 rounded-full text-sm hover:bg-white/20 transition">#scotland</a>
-                    <a href="https://www.instagram.com/explore/tags/edinburgh/" target="_blank" class="bg-white/10 px-3 py-1 rounded-full text-sm hover:bg-white/20 transition">#edinburgh</a>
-                    <a href="https://www.instagram.com/explore/tags/scottishhighlands/" target="_blank" class="bg-white/10 px-3 py-1 rounded-full text-sm hover:bg-white/20 transition">#scottishhighlands</a>
-                    <a href="https://www.instagram.com/explore/tags/hiddenscotland/" target="_blank" class="bg-white/10 px-3 py-1 rounded-full text-sm hover:bg-white/20 transition">#hiddenscotland</a>
-                </div>
-            </div>
-        </section>
-
-        <!-- PRACTICAL INFO -->
-        <section id="practical" class="mb-20">
-            <h2 class="text-3xl font-serif font-bold mb-8 reveal">Informations pratiques</h2>
-
-            <div class="grid md:grid-cols-2 gap-6">
-                <!-- Hotel -->
-                <div class="reveal bg-slate-800 rounded-2xl p-6">
-                    <h3 class="font-bold text-xl mb-4 flex items-center gap-2">
-                        Hebergement
-                    </h3>
-                    <div class="font-bold text-amber-400 text-lg">Mercure Edinburgh Haymarket</div>
-                    <div class="text-slate-300 mt-2">38 Gardners Crescent, Edinburgh</div>
-                    <div class="text-slate-400 mt-1">+44 131 297 0480</div>
-                    <div class="text-slate-400">h9448@accor.com</div>
-                    <div class="mt-4 bg-slate-700 rounded-lg p-3">
-                        <div>Ref: <span class="font-mono text-amber-400">9014176920406</span></div>
-                        <div class="text-sm text-slate-400 mt-1">5 nuits &#8226; Petit-dej inclus &#8226; Chambre Privilege</div>
-                        <div class="text-sm text-slate-400">Check-in: 15:00 &#8226; Check-out: 11:00</div>
-                    </div>
-                </div>
-
-                <!-- Car -->
-                <div class="reveal bg-slate-800 rounded-2xl p-6">
-                    <h3 class="font-bold text-xl mb-4 flex items-center gap-2">
-                        Location voiture
-                    </h3>
-                    <div class="font-bold text-amber-400 text-lg">Arnold Clark via Clarify Car Hire</div>
-                    <div class="text-slate-300 mt-2">Kia Ceed &#8226; Kilometrage illimite</div>
-                    <div class="text-slate-400 mt-1">Zero depot &#8226; Assurance incluse</div>
-                    <div class="mt-4 bg-slate-700 rounded-lg p-3">
-                        <div>Pickup: <span class="text-emerald-400">Vendredi 20 fevrier 14:00</span></div>
-                        <div>Return: <span class="text-emerald-400">Lundi 23 fevrier 10:45</span></div>
-                    </div>
-                </div>
-
-                <!-- Reservations -->
-                <div class="reveal bg-rose-900/30 border border-rose-700/50 rounded-2xl p-6">
-                    <h3 class="font-bold text-xl mb-4 flex items-center gap-2">
-                        A reserver MAINTENANT
-                    </h3>
-                    <div class="space-y-3">
-                        <div class="bg-slate-800 rounded-lg p-3 hover:bg-slate-750 transition">
-                            <div class="font-bold">The Kitchin &#8211; Michelin</div>
-                            <div class="text-sm text-slate-400">Vendredi soir &#8226; 0131 555 1755</div>
-                        </div>
-                        <div class="bg-slate-800 rounded-lg p-3 hover:bg-slate-750 transition">
-                            <div class="font-bold">Black Ivy Pub (Rugby)</div>
-                            <div class="text-sm text-slate-400">Samedi 15:30 &#8226; weareblackivy.com</div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Interactive Packing Checklist -->
-                <div class="reveal bg-slate-800 rounded-2xl p-6">
-                    <h3 class="font-bold text-xl mb-4 flex items-center gap-2">
-                        Equipement essentiel
-                    </h3>
-                    <p class="text-xs text-slate-500 mb-3">Coche au fur et a mesure &#8212; sauvegarde automatique</p>
-                    <div id="checklist" class="grid grid-cols-1 gap-2">
-                        <div class="check-item flex items-center gap-3 p-2 rounded hover:bg-slate-700 transition">
-                            <input type="checkbox" id="pack-1" class="w-5 h-5 rounded accent-amber-500 shrink-0" onchange="saveChecklist()">
-                            <label for="pack-1" class="cursor-pointer">Chaussures rando impermeables</label>
-                        </div>
-                        <div class="check-item flex items-center gap-3 p-2 rounded hover:bg-slate-700 transition">
-                            <input type="checkbox" id="pack-2" class="w-5 h-5 rounded accent-amber-500 shrink-0" onchange="saveChecklist()">
-                            <label for="pack-2" class="cursor-pointer">Veste coupe-vent/pluie</label>
-                        </div>
-                        <div class="check-item flex items-center gap-3 p-2 rounded hover:bg-slate-700 transition">
-                            <input type="checkbox" id="pack-3" class="w-5 h-5 rounded accent-amber-500 shrink-0" onchange="saveChecklist()">
-                            <label for="pack-3" class="cursor-pointer">Couches (laine + polaire)</label>
-                        </div>
-                        <div class="check-item flex items-center gap-3 p-2 rounded hover:bg-slate-700 transition">
-                            <input type="checkbox" id="pack-4" class="w-5 h-5 rounded accent-amber-500 shrink-0" onchange="saveChecklist()">
-                            <label for="pack-4" class="cursor-pointer">Snacks & gourde</label>
-                        </div>
-                        <div class="check-item flex items-center gap-3 p-2 rounded hover:bg-slate-700 transition">
-                            <input type="checkbox" id="pack-5" class="w-5 h-5 rounded accent-amber-500 shrink-0" onchange="saveChecklist()">
-                            <label for="pack-5" class="cursor-pointer">Batterie externe</label>
-                        </div>
-                        <div class="check-item flex items-center gap-3 p-2 rounded hover:bg-slate-700 transition">
-                            <input type="checkbox" id="pack-6" class="w-5 h-5 rounded accent-amber-500 shrink-0" onchange="saveChecklist()">
-                            <label for="pack-6" class="cursor-pointer">Lampe frontale</label>
-                        </div>
-                        <div class="check-item flex items-center gap-3 p-2 rounded hover:bg-slate-700 transition">
-                            <input type="checkbox" id="pack-7" class="w-5 h-5 rounded accent-amber-500 shrink-0" onchange="saveChecklist()">
-                            <label for="pack-7" class="cursor-pointer">Bonnet & gants</label>
-                        </div>
-                        <div class="check-item flex items-center gap-3 p-2 rounded hover:bg-slate-700 transition">
-                            <input type="checkbox" id="pack-8" class="w-5 h-5 rounded accent-amber-500 shrink-0" onchange="saveChecklist()">
-                            <label for="pack-8" class="cursor-pointer">Appareil photo</label>
-                        </div>
-                    </div>
-                    <div id="checklist-progress" class="mt-4 text-center text-sm text-slate-400"></div>
-                </div>
-            </div>
-
-            <!-- Weather -->
-            <div class="mt-6 reveal bg-slate-800 rounded-2xl p-6">
-                <h3 class="font-bold text-xl mb-4 flex items-center gap-2">
-                    Meteo fevrier
-                </h3>
-                <div class="grid grid-cols-3 gap-6 text-center">
-                    <div>
-                        <div class="text-3xl font-bold text-amber-400">3-8&#176;C</div>
-                        <div class="text-slate-400">Temperatures</div>
-                    </div>
-                    <div>
-                        <div class="text-3xl font-bold text-amber-400">07:30</div>
-                        <div class="text-slate-400">Lever soleil</div>
-                    </div>
-                    <div>
-                        <div class="text-3xl font-bold text-amber-400">17:30</div>
-                        <div class="text-slate-400">Coucher soleil</div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-    </main>
-
-    <!-- FOOTER -->
-    <footer class="bg-slate-800 py-12 text-center">
-        <p class="text-4xl mb-4">Slainte mhath!</p>
-        <p class="text-xl text-amber-400 font-serif">Bon voyage Thomas & Emilie!</p>
-        <p class="text-slate-500 mt-6">Edimbourg & Highlands &#8226; Fevrier 2026</p>
-    </footer>
-
-    <!-- Back to top button -->
-    <button id="back-to-top" class="back-to-top fixed bottom-6 right-6 z-50 bg-amber-500 text-slate-900 w-12 h-12 rounded-full shadow-lg flex items-center justify-center hover:bg-amber-400 transition" onclick="window.scrollTo({top:0,behavior:'smooth'})">
-        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"/></svg>
-    </button>
-
-    <script>
-    // ============================================
-    // COUNTDOWN TIMER
-    // ============================================
-    (function() {
-        const departure = new Date('2026-02-19T15:00:00');
-        const el = document.getElementById('countdown');
-
-        function update() {
-            const now = new Date();
-            const diff = departure - now;
-
-            if (diff <= 0) {
-                el.innerHTML = '<div class="countdown-card bg-emerald-600 text-white px-4 py-2 rounded-xl font-bold text-lg">C\'est parti ! Bon voyage !</div>';
-                return;
-            }
-
-            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-            const secs = Math.floor((diff % (1000 * 60)) / 1000);
-
-            el.innerHTML = [
-                { v: days, l: 'jours' },
-                { v: hours, l: 'heures' },
-                { v: mins, l: 'min' },
-                { v: secs, l: 'sec' }
-            ].map(function(x) {
-                return '<div class="countdown-card bg-slate-800/80 backdrop-blur px-4 py-2 rounded-xl text-center">' +
-                    '<div class="text-2xl font-bold text-amber-400">' + x.v + '</div>' +
-                    '<div class="text-xs text-slate-400">' + x.l + '</div></div>';
-            }).join('');
-        }
-
-        update();
-        setInterval(update, 1000);
-    })();
-
-    // ============================================
-    // SCROLL REVEAL ANIMATIONS
-    // ============================================
-    (function() {
-        var observer = new IntersectionObserver(function(entries) {
-            entries.forEach(function(entry) {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                }
-            });
-        }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
-
-        document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale').forEach(function(el) {
-            observer.observe(el);
-        });
-    })();
-
-    // ============================================
-    // ACTIVE NAV TRACKING
-    // ============================================
-    (function() {
-        var sections = document.querySelectorAll('section[id]');
-        var navLinks = document.querySelectorAll('.nav-link');
-
-        var navObserver = new IntersectionObserver(function(entries) {
-            entries.forEach(function(entry) {
-                if (entry.isIntersecting) {
-                    navLinks.forEach(function(link) {
-                        link.classList.remove('active');
-                        if (link.getAttribute('href') === '#' + entry.target.id) {
-                            link.classList.add('active');
-                        }
-                    });
-                }
-            });
-        }, { threshold: 0.2, rootMargin: '-80px 0px -50% 0px' });
-
-        sections.forEach(function(section) {
-            navObserver.observe(section);
-        });
-    })();
-
-    // ============================================
-    // BACK TO TOP BUTTON
-    // ============================================
-    (function() {
-        var btn = document.getElementById('back-to-top');
-        window.addEventListener('scroll', function() {
-            if (window.scrollY > 600) {
-                btn.classList.add('show');
-            } else {
-                btn.classList.remove('show');
-            }
-        });
-    })();
-
-    // ============================================
-    // INTERACTIVE MAP (Leaflet + OpenStreetMap)
-    // ============================================
-    var mapInstance;
-    var flyTargets = {};
-
-    (function() {
-        mapInstance = L.map('map-container', {
-            scrollWheelZoom: false
-        }).setView([56.2, -3.8], 7);
-
-        L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-            attribution: '&copy; OpenStreetMap &copy; CARTO',
-            maxZoom: 18
-        }).addTo(mapInstance);
-
-        var spots = [
-            // Edinburgh
-            { lat: 55.9488, lng: -3.1943, name: 'Victoria Street', day: 'J1', color: '#be123c' },
-            { lat: 55.9472, lng: -3.1955, name: 'Grassmarket', day: 'J1', color: '#be123c' },
-            { lat: 55.9486, lng: -3.1999, name: 'Edinburgh Castle', day: 'J1', color: '#be123c' },
-            { lat: 55.9553, lng: -3.1828, name: 'Calton Hill', day: 'J1', color: '#be123c' },
-            { lat: 55.9476, lng: -3.1965, name: 'The Vennel', day: 'J1', color: '#be123c' },
-            { lat: 55.9458, lng: -3.2186, name: 'Mercure Haymarket (Hotel)', day: 'Hotel', color: '#f59e0b' },
-            // Jour 2
-            { lat: 55.9441, lng: -3.1618, name: "Arthur's Seat (251m)", day: 'J2', color: '#047857' },
-            { lat: 55.8550, lng: -3.2300, name: 'Pentland Hills', day: 'J2', color: '#047857' },
-            { lat: 55.9780, lng: -3.1680, name: 'The Kitchin (Michelin)', day: 'J2 Diner', color: '#047857' },
-            // Jour 3
-            { lat: 56.0590, lng: -2.7186, name: 'North Berwick', day: 'J3', color: '#0369a1' },
-            { lat: 56.0540, lng: -2.6460, name: 'Tantallon Castle', day: 'J3', color: '#0369a1' },
-            // Jour 4 - Glencoe
-            { lat: 56.6520, lng: -5.0520, name: 'Buachaille Etive Mor', day: 'J4', color: '#7e22ce' },
-            { lat: 56.6170, lng: -5.1340, name: 'Glen Etive (Skyfall)', day: 'J4', color: '#7e22ce' },
-            { lat: 56.6680, lng: -5.0700, name: 'Three Sisters', day: 'J4', color: '#7e22ce' },
-            { lat: 56.6780, lng: -5.0980, name: 'Lost Valley', day: 'J4', color: '#7e22ce' },
-            { lat: 56.6830, lng: -5.1390, name: 'Clachaig Inn (Pub)', day: 'J4', color: '#7e22ce' },
-            { lat: 56.6870, lng: -5.1080, name: 'Glencoe Lochan', day: 'J4', color: '#7e22ce' },
-            // Jour 5
-            { lat: 55.9524, lng: -3.2177, name: 'Dean Village', day: 'J5', color: '#c2410c' },
-        ];
-
-        spots.forEach(function(s) {
-            var icon = L.divIcon({
-                className: '',
-                html: '<div style="background:' + s.color + ';width:12px;height:12px;border-radius:50%;border:2px solid white;box-shadow:0 0 6px rgba(0,0,0,0.5)"></div>',
-                iconSize: [12, 12],
-                iconAnchor: [6, 6]
-            });
-            L.marker([s.lat, s.lng], { icon: icon })
-                .addTo(mapInstance)
-                .bindPopup('<div style="color:#1e293b"><strong>' + s.name + '</strong><br><span style="color:#6b7280;font-size:12px">' + s.day + '</span></div>');
-        });
-
-        // Fly targets
-        flyTargets.edinburgh = { center: [55.949, -3.19], zoom: 14 };
-        flyTargets.northberwick = { center: [56.057, -2.68], zoom: 13 };
-        flyTargets.pentland = { center: [55.855, -3.23], zoom: 13 };
-        flyTargets.glencoe = { center: [56.67, -5.1], zoom: 12 };
-        flyTargets.all = { center: [56.2, -3.8], zoom: 7 };
-    })();
-
-    function flyTo(target) {
-        var t = flyTargets[target];
-        if (t) mapInstance.flyTo(t.center, t.zoom);
-    }
-
-    // ============================================
-    // PACKING CHECKLIST (localStorage)
-    // ============================================
-    function saveChecklist() {
-        var state = {};
-        for (var i = 1; i <= 8; i++) {
-            state['pack-' + i] = document.getElementById('pack-' + i).checked;
-        }
-        localStorage.setItem('edinburgh-checklist', JSON.stringify(state));
-        updateProgress();
-    }
-
-    function loadChecklist() {
-        try {
-            var state = JSON.parse(localStorage.getItem('edinburgh-checklist'));
-            if (state) {
-                for (var key in state) {
-                    var el = document.getElementById(key);
-                    if (el) el.checked = state[key];
-                }
-            }
-        } catch(e) {}
-        updateProgress();
-    }
-
-    function updateProgress() {
-        var total = 8;
-        var checked = 0;
-        for (var i = 1; i <= total; i++) {
-            if (document.getElementById('pack-' + i).checked) checked++;
-        }
-        var pct = Math.round((checked / total) * 100);
-        var el = document.getElementById('checklist-progress');
-        el.innerHTML = '<div class="w-full bg-slate-700 rounded-full h-2 mb-2"><div class="bg-amber-500 h-2 rounded-full transition-all" style="width:' + pct + '%"></div></div>' +
-            checked + '/' + total + ' &#8212; ' + (checked === total ? 'Pret pour l\'aventure !' : pct + '% prepare');
-    }
-
-    loadChecklist();
-
-    // ============================================
-    // HERO PARALLAX (subtle)
-    // ============================================
-    (function() {
-        var heroBg = document.querySelector('.hero-bg');
-        window.addEventListener('scroll', function() {
-            var y = window.scrollY;
-            if (y < 700) {
-                heroBg.style.transform = 'translateY(' + (y * 0.3) + 'px) scale(1.1)';
-            }
-        });
-    })();
-    </script>
-
+// PHOTOS
+var ph=JSON.parse(localStorage.getItem('edi-photos')||'[]');
+function renderPh(){var g=document.getElementById('photo-gallery');g.innerHTML='';ph.forEach(function(p,i){var d=document.createElement('div');d.className='photo-thumb aspect-square';d.innerHTML='<img src="'+p+'" loading="lazy"><div class="del" onclick="delPh('+i+')"><svg class="w-3.5 h-3.5" fill="none" stroke="white" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/></svg></div>';g.appendChild(d)})}
+function handleUpload(e){Array.from(e.target.files).forEach(function(f){var r=new FileReader();r.onload=function(ev){var img=new Image();img.onload=function(){var c=document.createElement('canvas'),mx=800,w=img.width,h=img.height;if(w>mx){h=h*(mx/w);w=mx}if(h>mx){w=w*(mx/h);h=mx}c.width=w;c.height=h;c.getContext('2d').drawImage(img,0,0,w,h);ph.push(c.toDataURL('image/jpeg',.7));try{localStorage.setItem('edi-photos',JSON.stringify(ph))}catch(x){alert('Stockage plein!')}renderPh()};img.src=ev.target.result};r.readAsDataURL(f)});e.target.value=''}
+function delPh(i){ph.splice(i,1);localStorage.setItem('edi-photos',JSON.stringify(ph));renderPh()}
+renderPh();
+var uz=document.getElementById('upload-zone');
+uz.addEventListener('dragover',function(e){e.preventDefault();uz.classList.add('dragover')});
+uz.addEventListener('dragleave',function(){uz.classList.remove('dragover')});
+uz.addEventListener('drop',function(e){e.preventDefault();uz.classList.remove('dragover');if(e.dataTransfer.files.length)handleUpload({target:{files:e.dataTransfer.files,value:''}})});
+</script>
 </body>
 </html>
